@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="author" content="Muhammed Esmail" />
+    <meta charset="UTF-8" />
+    <title>Log In — Recipe Finder</title>
+  </head>
+
+  <body>
+    <!-- H1 header -->
+
+    <h1>Recipe Finder</h1>
+    <hr />
+
+    <!-- Sign in -->
+    <h2>Sign In</h2>
+
+    <form action="#" method="post">
+      <!-- Credentials -->
+      <fieldset>
+        <legend>Your Credentials</legend>
+
+        <br />
+
+        <label> Username: </label>
+        <br />
+        <input
+          type="text"
+          id="user_name"
+          name="user_name"
+          placeholder="eg. Esmail0"
+          required
+        />
+        <br /><br />
+
+        <legend>Password</legend>
+
+        <br />
+
+        <label> Password </label><br />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          minlength="8"
+          placeholder="At least 8 characters"
+          required
+        />
+        <br /><br />
+      </fieldset>
+
+      <br />
+      <!-- Create My account + Clear Form button -->
+      <input type="submit" value="Sign In" />
+      <input type="reset" value="Clear" />
+    </form>
+    <hr />
+    <!-- Already Have an account? Sign in -->
+    <p>Don't have an account? <a href="signup.html">Create one here</a></p>
+  </body>
+</html>
