@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+</head>
+<body>
+    <h1>Add a New Recipe</h1>
+    <form>
+
+        <h2 for="recipe">Recipe Details</h2>
+        <label for="recipe-name">Recipe Name</label><br>
+        <input type="text" id="recipe-name" name="recipe-name" placeholder="Enter recipe name"><br>
+
+        <br>
+
+        <label for="course">Course</label><br>
+        <select name="course" id="course">
+            <option>Appetizers</option>
+            <option>Main</option>
+            <option>Dessert</option>
+        </select><br>
+
+        <br>
+
+        <label for="description">Description</label><br>
+        <textarea id="description" name="description" rows="4" cols="40" placeholder="Write a short description of the recipe..."></textarea><br>
+
+        <br>
+
+        <hr>
+
+        <h2 for="ingredients">Ingredients</h2>
+        <label for="ingredient-name">Ingredient Name</label><br>
+        <input type="text" id="ingredient-name" name="ingredient-name" placeholder="e.g. Sugar"><br><br>
+        <label for="ingredient-name">Ingredient Quantity</label><br>
+        <input type="number" id="quantity" name="quantity" placeholder="Amount"><br><br>
+        <label for="unit">Unit</label><br>
+        <select name="unit" id="unit">
+            <option>Cup</option>
+            <option>Spoon</option>
+            <option>Piece</option>
+        </select><br><br>
+
+        <button type="button" id="add-ingredient">Add Ingredient</button><br>
+    </form>
+
+    <hr>
+
+    <h3>Ingredients List:</h3>
+    <ul id="ingredient-list">
+    </ul>
+
+
+    <hr>
+    
+    <button type="button" id="add-recipe">Add Recipe</button>
+</body>
+</html>
+
+<!-- <script>
+    const addButton = document.querySelector("#add-ingredient")
+    const list = document.querySelector("#ingredient-list")
+
+    addButton.addEventListener("click", () => {
+        const name = document.querySelector("#ingredient-name").value
+        const quantity = document.querySelector("#quantity").value
+        const unit = document.querySelector("#unit").value
+
+        const item = document.createElement("li")
+        item.textContent = `${name} - ${quantity} ${unit}`
+
+        list.appendChild(item)
+
+        document.querySelector("#ingredient-name").value = ""
+        document.querySelector("#quantity").value = ""
+        document.querySelector("#unit").value = ""
+    })
+</script> -->
