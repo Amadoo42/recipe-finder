@@ -40,8 +40,8 @@ export async function createUser(newUserObject){
 
     if(usernameCheckMessage.success === false){
         return usernameCheckMessage;
-    }
-
+    }    
+    
     // Attempt to create the new account
     const accountCreationMessage = await insertNewUser(newUserObject);
 

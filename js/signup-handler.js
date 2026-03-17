@@ -1,6 +1,7 @@
 import { createUser } from "./auth.js";
 import { createMessage } from "./utils/create-message.js";
 import { hash } from "./utils/hash.js";
+import { validation } from "./validation.js";
 
 
 const signupForm = document.getElementById('signupForm');
@@ -43,16 +44,26 @@ async function onSubmit(event){
     console.log("password :" + password);
     console.log("role" + role);
 
-    
-    // Pass the object into the createUser function and create the account
-    const message = await createUser({
+    var userObject = {
         firstName: firstName,
         lastName: lastName,
         username: userName,
         email: email,
-        password: hash(password),   // given the hashed version directly
+        password: password,
         role: role
-    });
+    };
+
+    const validationMessage = validation(userObject);
+    
+    if(validationMessage.success === false){
+        handleCreationMessage(validationMessage);
+        return;
+    }
+    
+    userObject.password = hash(password);   // given the hashed version directly
+
+    // Pass the object into the createUser function and create the account
+    const message = await createUser(userObject);
 
     // pass the message to the handler
     handleCreationMessage(message);
