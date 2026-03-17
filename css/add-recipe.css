@@ -110,6 +110,10 @@ li {
     margin-bottom: 10px;
 }
 
+.ingredient-name {
+    color: black;
+}
+
 .item-container div {
     display: flex;
     gap: 5px;

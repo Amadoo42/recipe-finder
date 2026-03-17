@@ -15,9 +15,17 @@ class Ingredient {
     }
 }
 
+var initalized = false;
+
+
 function addIngredient() {
     const list = document.querySelector("#ingredient-list");
     
+    if (!initalized) {
+        list.innerHTML = "";
+        initalized = true;
+    }
+
     const nameInput = document.querySelector("#ingredient-name");
     const quantInput = document.querySelector("#quantity");
     const unitInput = document.querySelector("#unit");
@@ -29,7 +37,7 @@ function addIngredient() {
 
     item.innerHTML = `
         <div class="item-container">
-            <p class="ingredient-name" style="color: black;">${nameInput.value}</p>
+            <p class="ingredient-name">${nameInput.value}</p>
             <div>
                 <p class="ingredient-quantity">${quantInput.value}</p>
                 <p class="ingredient-unit">${unitInput.value}</p>
