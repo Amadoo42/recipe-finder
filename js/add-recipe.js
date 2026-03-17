@@ -17,14 +17,8 @@ class Ingredient {
 
 var initalized = false;
 
-
 function addIngredient() {
     const list = document.querySelector("#ingredient-list");
-    
-    if (!initalized) {
-        list.innerHTML = "";
-        initalized = true;
-    }
 
     const nameInput = document.querySelector("#ingredient-name");
     const quantInput = document.querySelector("#quantity");

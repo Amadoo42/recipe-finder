@@ -101,8 +101,8 @@ const recipeID = params.get("RecipeID") - 1;
 const isEdit = params.get("Edit");
 
 function EditHtml() {
-    const header = document.getElementsByTagName("h1");
-    header[0].innerText = "Edit Recipe";
+    const header = document.getElementById("recipe");
+    header.innerText = "Edit Recipe";
 
     const button = document.getElementById("add-recipe");
     button.innerText = "Save";
@@ -137,9 +137,11 @@ function LoadRecipe(){
         </div>
         <button class="delete-btn">X</button>
         `;
+        item.querySelector(".delete-btn").addEventListener("click", function(){item.remove()});
         Ingredients.appendChild(item);
     });
 }
+
 if(isEdit){
     EditHtml();
     LoadRecipe();

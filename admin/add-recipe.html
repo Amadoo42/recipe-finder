@@ -21,7 +21,7 @@
     </h1>
 
     <div class="main-div">
-        <p class="add-recipe-header" style="text-align: left;">Add a New Recipe</p>
+        <p class="add-recipe-header" style="text-align: left;" id ="recipe">Add a New Recipe</p>
 
         <form>
     
@@ -31,7 +31,7 @@
 
                 <div>
                     <label class="great-vibes-regular" for="recipe-name">Recipe Name</label><br>
-                    <input type="text" class="data-field" name="recipe-name" placeholder="Enter recipe name"><br>
+                    <input type="text" class="data-field" name="recipe-name" placeholder="Enter recipe name" id="recipe-name"><br>
                 </div>
         
                 <div>
@@ -46,7 +46,7 @@
 
             <div>
                 <label class="great-vibes-regular" for="description">Description</label><br>
-                <textarea class="data-field" name="description" rows="4" cols="40" placeholder="Write a short description of the recipe..."></textarea><br>
+                <textarea class="data-field" name="description" rows="4" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
             </div>
     
     
@@ -85,16 +85,6 @@
     
         <h2 class="great-vibes-regular">Ingredients List</h3>
         <ul id="ingredient-list">
-            <li>
-                <div class="item-container">
-                <p class="ingredient-name">Salt</p>
-                <div>
-                    <p class="ingredient-quantity">10</p>
-                    <p class="ingredient-unit">Spoons</p>
-                </div>
-                </div>
-                <button class="delete-btn">X</button>
-            </li>
         </ul>
     
         <hr>
@@ -102,5 +92,6 @@
         <button type="button" id="add-recipe" onclick="createRecipeObject()">Add Recipe</button>
     </div>
     <script src="../js/add-recipe.js"></script>
+    <script src="../js/Edit.js"></script>
 </body>
 </html>
