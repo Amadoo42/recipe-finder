@@ -1,5 +1,6 @@
 import { createMessage } from "../utils/create-message.js";
 import { createUserObject } from "../utils/create-userObject.js";
+import { generateToken } from "../utils/generate-token.js";
 
 export function checkEmail(email){
     return createMessage(
@@ -27,10 +28,14 @@ export function checkUsername(username){
     */
 }
 
-export function checkPassword(username, hashed_password){
+export function checkCredentials(username, hashed_password){
     return createMessage(
         true,
-        "Correct Password"
+        "The credentials are valid.",
+        {
+            token: generateToken(),
+            role: "user"
+        }
     );
     /*
     return createMessage(
@@ -40,7 +45,7 @@ export function checkPassword(username, hashed_password){
     */
 }
 
-export function saveSession(username, token, expiresAt){
+export function saveSession(token){
     return createMessage(
         true,
         "Session saved successfully"
@@ -61,7 +66,6 @@ export function checkToken(token){
             "Ahmad",
             "Amin",
             "Amadoo42",
-            "amadoo@amin.com",
             "ahmadaminiscool",
             "admin",
             [1213, 1214, 1215]
@@ -71,6 +75,22 @@ export function checkToken(token){
     return createMessage(
         false,
         "The token is invalid or has expired!",
+    );
+    */
+}
+
+export function retreiveLocalToken(){
+    return createMessage(
+        true,
+        "Local Token Found.",
+        {
+            token: "T0kenExample"
+        }
+    );
+    /*
+    return createMessage(
+        false,
+        "Found no local tokens.",
     );
     */
 }

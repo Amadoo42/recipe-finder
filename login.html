@@ -22,7 +22,7 @@
     <!-- Sign in -->
     <h2>Sign In</h2>
 
-    <form action="#" method="post">
+    <form name="loginUserForm" id="loginForm">
       <!-- Credentials -->
       <fieldset>
         <legend>Your Credentials</legend>
@@ -56,11 +56,12 @@
 
       <br />
       <!-- Sign in + Clear Form button -->
-      <input type="submit" onclick="tempDirectToHome()" value="Sign In" />
+      <input type="submit" value="Sign In" />
       <input type="reset" value="Clear" />
     </form>
     <hr />
     <!-- Footer -->
     <p>Don't have an account? <a href="signup.html">Create one here</a></p>
+    <script type="module" src="js/login-handler.js"></script>
   </body>
 </html>
