@@ -1,12 +1,12 @@
 import { createUser } from "./auth.js";
-import { createMessage } from "./utils/Create Message Object.js";
+import { createMessage } from "./utils/create-message.js";
 import { hash } from "./utils/hash.js";
 
 
 const signupForm = document.getElementById('signupForm');
 
-function handleCreationOutput(message){
-
+function handleCreationMessage(message){
+    alert(message.description);
 }
 
 async function onSubmit(event){
@@ -21,7 +21,7 @@ async function onSubmit(event){
     const confirmPassword = signupForm.elements['confirm_password'].value;
 
     if(password !== confirmPassword){
-        handleCreationOutput(createMessage(
+        handleCreationMessage(createMessage(
             false,
             "Passwords do not match!"
         ))
@@ -48,14 +48,18 @@ async function onSubmit(event){
     const message = await createUser({
         firstName: firstName,
         lastName: lastName,
-        userName: userName,
+        username: userName,
         email: email,
         password: hash(password),   // given the hashed version directly
         role: role
     });
 
     // pass the message to the handler
-    handleCreationOutput(message);
+    handleCreationMessage(message);
+
+    if(message.success === true){
+       window.location.replace("login.html");
+    }
 }
 
 if(signupForm){

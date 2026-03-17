@@ -1,4 +1,4 @@
-export function createUserObject(firstName, lastName, username, email, password, role = 'user') {
+export function createUserObject(firstName, lastName, username, role = 'user') {
     return {
         firstName: firstName,
         lastName: lastName,

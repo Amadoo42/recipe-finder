@@ -1,7 +1,4 @@
-import { hash } from "./utils/hash.js";
-import { createMessage } from "./utils/Create Message Object.js";
 import { checkEmail, checkToken, checkUsername, insertNewUser, saveSession } from "./database/db-client.js";
-import { generateToken } from "./utils/Generate Token.js";
 
 
 /*
@@ -31,14 +28,14 @@ export async function createUser(newUserObject){
     // check Email Uniquness
     const mailCheckMessage = await checkEmail(newUserObject.email);
 
-    if(mailCheck.success === false){
+    if(mailCheckMessage.success === false){
         return mailCheckMessage;
     }
 
     // check Username Uniquness
     const usernameCheckMessage = await checkUsername(newUserObject.username);
 
-    if(username.success === false){
+    if(usernameCheckMessage.success === false){
         return usernameCheckMessage;
     }
 

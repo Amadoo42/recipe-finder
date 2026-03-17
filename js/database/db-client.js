@@ -1,62 +1,62 @@
-import { createMessage } from "../utils/Create Message Object";
-import { createUserObject } from "../utils/createUserObject";
+import { createMessage } from "../utils/create-message.js";
+import { createUserObject } from "../utils/create-userObject.js";
 
 export function checkEmail(email){
     return createMessage(
-        success=true,
-        description="Email is unique"
+        true,
+        "Email is unique"
     );
     /*
     return createMessage(
-        success=false,
-        description="This Email is associated with an existing account!"
+        false,
+        "This Email is associated with an existing account!"
     );
     */
 }
 
 export function checkUsername(username){
     return createMessage(
-        success=true,
-        description="Username is unique"
+        true,
+        "Username is unique"
     );
         /*
     return createMessage(
-        success=false,
-        description="This username is associated with an existing account!"
+        false,
+        "This username is associated with an existing account!"
     );
     */
 }
 
 export function checkPassword(username, hashed_password){
     return createMessage(
-        success=true,
-        description="Correct Password"
+        true,
+        "Correct Password"
     );
     /*
     return createMessage(
-        success=false,
-        description="The credentials you have provided are invalid!"
+        false,
+        "The credentials you have provided are invalid!"
     );
     */
 }
 
 export function saveSession(username, token, expiresAt){
     return createMessage(
-        success=true,
-        description="Session saved successfully"
+        true,
+        "Session saved successfully"
     );
     /*
     return createMessage(
-        success=false,
-        description="Something went wrong! Could not save session."
+        false,
+        "Something went wrong! Could not save session."
     );
     */
 }
 
 export function checkToken(token){
     return createMessage(
-        success=true,
-        description="Session saved successfully",
+        true,
+        "Session saved successfully",
         createUserObject(
             "Ahmad",
             "Amin",
@@ -69,21 +69,21 @@ export function checkToken(token){
     );
     /*
     return createMessage(
-        success=false,
-        description="The token is invalid or has expired!",
+        false,
+        "The token is invalid or has expired!",
     );
     */
 }
 
 export function insertNewUser(newUserObject){
     return createMessage(
-        success=true,
-        description="Account successfully created!"
+        true,
+        "Account successfully created!"
     );
     /*
     return createMessage(
-        success=false,
-        description="Something went wrong! Could not create the new account."
+        false,
+        "Something went wrong! Could not create the new account."
     );
     */
 }
