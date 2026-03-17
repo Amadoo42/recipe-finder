@@ -4,7 +4,7 @@
     <meta name="author" content="Muhammed Esmail" />
     <meta charset="UTF-8" />
     <title>Sign Up — Recipe Finder</title>
-    <script src="js/auth.js"></script>
+    <script type="module" src="js/auth.js"></script>
   </head>
 
   <body>
@@ -22,7 +22,7 @@
     <!-- Create an account -->
     <h2>Create an account</h2>
 
-    <form action="#" method="post">
+    <form name="createUserForm" id="signupForm">
       <!-- Select Account Type -->
       <fieldset>
         <legend>Account Type</legend>
@@ -31,7 +31,7 @@
         <label for="admin"> Admin </label>
         <br />
 
-        <input type="radio" id="user" name="user_role" value="user" />
+        <input type="radio" id="user" name="user_role" value="user" checked/>
         <label for="user"> User </label>
       </fieldset>
 
@@ -118,13 +118,16 @@
       <!-- Create My account + Clear Form button -->
       <input
         type="submit"
-        onclick="tempDirectToLogin()"
         value="Create My Account"
       />
       <input type="reset" value="Clear Form" />
     </form>
     <hr />
+    
     <!-- Already Have an account? Sign in -->
     <p>Already have an account? <a href="login.html">Sign in</a></p>
+    
+    <!-- Page specific logic -->
+    <script type="module" src="js/signup-handler.js"></script>
   </body>
 </html>
