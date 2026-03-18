@@ -40,7 +40,7 @@ function addIngredient() {
         <button class="delete-btn">X</button>
     `;
 
-    item.querySelector(".delete-btn").addEventListener("click", function(){item.remove()});
+    item.querySelector(".delete-btn").addEventListener("click", function() { item.remove() });
     list.appendChild(item);
 
     nameInput.value = "";
