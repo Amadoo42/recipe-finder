@@ -100,6 +100,12 @@ const params = new URLSearchParams(queryString);
 const recipeID = params.get("RecipeID") - 1;
 const isEdit = params.get("Edit");
 
+//this function is used to initilize the recipe array
+//function needs is getRecipes which returns an array containing recipe objects
+function init() {
+    //getRecipes();
+}
+
 function editHtml() {
     const header = document.getElementById("recipe");
     header.innerText = "Edit Recipe";
@@ -107,6 +113,7 @@ function editHtml() {
     const button = document.getElementById("add-recipe");
     button.innerText = "Save";
 }
+
 function loadRecipe(){
     const inputName = document.getElementById("recipe-name");
     inputName.value = `${recipes[recipeID].name}`;

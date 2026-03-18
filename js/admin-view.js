@@ -92,22 +92,25 @@ const recipes = [
     ]
   }
 ];
+//note id is int
 
-//fetch json.recipes
+//this function is used to initilize the recipe array
+//function needs is getRecipes which returns an array containing recipe objects
 function init() {
-    //initilize recipes
-    //getAllrecipes();
+    //getRecipes();
 }
 
 function editRecipe(id){
     window.location.href = `add-recipe.html?RecipeID=${id}&Edit=1`;
 }
 
+//this function is used to delete a recipe from UI and DB
+//this function needs a deleteRecipe(id) function that delete recipe of "id" in the database
 function deleteRecipe(id){
     if(confirm("Do you want to marry me?<3")){
         const article = document.getElementById(id);
         article.remove();
-        //deletes recipe from db
+        //deleteRecipe(id);
     }
 }
 
