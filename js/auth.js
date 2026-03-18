@@ -111,7 +111,7 @@ function checkAuth() {
     const retreiveLocalTokenMessage = retreiveLocalToken();
 
     if(retreiveLocalTokenMessage.success === false){
-        window.location.replace("login.html");
+        window.location.replace("/login.html");
         return;
     }
 
@@ -120,7 +120,7 @@ function checkAuth() {
     const checkTokenMessage = checkToken(localToken);
 
     if(checkTokenMessage.success === false){
-        window.location.replace("login.html");
+        window.location.replace("/login.html");
         return;
     }
 
