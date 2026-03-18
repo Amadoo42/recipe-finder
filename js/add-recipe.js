@@ -15,8 +15,24 @@ class Ingredient {
     }
 }
 
-var initalized = false;
+function handleOtherUnit() {
+    const unitInput = document.getElementById("unit");
+    const otherUnit = document.getElementById("other-unit")
+    if (unitInput.value == "Other") {
+        var unit = prompt("Enter a custom unit");
+        if (unit) {
+            const newOption = document.createElement("option");
+            newOption.innerHTML = unit;
+            unitInput.insertBefore(newOption, otherUnit);
+            unitInput.value = unit;
+        }
+        else {
+            unitInput.value = "Cups";
+        }
+    }
+}
 
+var initalized = false;
 function addIngredient() {
     const list = document.querySelector("#ingredient-list");
 

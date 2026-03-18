@@ -8,20 +8,23 @@
     <title>Add Recipe</title>
 </head>
 <body>
+    
     <nav>
         <a href="dashboard.html">Admin Dashboard</a> | 
-        <a href="add-recipe.html">Add New Recipe</a> | 
+        <a href="add-recipe.html">Add New Recipe</a> |
         <a href="view-recipe.html">View Recipes</a> | 
         <a href="../index.html">Logout</a>
     </nav>
-    <hr>
-
-    <h1 class="title">
-        Recipe Finder
-    </h1>
+    <div class="title-container">
+        <h1 class="title">
+            Recipe Finder
+        </h1>
+    </div>
 
     <div class="main-div">
         <p class="add-recipe-header" style="text-align: left;" id="recipe">Add a New Recipe</p>
+
+        <hr>
 
         <form>
     
@@ -67,30 +70,28 @@
 
                 <div>
                     <label class="great-vibes-regular" for="unit">Unit</label><br>
-                    <select class="data-field" name="unit" id="unit">
-                        <option>Cup</option>
-                        <option>Spoon</option>
-                        <option>Piece</option>
+                    <select class="data-field" name="unit" id="unit" onchange="handleOtherUnit()">
+                        <option>Cups</option>
+                        <option>Spoons</option>
+                        <option>Pieces</option>
+                        <option id="other-unit">Other</option>
                     </select>
                 </div>
                 
                 <div>
-                    <button onclick="addIngredient()" type="button" id="add-ingredient">+</button>
+                    <button onclick="addIngredient()" type="button" id="add-ingredient">Add</button>
                 </div>
         
             </div>
         </form>
         <p id="error-message">Quantity must be a valid number greater than 0.</p>
     
-        <hr>
-    
-        <h2 class="great-vibes-regular">Ingredients List</h3>
         <ul id="ingredient-list">
         </ul>
-    
-        <hr>
         
-        <button type="button" id="add-recipe" onclick="createRecipeObject()">Add Recipe</button>
+        <div id="add-recipe-button-container">
+            <button type="button" id="add-recipe" onclick="createRecipeObject()">Add Recipe</button>
+        </div>
     </div>
     <script src="../js/add-recipe.js"></script>
     <script src="../js/edit-recipe.js"></script>
