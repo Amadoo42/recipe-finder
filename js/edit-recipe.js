@@ -100,26 +100,25 @@ const params = new URLSearchParams(queryString);
 const recipeID = params.get("RecipeID") - 1;
 const isEdit = params.get("Edit");
 
-function EditHtml() {
+function editHtml() {
     const header = document.getElementById("recipe");
     header.innerText = "Edit Recipe";
 
     const button = document.getElementById("add-recipe");
     button.innerText = "Save";
 }
-function LoadRecipe(){
+function loadRecipe(){
     const inputName = document.getElementById("recipe-name");
     inputName.value = `${recipes[recipeID].name}`;
 
     const selectName = document.getElementById("course");
-    console.log(recipes[recipeID].course);
     selectName.value = `${recipes[recipeID].course}`;
 
     const description = document.getElementById("description");
     description.value = recipes[recipeID].description;
 
-    const Ingredients = document.getElementById("ingredient-list");
-    Ingredients.innerHTML = "";
+    const ingredients = document.getElementById("ingredient-list");
+    ingredients.innerHTML = "";
 
     recipes[recipeID].ingredients.forEach(ingredient => {
         const item = document.createElement("li");
@@ -138,11 +137,11 @@ function LoadRecipe(){
         <button class="delete-btn">X</button>
         `;
         item.querySelector(".delete-btn").addEventListener("click", function(){item.remove()});
-        Ingredients.appendChild(item);
+        ingredients.appendChild(item);
     });
 }
 
 if(isEdit){
-    EditHtml();
-    LoadRecipe();
+    editHtml();
+    loadRecipe();
 }
