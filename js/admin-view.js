@@ -99,11 +99,11 @@ function init() {
     //getAllrecipes();
 }
 
-function Edit(id){
+function editRecipe(id){
     window.location.href = `add-recipe.html?RecipeID=${id}&Edit=1`;
 }
 
-function Delete(id){
+function deleteRecipe(id){
     if(confirm("Do you want to marry me?<3")){
         const article = document.getElementById(id);
         article.remove();
@@ -124,8 +124,8 @@ function renderRecipes() {
             <p>${recipe.name}</p>
             <p>${recipe.description}</p>
             <div>
-                <button onclick = "Edit(${recipe.id})">Edit</button>
-                <button onclick = "Delete('${id}')">Delete</button>
+                <button onclick = "editRecipe(${recipe.id})">Edit</button>
+                <button onclick = "deleteRecipe('${id}')">Delete</button>
             </div>
         `;
         container.appendChild(article);
