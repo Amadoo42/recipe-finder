@@ -1,0 +1,159 @@
+body {
+    background-color: var(--backgroundColor);
+}
+
+* {
+    color: var(--textPrimary)
+}
+
+button {
+    color: var(--buttons);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    filter: brightness(90%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(0);
+    filter: brightness(80%);
+}
+
+.main-div {
+    margin: auto;
+    max-width: 800px;
+    padding: 15px;
+
+}
+
+.main-div > * {
+    margin-top: 25px;
+}
+
+.main-div > *:first-child {
+    margin-top: 0;
+}
+
+label {
+    font-size: 20px;
+}
+
+.title {
+    text-align: center;
+}
+
+.add-recipe-header {
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 40px;
+    color: var(--buttons);
+}
+
+h2 {
+    border-left: 5px solid var(--buttons);
+    padding-left: 10px;
+}
+
+.data-field {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+}
+
+#recipe-name:focus {
+    border-color: brown;
+}
+.secondary-div {
+    display: flex;
+    gap: 40px;
+    align-items: flex-end;
+}
+
+form > * {
+    margin-top: 25px;
+}
+
+li {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    font-size: 20px;
+    border-left: 2px solid var(--buttons);
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 5px 15px;
+    margin-bottom: 10px;
+}
+
+.ingredient-name {
+    color: black;
+}
+
+.item-container div {
+    display: flex;
+    gap: 5px;
+}
+
+.item-container div p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+    color: var(--textPrimary);
+}
+
+.item-container p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+}
+
+li button {
+    color: var(--buttons);
+    margin-bottom: 10px;
+}
+
+#error-message {
+    position: relative;
+    color: red;
+    border: 1px solid black;
+    padding: 10px 14px;
+    font-size: 20px;
+    margin-top: 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    height: 0px;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+#error-message.show {
+    transform: translateX(0);
+    height: 30px;
+    opacity: 1;
+}

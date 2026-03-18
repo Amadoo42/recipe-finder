@@ -1,19 +1,31 @@
-:root{
-    --backgroundColor:#F8EAC5;
-    --buttons:#FF654A;
-    --textPrimary: #4C4842;
+:root {
+    --backgroundColor: #f8eac5;
+    --buttons: #ff654a;
+    --textPrimary: #4c4842;
 }
 
 .great-vibes-regular {
-  font-family: "Great Vibes", cursive;
-  font-weight: 400;
-  font-style: normal;
+    font-family: 'Great Vibes', cursive;
+    font-weight: 400;
+    font-style: normal;
 }
 
 h1 {
-    font-family: "Great Vibes", cursive;
+    font-family: 'Great Vibes', cursive;
     font-weight: 400;
     font-style: normal;
-    font-size: 55px;
+    font-size: 70px;
     color: var(--buttons);
+}
+
+html {
+    font-size: 140%;
+}
+
+input,
+button,
+select,
+textarea {
+    font-family: inherit;
+    font-size: inherit;
 }
