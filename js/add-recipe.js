@@ -24,7 +24,15 @@ function addIngredient() {
     const quantInput = document.querySelector("#quantity");
     const unitInput = document.querySelector("#unit");
 
+    quantity = Number(quantInput.value);
+    errorMessage = document.getElementById("error-message");
+    if (isNaN(quantity) || quantity <= 0) {
+        errorMessage.classList.add("show");
+        return;
+    }
+    errorMessage.classList.remove("show");
     if (!nameInput.value || !quantInput.value) return;
+
 
     const item = document.createElement("li");
     item.className = "ingredient-list-item";
@@ -33,7 +41,7 @@ function addIngredient() {
         <div class="item-container">
             <p class="ingredient-name">${nameInput.value}</p>
             <div>
-                <p class="ingredient-quantity">${quantInput.value}</p>
+                <p class="ingredient-quantity">${quantity}</p>
                 <p class="ingredient-unit">${unitInput.value}</p>
             </div>
         </div>
