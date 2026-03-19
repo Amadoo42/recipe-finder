@@ -15,31 +15,31 @@
         <a href="view-recipe.html">View Recipes</a> | 
         <a href="../index.html">Logout</a>
     </nav>
-    <div class="title-container">
-        <h1 class="title">
+    <div class="TitleContainer">
+        <h1 class="Title">
             Recipe Finder
         </h1>
     </div>
 
-    <div class="main-div">
-        <p class="add-recipe-header" style="text-align: left;" id="recipe">Add a New Recipe</p>
+    <div class="MainDiv">
+        <p class="AddRecipeHeader" style="text-align: left;" id="recipe">Add a New Recipe</p>
 
         <hr>
 
         <form>
     
-            <h2 class="great-vibes-regular" for="recipe">Recipe Details</h2>
+            <h2 class="GreatVibesRegular" for="recipe">Recipe Details</h2>
 
-            <div class="secondary-div">
+            <div class="SecondaryDiv">
 
                 <div>
-                    <label class="great-vibes-regular" for="recipe-name">Recipe Name</label><br>
-                    <input type="text" class="data-field" name="recipe-name" placeholder="Enter recipe name" id="recipe-name"><br>
+                    <label class="GreatVibesRegular" for="recipe-name">Recipe Name</label><br>
+                    <input type="text" class="DataField" name="recipe-name" placeholder="Enter recipe name" id="recipeName"><br>
                 </div>
         
                 <div>
-                    <label class="great-vibes-regular" for="course">Course</label><br>
-                    <select class="data-field" name="course" id="course">
+                    <label class="GreatVibesRegular" for="course">Course</label><br>
+                    <select class="DataField" name="course" id="course">
                         <option>Appetizers</option>
                         <option>Main</option>
                         <option>Dessert</option>
@@ -47,61 +47,62 @@
                 </div>
             </div>
 
-            <div>
-                <label class="great-vibes-regular" for="description">Description</label><br>
-                <textarea class="data-field" name="description" rows="4" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
+            <div id="descriptionContainer">
+                <label class="GreatVibesRegular" for="description">Description</label><br>
+                <textarea class="DataField" name="description" rows="4" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
             </div>
     
     
             <hr>
     
-            <h2 class="great-vibes-regular" for="ingredients">Ingredients</h2>
+            <h2 class="GreatVibesRegular" for="ingredients">Ingredients</h2>
 
-            <div class="secondary-div">
+            <div class="SecondaryDiv">
                 <div>
-                    <label class="great-vibes-regular" for="ingredient-name">Ingredient Name</label><br>
-                    <input class="data-field" type="text" id="ingredient-name" name="ingredient-name" placeholder="e.g. Sugar">
+                    <label class="GreatVibesRegular" for="ingredient-name">Ingredient Name</label><br>
+                    <input class="DataField" type="text" id="ingredientName" name="ingredient-name" placeholder="e.g. Sugar">
                 </div>
 
                 <div>
-                    <label class="great-vibes-regular" for="ingredient-name">Ingredient Quantity</label><br>
-                    <input class="data-field" type="number" id="quantity" name="quantity" placeholder="1" min="1">
+                    <label class="GreatVibesRegular" for="ingredient-name">Ingredient Quantity</label><br>
+                    <input class="DataField" type="number" id="quantity" name="quantity" placeholder="Amount" min="1">
                 </div>
 
                 <div>
-                    <label class="great-vibes-regular" for="unit">Unit</label><br>
-                    <select class="data-field" name="unit" id="unit" onchange="handleOtherUnit()">
+                    <label class="GreatVibesRegular" for="unit">Unit</label><br>
+                    <select class="DataField" name="unit" id="unit" onchange="handleOtherUnit()">
                         <option>Cups</option>
                         <option>Spoons</option>
                         <option>Pieces</option>
-                        <option id="other-unit">Other</option>
+                        <option id="otherUnit">Other</option>
                     </select>
                 </div>
                 
                 <div>
-                    <button onclick="addIngredient()" type="button" id="add-ingredient">Add</button>
+                    <button onclick="addNewIngredient()" type="button" id="addIngredient">Add</button>
                 </div>
         
             </div>
         </form>
-        <p id="error-message">Quantity must be a valid number greater than 0.</p>
+        <p id="quantityErrorMessage" class="ErrorMessage">Quantity must be a valid number greater than 0.</p>
+        <p id="ingredientNameErrorMessage" class="ErrorMessage">Ingredient name cannot include numbers or special characters</p>
 
-        <div id="custom-unit-cotainer">
-            <div id="custom-unit-prompt">
-                <label class="great-vibes-regular">Enter a custom unit</label>
-                <input class="data-field" type="text" name="custom-unit">
-                <div id="custom-unit-submit-container">
-                    <button id="cancel-custom-unit" onclick="cancelOtherUnit()">Cancel</button>
-                    <button id="add-custom-unit" onclick="addOtherUnit()">Add Custom Unit</button>
+        <div id="customUnitCotainer">
+            <div id="customUnitPrompt">
+                <label class="GreatVibesRegular">Enter a custom unit</label>
+                <input class="DataField" type="text" name="custom-unit">
+                <div id="customUnitSubmitContainer">
+                    <button id="cancelCustomUnit" onclick="cancelOtherUnit()">Cancel</button>
+                    <button id="addCustomUnit" onclick="addOtherUnit()">Add Custom Unit</button>
                 </div>
             </div>
         </div>
     
-        <ul id="ingredient-list">
+        <ul id="ingredientList">
         </ul>
         
-        <div id="add-recipe-button-container">
-            <button type="button" id="add-recipe" onclick="createRecipeObject()">Add Recipe</button>
+        <div id="addRecipeButtonContainer">
+            <button type="button" id="addRecipe" onclick="createRecipeObject()">Add Recipe</button>
         </div>
     </div>
     <script src="../js/add-recipe.js"></script>

@@ -8,6 +8,11 @@ body {
     color: var(--textPrimary)
 }
 
+textarea {
+    width: 100%;
+    height: 100%;
+}
+
 button {
     color: var(--buttons);
     border: none;
@@ -31,7 +36,7 @@ button:active {
     filter: brightness(80%);
 }
 
-.main-div {
+.MainDiv {
     margin: auto;
     max-width: 50%;
     padding: 15px;
@@ -40,11 +45,11 @@ button:active {
     background-color: rgb(249, 238, 238);
 }
 
-.main-div > * {
+.MainDiv > * {
     margin-top: 25px;
 }
 
-.main-div > *:first-child {
+.MainDiv > *:first-child {
     margin-top: 0;
 }
 
@@ -52,13 +57,13 @@ label {
     font-size: 20px;
 }
 
-.title {
+.Title {
     text-align: center;
     color: white;
     margin: 0;
 }
 
-.title-container {
+.TitleContainer {
     background-color: var(--buttons);
     margin: 0 0 20px 0;
     padding-bottom: 10px;
@@ -70,7 +75,11 @@ label {
     justify-content: flex-end;
 }
 
-.add-recipe-header {
+#descriptionContainer {
+    height: 15vh;
+}
+
+.AddRecipeHeader {
     font-family: "Great Vibes", cursive;
     font-weight: 400;
     font-style: normal;
@@ -84,21 +93,21 @@ h2 {
     padding-left: 10px;
 }
 
-.data-field {
+.DataField {
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     outline: none;
-    font-size: 16px;
-    padding: 8px 12px;
+    font-size: 20px;
+    padding: 8px 30px;
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(2px);
 }
 
-#recipe-name:focus {
+#recipeName:focus {
     border-color: brown;
 }
-.secondary-div {
+.SecondaryDiv {
     display: flex;
     gap: 40px;
     align-items: flex-end;
@@ -108,7 +117,7 @@ form > * {
     margin-top: 25px;
 }
 
-#add-ingredient {
+#addIngredient {
     background-color: var(--buttons);
     color: white;
 }
@@ -127,7 +136,7 @@ li {
     margin-bottom: 10px;
 }
 
-.ingredient-name {
+.IngredientName {
     color: black;
 }
 
@@ -136,19 +145,19 @@ li button {
 }
 
 
-#ingredient-list li {
+#ingredientList li {
     margin: 0;
 }
 
-#ingredient-list li:nth-child(odd) {
+#ingredientList li:nth-child(odd) {
     background-color: #dfd6c4;
 }
 
-#ingredient-list li:nth-child(even) {
+#ingredientList li:nth-child(even) {
     background-color: #F7F1E5;
 }
 
-.item-container {
+.ItemContainer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -159,37 +168,37 @@ li button {
     margin-bottom: 10px;
 }
 
-.item-container div {
+.ItemContainer div {
     display: flex;
     gap: 5px;
 }
 
-.item-container div p {
+.ItemContainer div p {
     margin: 0;
     padding: 0;
     line-height: 1.2;
     color: var(--textPrimary);
 }
 
-.item-container p {
+.ItemContainer p {
     margin: 0;
     padding: 0;
     line-height: 1.2;
 }
 
-#add-recipe-button-container {
+#addRecipeButtonContainer {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#add-recipe {
+#addRecipe {
     background-color: var(--buttons);
     color: white;
     width: 30%;
 }
 
-#error-message {
+.ErrorMessage {
     position: relative;
     color: #ae2012;
     background-color: rgba(255, 255, 255, 0.4);
@@ -208,13 +217,13 @@ li button {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#error-message.show {
+.ErrorMessage.show {
     transform: translateY(0);
     height: 30px;
     opacity: 1;
 }
 
-#custom-unit-prompt {
+#customUnitPrompt {
     position: relative;
     color: #ae2012;
     background-color: rgba(255, 255, 255, 0.4);
@@ -236,27 +245,27 @@ li button {
     gap: 20px;    
 }
 
-#custom-unit-prompt.show {
+#customUnitPrompt.show {
     transform: translateY(0);
     max-height: 200px;
 }
 
-#custom-unit-submit-container {
+#customUnitSubmitContainer {
     display: flex;
     justify-content: space-between;
 }
 
-#add-custom-unit {
+#addCustomUnit {
     background-color: var(--buttons);
     color: white;
 }
 
-#cancel-custom-unit {
+#cancelCustomUnit {
     background-color: var(--buttons);
     color: white;
 }
 
-#custom-unit-cotainer {
+#customUnitCotainer {
     position: fixed;
     top: 0;
     left: 0;
@@ -270,7 +279,7 @@ li button {
     justify-content: center;
 }
 
-#custom-unit-cotainer.show {
+#customUnitCotainer.show {
     width: 100%;
     height: 100%;
 }
