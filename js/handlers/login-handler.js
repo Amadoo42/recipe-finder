@@ -15,7 +15,7 @@ async function onSubmit(event) {
     // Scrap form values
 
     // Check the confirm field first
-    const userName = loginForm.elements['user_name'].value;
+    const userName = loginForm.elements['userName'].value;
     const password = loginForm.elements['password'].value;
 
     // Log the values for debugging

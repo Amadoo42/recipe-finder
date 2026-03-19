@@ -3,7 +3,7 @@ import { createMessage } from '../utils/create-message.js';
 import { hash } from '../utils/hash.js';
 import { validation } from '../validation.js';
 
-const signupForm = document.getElementById('signupForm');
+const signUpForm = document.getElementById('signUpForm');
 
 function handleCreationMessage(message) {
     alert(message.description);
@@ -16,19 +16,19 @@ async function onSubmit(event) {
     // Scrap form values
 
     // Check the confirm field first
-    const password = signupForm.elements['password'].value;
-    const confirmPassword = signupForm.elements['confirm_password'].value;
+    const password = signUpForm.elements['password'].value;
+    const confirmPassword = signUpForm.elements['confirmPassword'].value;
 
     if (password !== confirmPassword) {
         handleCreationMessage(createMessage(false, 'Passwords do not match!'));
         return;
     }
 
-    const firstName = signupForm.elements['first_name'].value;
-    const lastName = signupForm.elements['last_name'].value;
-    const userName = signupForm.elements['user_name'].value;
-    const email = signupForm.elements['email'].value;
-    const role = signupForm.elements['user_role'].value;
+    const firstName = signUpForm.elements['firstName'].value;
+    const lastName = signUpForm.elements['lastName'].value;
+    const userName = signUpForm.elements['userName'].value;
+    const email = signUpForm.elements['email'].value;
+    const role = signUpForm.elements['userRole'].value;
 
     // Log the values for debugging
     console.log('USER REQUESTS ACCOUNT CREATION WITH: ');
@@ -68,6 +68,6 @@ async function onSubmit(event) {
     }
 }
 
-if (signupForm) {
-    signupForm.addEventListener('submit', onSubmit);
+if (signUpForm) {
+    signUpForm.addEventListener('submit', onSubmit);
 }
