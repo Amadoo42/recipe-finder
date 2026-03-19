@@ -6,7 +6,9 @@ import {
     insertNewUser,
     saveSession,
     retreiveLocalToken,
+    logoutUser,
 } from './database/db-client.js';
+import { initUI } from './init-UI.js';
 import { createMessage } from './utils/create-message.js';
 
 /*
@@ -26,7 +28,6 @@ createUser(data) function:
         - Check Uniquness of
             - Email
             - Username
-        - Validate data before passing on to the DB
     - return
         returns a message confirming success or describing the specific issue
 
@@ -92,6 +93,11 @@ export async function requestLogin(userObject) {
     });
 }
 
+export function logout() {
+    logoutUser();
+    console.log('User logged out');
+}
+
 function checkAuth() {
     // Check if the current page is a public page first
     // Public pages are ones that do not require a user to be logged in
@@ -101,6 +107,7 @@ function checkAuth() {
     for (var publicPage of publicPages) {
         if (path.includes(publicPage)) {
             console.log('Public Page');
+            initUI(null);
             return;
         }
     }
@@ -133,8 +140,8 @@ function checkAuth() {
         window.location.replace('/user/dashboard.html');
     }
 
-    // Should Update the UI somehow to display the username on the top right
-    // uiUpdate(checkTokenMessage.data)
+    // Feed the UI with the user data
+    initUI(checkTokenMessage.data);
 }
 
 checkAuth();

@@ -1,53 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- this is commented until i decide on the layout of this css page -->
-    <!-- <link rel = "stylesheet" href = "../css/main.css"> -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> -->
-    <script type="module" src="../js/auth.js"></script>
-    <title>All recipes</title>
-</head>
-<body>
-    <nav>
-        <a href="dashboard.html">Admin Dashboard</a> | 
-        <a href="add-recipe.html">Add New Recipe</a> | 
-        <a href="view-recipe.html">View Recipes</a> | 
-        <a href="../index.html">Logout</a>
-    </nav>
-    <hr>
-    <header>
-        <h1>Available Recipes</h1>
-        <div>
-            <input type = "text" placeholder="Search for a recipe...">
-            <button>Search</button>
-        </div>
-    </header>
-    <section>
-        <h2>Filter:</h2>
-        <label>Course:</label>
-        <select>
-            <option>All</option>
-            <option>Appetizer</option>
-            <option>Main</option>
-            <option>Dessert</option>
-        </select>
-        <button>Apply Filters</button>
-    </section>
-    <hr>
-    <main id="main">
-        <article>
-            <img src="">
-            <p>Recipe Name</p>
-            <p>Short description of the recipe...</p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- this is commented until i decide on the layout of this css page -->
+        <!-- <link rel = "stylesheet" href = "../css/main.css"> -->
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> -->
+        <script type="module" src="../js/auth.js"></script>
+        <title>All recipes</title>
+    </head>
+    <body>
+        <nav></nav>
+        <hr />
+        <header>
+            <h1>Available Recipes</h1>
             <div>
-                <button>Edit</button>
-                <button>Delete</button>
+                <input type="text" placeholder="Search for a recipe..." />
+                <button>Search</button>
             </div>
-        </article>
-    </main>
-     
-    <script src = "../js/admin-view.js"></script>
-</body>
+        </header>
+        <section>
+            <h2>Filter:</h2>
+            <label>Course:</label>
+            <select>
+                <option>All</option>
+                <option>Appetizer</option>
+                <option>Main</option>
+                <option>Dessert</option>
+            </select>
+            <button>Apply Filters</button>
+        </section>
+        <hr />
+        <main id="main">
+            <article>
+                <img src="" />
+                <p>Recipe Name</p>
+                <p>Short description of the recipe...</p>
+                <div>
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </div>
+            </article>
+        </main>
+
+        <script src="../js/handlers/admin-view.js"></script>
+    </body>
 </html>

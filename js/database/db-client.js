@@ -1,12 +1,9 @@
-import { createMessage } from "../utils/create-message.js";
-import { createUserObject } from "../utils/create-userObject.js";
-import { generateToken } from "../utils/generate-token.js";
+import { createMessage } from '../utils/create-message.js';
+import { createUserObject } from '../utils/create-userObject.js';
+import { generateToken } from '../utils/generate-token.js';
 
-export function checkEmail(email){
-    return createMessage(
-        true,
-        "Email is unique"
-    );
+export function checkEmail(email) {
+    return createMessage(true, 'Email is unique');
     /*
     return createMessage(
         false,
@@ -15,12 +12,9 @@ export function checkEmail(email){
     */
 }
 
-export function checkUsername(username){
-    return createMessage(
-        true,
-        "Username is unique"
-    );
-        /*
+export function checkUsername(username) {
+    return createMessage(true, 'Username is unique');
+    /*
     return createMessage(
         false,
         "This username is associated with an existing account!"
@@ -28,15 +22,11 @@ export function checkUsername(username){
     */
 }
 
-export function checkCredentials(username, hashed_password){
-    return createMessage(
-        true,
-        "The credentials are valid.",
-        {
-            token: generateToken(),
-            role: "user"
-        }
-    );
+export function checkCredentials(username, hashed_password) {
+    return createMessage(true, 'The credentials are valid.', {
+        token: generateToken(),
+        role: 'user',
+    });
     /*
     return createMessage(
         false,
@@ -45,11 +35,8 @@ export function checkCredentials(username, hashed_password){
     */
 }
 
-export function saveSession(token){
-    return createMessage(
-        true,
-        "Session saved successfully"
-    );
+export function saveSession(token) {
+    return createMessage(true, 'Session saved successfully');
     /*
     return createMessage(
         false,
@@ -58,18 +45,18 @@ export function saveSession(token){
     */
 }
 
-export function checkToken(token){
+export function checkToken(token) {
     return createMessage(
         true,
-        "Session saved successfully",
+        'Session saved successfully',
         createUserObject(
-            "Ahmad",
-            "Amin",
-            "Amadoo42",
-            "ahmadaminiscool",
-            "admin",
-            [1213, 1214, 1215]
-        )
+            'Ahmad',
+            'Amin',
+            'Amadoo42',
+            'ahmadaminiscool',
+            'admin',
+            [1213, 1214, 1215],
+        ),
     );
     /*
     return createMessage(
@@ -79,14 +66,10 @@ export function checkToken(token){
     */
 }
 
-export function retreiveLocalToken(){
-    return createMessage(
-        true,
-        "Local Token Found.",
-        {
-            token: "T0kenExample"
-        }
-    );
+export function retreiveLocalToken() {
+    return createMessage(true, 'Local Token Found.', {
+        token: 'T0kenExample',
+    });
     /*
     return createMessage(
         false,
@@ -95,15 +78,16 @@ export function retreiveLocalToken(){
     */
 }
 
-export function insertNewUser(newUserObject){
-    return createMessage(
-        true,
-        "Account successfully created!"
-    );
+export function insertNewUser(newUserObject) {
+    return createMessage(true, 'Account successfully created!');
     /*
     return createMessage(
         false,
         "Something went wrong! Could not create the new account."
     );
     */
+}
+
+export function logoutUser() {
+    // Clear the session key from DB
 }
