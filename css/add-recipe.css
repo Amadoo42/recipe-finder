@@ -135,30 +135,6 @@ li button {
     color: var(--buttons);
 }
 
-#error-message {
-    position: relative;
-    color: #ae2012;
-    background-color: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(174, 32, 18, 0.2);
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin-top: 10px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
-
-    height: 0px;
-    opacity: 0;
-    overflow: hidden;
-    transform: translateY(-10px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-#error-message.show {
-    transform: translateY(0);
-    height: 30px;
-    opacity: 1;
-}
 
 #ingredient-list li {
     margin: 0;
@@ -211,4 +187,90 @@ li button {
     background-color: var(--buttons);
     color: white;
     width: 30%;
+}
+
+#error-message {
+    position: relative;
+    color: #ae2012;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(174, 32, 18, 0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+
+    height: 0px;
+    opacity: 0;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#error-message.show {
+    transform: translateY(0);
+    height: 30px;
+    opacity: 1;
+}
+
+#custom-unit-prompt {
+    position: relative;
+    color: #ae2012;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(174, 32, 18, 0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    max-height: 0px;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 30%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;    
+}
+
+#custom-unit-prompt.show {
+    transform: translateY(0);
+    max-height: 200px;
+}
+
+#custom-unit-submit-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#add-custom-unit {
+    background-color: var(--buttons);
+    color: white;
+}
+
+#cancel-custom-unit {
+    background-color: var(--buttons);
+    color: white;
+}
+
+#custom-unit-cotainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#custom-unit-cotainer.show {
+    width: 100%;
+    height: 100%;
 }
