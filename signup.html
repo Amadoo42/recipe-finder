@@ -25,7 +25,7 @@
                 <h2 id="cardTitle">Create an account</h2>
             </div>
 
-            <form name="createUserForm" id="signupForm">
+            <form name="createUserForm" id="signUpForm">
                 <!-- Select Account Type -->
                 <fieldset>
                     <legend>Account Type</legend>
@@ -33,7 +33,7 @@
                     <input
                         type="radio"
                         id="admin"
-                        name="user_role"
+                        name="userRole"
                         value="admin"
                     />
                     <label for="admin"> Admin </label>
@@ -42,7 +42,7 @@
                     <input
                         type="radio"
                         id="user"
-                        name="user_role"
+                        name="userRole"
                         value="user"
                         checked
                     />
@@ -59,8 +59,8 @@
                     <br />
                     <input
                         type="text"
-                        id="first_name"
-                        name="first_name"
+                        id="firstName"
+                        name="firstName"
                         placeholder="eg. Muhammed"
                         required
                     />
@@ -70,8 +70,8 @@
                     <br />
                     <input
                         type="text"
-                        id="last_name"
-                        name="last_name"
+                        id="lastName"
+                        name="lastName"
                         placeholder="eg. Esmail"
                         required
                     />
@@ -81,8 +81,8 @@
                     <br />
                     <input
                         type="text"
-                        id="user_name"
-                        name="user_name"
+                        id="userName"
+                        name="userName"
                         placeholder="eg. Esmail0"
                         required
                     />
@@ -119,8 +119,8 @@
                     <label> Confirm Password </label><br />
                     <input
                         type="password"
-                        id="confirm_password"
-                        name="confirm_password"
+                        id="confirmPassword"
+                        name="confirmPassword"
                         minlength="8"
                         placeholder="Repeat your password"
                         required
@@ -148,6 +148,6 @@
         </div>
 
         <!-- Page specific logic -->
-        <script type="module" src="js/signup-handler.js"></script>
+        <script type="module" src="js/handlers/signup-handler.js"></script>
     </body>
 </html>
