@@ -17,19 +17,47 @@ class Ingredient {
 
 function handleOtherUnit() {
     const unitInput = document.getElementById("unit");
-    const otherUnit = document.getElementById("other-unit")
     if (unitInput.value == "Other") {
-        var unit = prompt("Enter a custom unit");
-        if (unit) {
-            const newOption = document.createElement("option");
-            newOption.innerHTML = unit;
-            unitInput.insertBefore(newOption, otherUnit);
-            unitInput.value = unit;
-        }
-        else {
-            unitInput.value = "Cups";
+        const customUnitContainer = document.getElementById("custom-unit-cotainer");
+        customUnitContainer.classList.add("show");
+        const customUnitPrompt = document.getElementById("custom-unit-prompt");
+        customUnitPrompt.classList.add("show");
+    }
+}
+
+function addOtherUnit() {
+    const unitInput = document.getElementById("unit");
+    const unit = document.querySelector("input[name='custom-unit']").value;
+    const customUnitPrompt = document.getElementById("custom-unit-prompt");
+    const customUnitContainer = document.getElementById("custom-unit-cotainer");
+    var isThere = false;
+    for (var option of unitInput.options) {
+        if (option.value.toLowerCase() === unit.toLowerCase()) {
+            isThere = true;
+            false;
         }
     }
+    if (unit && !isThere) {
+        const otherUnit = document.getElementById("other-unit")
+        var newOption = document.createElement("option");
+        newOption.innerHTML = unit;
+        unitInput.insertBefore(newOption, otherUnit);
+        unitInput.value = unit;
+    }
+    else {
+        unitInput.value = "Cups";
+    }
+    customUnitPrompt.classList.remove("show");
+    customUnitContainer.classList.remove("show");
+}
+
+function cancelOtherUnit() {
+    const unitInput = document.getElementById("unit");
+    const customUnitPrompt = document.getElementById("custom-unit-prompt");
+    const customUnitContainer = document.getElementById("custom-unit-cotainer");
+    unitInput.value = "Cups";
+    customUnitPrompt.classList.remove("show");
+    customUnitContainer.classList.remove("show");
 }
 
 var initalized = false;

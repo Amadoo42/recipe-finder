@@ -85,6 +85,17 @@
             </div>
         </form>
         <p id="error-message">Quantity must be a valid number greater than 0.</p>
+
+        <div id="custom-unit-cotainer">
+            <div id="custom-unit-prompt">
+                <label class="great-vibes-regular">Enter a custom unit</label>
+                <input class="data-field" type="text" name="custom-unit">
+                <div id="custom-unit-submit-container">
+                    <button id="cancel-custom-unit" onclick="cancelOtherUnit()">Cancel</button>
+                    <button id="add-custom-unit" onclick="addOtherUnit()">Add Custom Unit</button>
+                </div>
+            </div>
+        </div>
     
         <ul id="ingredient-list">
         </ul>
