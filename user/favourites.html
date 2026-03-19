@@ -1,54 +1,56 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Favourites Recipe Finder</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-    <link href="../css/main.css" rel="stylesheet">
-</head>
-<body>
-    <nav>
-        <a href="dashboard.html">User Dashboard</a> |
-        <a href="search.html">Search & Browse Recipes</a> | 
-        <a href="favourites.html">My Favourites</a> | 
-        <a href="../index.html">Logout</a> 
-    </nav>
-    <hr>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Favourites Recipe Finder</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+            rel="stylesheet"
+        />
+        <link href="../css/main.css" rel="stylesheet" />
+        <script type="module" src="../js/auth.js"></script>
+    </head>
+    <body>
+        <nav></nav>
+        <hr />
 
-    <h1>My Favourites</h1>
-    
-    <div>
-        <button>All</button>
-        <button>Main Dish</button>
-        <button>Appetizers</button>
-        <button>Dessert</button>
-        <!-- We should right-align this later -->
-        <p>Count</p>
-        <br>
-    </div>
-    
-    <section>
-        <article>
-            <!-- Adjust width and height here later -->
-            <a href="recipe_details.html">
-                <img src="../assets/Egyptian-Koshari-1.jpg" alt="Main Dish" width="500">
-            </a>
-            <br><br>
-            <h3>Main Dish</h3>
-            
-            <h2>Description</h2>
-            <h3>This is a description!</h3>
-            <br>
-            <button>Remove🗑️</button>
-        </article>
-    </section>
+        <h1>My Favourites</h1>
 
-    <section>
-        <br>
-        <h2>No added favourites</h2>
-    </section>
-    <script type="module" src="../js/auth.js"></script> 
-</body>
+        <div>
+            <button>All</button>
+            <button>Main Dish</button>
+            <button>Appetizers</button>
+            <button>Dessert</button>
+            <!-- We should right-align this later -->
+            <p>Count</p>
+            <br />
+        </div>
+
+        <section>
+            <article>
+                <!-- Adjust width and height here later -->
+                <a href="recipe_details.html">
+                    <img
+                        src="../assets/Egyptian-Koshari-1.jpg"
+                        alt="Main Dish"
+                        width="500"
+                    />
+                </a>
+                <br /><br />
+                <h3>Main Dish</h3>
+
+                <h2>Description</h2>
+                <h3>This is a description!</h3>
+                <br />
+                <button>Remove🗑️</button>
+            </article>
+        </section>
+
+        <section>
+            <br />
+            <h2>No added favourites</h2>
+        </section>
+    </body>
 </html>
