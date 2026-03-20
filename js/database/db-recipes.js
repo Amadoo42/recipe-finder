@@ -121,20 +121,22 @@ export function deleteRecipe(recipeId) {
  */
 export function searchRecipes(queryText, courseFilter) {
     let recipes = getRecipes();
-    let results = [];
+    let results = recipes;
     
     if(courseFilter && courseFilter.toLowerCase() !== 'all') {
-        for(let r of recipes) {
+        let temp = []
+        for(let r of results) {
             if(r.courseType.toLowerCase() === courseFilter.toLowerCase()) {
-                results.push(r);
+                temp.push(r);
             }
         }
+        results = temp;
     }
 
     if(queryText && queryText.trim() !== '') {
         let query = queryText.toLowerCase().trim();
         let finalResults = [];
-        for(let r of results.length > 0 ? results : recipes) { // if there was a course filter applied, we search within the filtered results, otherwise we search within all recipes
+        for(let r of results) {
             let haveTitle = r.name.toLowerCase().includes(query);
             let haveDescription = r.description.toLowerCase().includes(query);
             let foundIngredient = false;
