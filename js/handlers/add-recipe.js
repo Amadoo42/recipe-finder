@@ -1,22 +1,12 @@
-class Recipe {
-    constructor(name, course, description) {
-        this.name = name;
-        this.course = course;
-        this.description = description;
-        this.ingredients = [];
-    }
-}
+import {createRecipeObject, createIngredientObject} from "../utils/schema-factories.js";
+import {addRecipe} from "../database/db-recipes.js";
 
-class Ingredient {
-    constructor(name, quantity, unit) {
-        this.name = name;
-        this.quantity = quantity;
-        this.unit = unit;
-    }
-}
+document.getElementById("unit").addEventListener("change", handleOtherUnit);
+document.getElementById("addIngredient").addEventListener("click", addNewIngredient);
+document.getElementById("cancelCustomUnit").addEventListener("click", cancelOtherUnit);
+document.getElementById("addCustomUnit").addEventListener("click", addOtherUnit);
+document.getElementById("addRecipe").addEventListener("click", addRecipeHandler);
 
-// this function is called whenever the user chooses an option in the ingredient unit drop list
-// it checks if the user chose 'Other' and opens the prompt and take input from the user for the unit they want
 function handleOtherUnit() {
     const unitInput = document.getElementById("unit");
     if (unitInput.value == "Other") {
@@ -35,6 +25,15 @@ function addOtherUnit() {
     const customUnitPrompt = document.getElementById("customUnitPrompt");
     const customUnitContainer = document.getElementById("customUnitCotainer");
     var isThere = false;
+
+    const unitErrorMessage = document.getElementById("customUnitErrorMessage");
+    const regex = /[^\p{L}\s]/u;
+    if (regex.test(unit)) {
+        unitErrorMessage.classList.add("show");
+        return;
+    }
+    unitErrorMessage.classList.remove("show");
+
     for (var option of unitInput.options) {
         if (option.value.toLowerCase() === unit.toLowerCase()) {
             isThere = true;
@@ -46,7 +45,7 @@ function addOtherUnit() {
         var newOption = document.createElement("option");
         newOption.innerHTML = unit;
         unitInput.insertBefore(newOption, otherUnit);
-        unitInput.value = unit;
+        unitInput.value = unit;        
     }
     else {
         unitInput.value = "Cups";
@@ -73,7 +72,12 @@ function addNewIngredient() {
     const quantInput = document.querySelector("#quantity");
     const unitInput = document.querySelector("#unit");
 
-    nameErrorMessage = document.getElementById("ingredientNameErrorMessage");
+    const nameErrorMessage = document.getElementById("ingredientNameErrorMessage");
+    const quantityErrorMessage = document.getElementById("quantityErrorMessage");
+
+    nameErrorMessage.classList.remove("show");
+    quantityErrorMessage.classList.remove("show");
+
     const regex = /[^\p{L}\s]/u;
     if (regex.test(nameInput.value)) {
         nameErrorMessage.classList.add("show");
@@ -81,8 +85,7 @@ function addNewIngredient() {
     }
     nameErrorMessage.classList.remove("show");
 
-    quantity = Number(quantInput.value);
-    quantityErrorMessage = document.getElementById("quantityErrorMessage");
+    const quantity = Number(quantInput.value);
     if (isNaN(quantity) || quantity <= 0) {
         quantityErrorMessage.classList.add("show");
         return;
@@ -116,22 +119,37 @@ function addNewIngredient() {
 // this function is called when the user presses 'Add Recipe'
 // it gets all the input in all fields and creates a new Recipe object
 // it then converts that object to JSON
-function createRecipeObject() {
+// javascript doesn't allow retrieving the path of a file
+// this function saves the image data as base64 string and stores in the database
+// to load it in another page set src="base64String"
+async function addRecipeHandler() {
     const name = document.querySelector("input[name='recipe-name']").value;
     const course = document.querySelector("#course").value;
     const description = document.querySelector("textarea").value; 
 
-    var recipe = new Recipe(name, course, description);
     const names = document.getElementsByClassName("IngredientName");
     const quantities = document.getElementsByClassName("IngredientQuantity");
     const units = document.getElementsByClassName("IngredientUnit");
+    const imageSelector = document.getElementById("imageSelector");
+    var ingredients = []
+    var imageData = "";
+
+    const toBase64 = file => new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+    });
+    imageData = await toBase64(imageSelector.files[0]);    
 
     for (var i = 0; i < names.length; i++) {
-        x = new Ingredient(names[i].textContent, quantities[i].textContent, units[i].textContent);
-        recipe.ingredients.push(x)
+        const ingredient = createIngredientObject(names[i].textContent, quantities[i].textContent, units[i].textContent);
+        ingredients.push(ingredient);
     }
 
-    jsonObject = JSON.stringify(recipe);
-    console.log(jsonObject);
+    var recipe = createRecipeObject(name, description, course, ingredients, imageData);
+    addRecipe(recipe);
+
+    // jsonObject = JSON.stringify(recipe);
+    // console.log(jsonObject);
     alert("Added Recipe");
 }

@@ -50,9 +50,14 @@
             </div>
 
             <div id="descriptionContainer">
-                <label class="GreatVibesRegular" for="description">Description</label><br>
+                <label class="GreatVibesRegular" for="description">Description</label>
                 <textarea class="DataField" name="description" rows="6" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
                 <hr style="display: none;">
+            </div>
+
+            <div>
+                <label class="GreatVibesRegular">Select Image (Optional)</label><br>
+                <input class="DataField" id="imageSelector" type="file" accept="image/*">
             </div>
     
             <hr>
@@ -69,10 +74,9 @@
                     <label class="GreatVibesRegular" for="ingredient-name">Ingredient Quantity</label><br>
                     <input class="DataField" type="number" id="quantity" name="quantity" placeholder="Amount" min="1">
                 </div>
-
                 <div>
                     <label class="GreatVibesRegular" for="unit">Unit</label><br>
-                    <select class="DataField" name="unit" id="unit" onchange="handleOtherUnit()">
+                    <select class="DataField" name="unit" id="unit">
                         <option>Cups</option>
                         <option>Spoons</option>
                         <option>Pieces</option>
@@ -81,7 +85,7 @@
                 </div>
                 
                 <div>
-                    <button onclick="addNewIngredient()" type="button" id="addIngredient">Add</button>
+                    <button type="button" id="addIngredient">Add</button>
                 </div>
         
             </div>
@@ -94,24 +98,22 @@
                 <label class="GreatVibesRegular">Enter a custom unit</label>
                 <input class="DataField" type="text" name="custom-unit">
                 <div id="customUnitSubmitContainer">
-                    <button id="cancelCustomUnit" onclick="cancelOtherUnit()">Cancel</button>
-                    <button id="addCustomUnit" onclick="addOtherUnit()">Add Custom Unit</button>
+                    <button id="cancelCustomUnit">Cancel</button>
+                    <button id="addCustomUnit">Add Custom Unit</button>
                 </div>
+                <p id="customUnitErrorMessage" class="ErrorMessage">Ingredient unit cannot include numbers or special characters</p>
             </div>
         </div>
     
         <ul id="ingredientList">
         </ul>
-        <hr>
-    
-    <button type="button" id="add-recipe">Add Recipe</button>
-        <h2 class="great-vibes-regular">Ingredients List</h3>
         
         <div id="addRecipeButtonContainer">
-            <button type="button" id="addRecipe" onclick="createRecipeObject()">Add Recipe</button>
+            <button type="button" id="addRecipe">Add Recipe</button>
         </div>
     </div>
-    <script src="../js/handlers/add-recipe.js"></script>
-    <script src="../js/handlers/edit-recipe.js"></script>
+
+    <script type="module" src="../js/handlers/add-recipe.js"></script>
+    <script type="module" src="../js/handlers/edit-recipe.js"></script>
 </body>
 </html>

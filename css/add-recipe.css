@@ -39,7 +39,7 @@ button:active {
 
 .MainDiv {
     margin: auto;
-    max-width: 50%;
+    max-width: 65%;
     padding: 15px;
     border: solid 5px #ac0000;;
     border-radius: 20px;
@@ -253,7 +253,7 @@ li button {
 
 #customUnitPrompt.show {
     transform: translateY(0);
-    max-height: 200px;
+    max-height: 500px;
 }
 
 #customUnitSubmitContainer {
@@ -303,6 +303,7 @@ li button {
 
     #customUnitPrompt {
         width: 80%;
+        max-height: 200px;
     }
 
     .ItemContainer {
