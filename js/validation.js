@@ -93,7 +93,7 @@ export function validation(userObject) {
         validateName(userObject.lastName, "Last Name"),
         validateUsername(userObject.username),
         validateEmail(userObject.email),
-        validatePassword(userObject.passwordHash), // this is not actually a hashed password (#TODO: we can work on suggesting better naming/way of implementing this later)
+        validatePassword(userObject.password),
         validateRole(userObject.role)
     ];
 

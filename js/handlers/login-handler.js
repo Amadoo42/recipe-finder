@@ -43,7 +43,7 @@ async function onSubmit(event) {
         window.location.replace('admin/dashboard.html');
     } else {
         handleLoginMessage(
-            createMessage(false, 'Account is associated with borken role!'),
+            createMessage(false, 'Account is associated with broken role!'),
         );
         return;
     }

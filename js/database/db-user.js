@@ -26,7 +26,7 @@ export function toggleFavourite(recipeId) {
     let userIndex = -1;
 
     for(let i = 0; i < users.length; i++) {
-        if(users[i].sessionToken === sessionToken) {
+        if(users[i].token === sessionToken) {
             userIndex = i;
             break;
         }
@@ -107,7 +107,11 @@ export function getUserFavourites() {
  * @returns { number } The count of favourite recipes. 
  */
 export function countFavourites() {
-    return getUserFavourites().length;
+    let response = getUserFavourites();
+    if(response.success === false) {
+        return 0; // If the user is not authenticated or not found, we can consider that they have 0 favourites.
+    }
+    return getUserFavourites().data.length;
 }
 
 /**
@@ -123,7 +127,11 @@ export function isFavouritesEmpty() {
  * @returns { Object } A message object containing the filtered favourite recipes. If no category is specified or if 'all' is specified, it will return all favourite recipes.
  */
 export function filterFavouriteRecipes(courseCategory) {
-    let favourites = getUserFavourites();
+    let response = getUserFavourites();
+    if(response.success === false) {
+        return createMessage(false, 'User not authenticated or not found');
+    }
+    let favourites = response.data;
     if(!courseCategory || courseCategory.toLowerCase() === 'all') {
         return createMessage(true, 'No course category specified. All favourite recipes were retrieved.', favourites);
     }

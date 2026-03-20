@@ -40,10 +40,17 @@ async function onSubmit(event) {
     console.log('password :' + password);
     console.log('role' + role);
 
-    /** First we create a user object with the raw values (including the unhashed password) to pass into the validation function.
+    /** First we create a validation object with the raw values (including the unhashed password) to pass into the validation function.
      * This is because the validation function needs to check the password's length which requires access to the raw password value.
      */
-    var validationObject = createUserObject(firstName, lastName, userName, email, password, role);
+    var validationObject = {
+        firstName: firstName,
+        lastName: lastName,
+        username: userName,
+        email: email,
+        password: password,
+        role: role
+    }
     
     const validationMessage = validation(validationObject);
 

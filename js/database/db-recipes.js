@@ -134,7 +134,7 @@ export function searchRecipes(queryText, courseFilter) {
     if(queryText && queryText.trim() !== '') {
         let query = queryText.toLowerCase().trim();
         let finalResults = [];
-        for(let r of results) {
+        for(let r of results.length > 0 ? results : recipes) { // if there was a course filter applied, we search within the filtered results, otherwise we search within all recipes
             let haveTitle = r.name.toLowerCase().includes(query);
             let haveDescription = r.description.toLowerCase().includes(query);
             let foundIngredient = false;
@@ -144,7 +144,7 @@ export function searchRecipes(queryText, courseFilter) {
                     break;
                 }
             }
-            if(haveTitle || foundIngredient) {
+            if(haveTitle || foundIngredient || haveDescription) {
                 finalResults.push(r);
             }
         }

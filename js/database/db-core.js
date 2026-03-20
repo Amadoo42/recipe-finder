@@ -25,7 +25,8 @@ export function initDB() {
         writeTable('recipes', []);
     }
 
-    if(!localStorage.getItem('session')) {
+    let currentSession = localStorage.getItem('session');
+    if(currentSession === null || currentSession === undefined || currentSession === 'null'|| currentSession.trim() === '' || currentSession === 'undefined') {
         localStorage.removeItem('session'); // Just to be safe and ensure it's not set to some invalid value
     }
 }

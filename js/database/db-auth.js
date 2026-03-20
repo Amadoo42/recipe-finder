@@ -104,11 +104,12 @@ export function saveSession(token) {
  * @param {string} token - The session token to check.
  * @returns {Object} - A message object indicating the result of the check.
  */
-export function checkToken(token) {
+export function checkToken(userToken) {
     const users = readTable('users') || [];
     for(let user of users) {
-        if(user.token === token) {
-            return createMessage(true, "Session is valid", user);
+        if(user.token === userToken) {
+            let { passwordHash, token, ...userWithoutSensitiveInfo } = user; // exclude sensitive info from the returned user object
+            return createMessage(true, "Session is valid", userWithoutSensitiveInfo);
         }
     }
     return createMessage(false, "The token is invalid or has expired!");
