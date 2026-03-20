@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/add-recipe.css">
+    <script type="module" src="../js/auth.js"></script> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
     <title>Add Recipe</title>
 </head>
@@ -101,12 +102,16 @@
     
         <ul id="ingredientList">
         </ul>
+        <hr>
+    
+    <button type="button" id="add-recipe">Add Recipe</button>
+        <h2 class="great-vibes-regular">Ingredients List</h3>
         
         <div id="addRecipeButtonContainer">
             <button type="button" id="addRecipe" onclick="createRecipeObject()">Add Recipe</button>
         </div>
     </div>
-    <script src="../js/add-recipe.js"></script>
-    <script src="../js/edit-recipe.js"></script>
+    <script src="../js/handlers/add-recipe.js"></script>
+    <script src="../js/handlers/edit-recipe.js"></script>
 </body>
 </html>

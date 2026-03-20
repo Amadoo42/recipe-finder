@@ -1,130 +1,134 @@
 <!doctype html>
 <html>
-  <head>
-    <meta name="author" content="Muhammed Esmail" />
-    <meta charset="UTF-8" />
-    <title>Sign Up — Recipe Finder</title>
-    <script src="js/auth.js"></script>
-  </head>
+    <head>
+        <meta name="author" content="Muhammed Esmail" />
+        <meta charset="UTF-8" />
+        <title>Sign Up — Recipe Finder</title>
+        <link href="css/main.css" rel="stylesheet" />
+        <script type="module" src="js/auth.js"></script>
+    </head>
 
-  <body>
-    <nav>
-      <a href="index.html">Home</a> | <a href="login.html">Login</a> |
-      <a href="signup.html">Sign Up</a>
-    </nav>
-    <hr />
+    <body>
+        <nav></nav>
+        <hr />
 
-    <!-- H1 header -->
+        <!-- H1 header -->
 
-    <h1>Recipe Finder</h1>
-    <hr />
+        <h1>Recipe Finder</h1>
+        <hr />
 
-    <!-- Create an account -->
-    <h2>Create an account</h2>
+        <!-- Create an account -->
+        <h2>Create an account</h2>
 
-    <form action="#" method="post">
-      <!-- Select Account Type -->
-      <fieldset>
-        <legend>Account Type</legend>
+        <form name="createUserForm" id="signupForm">
+            <!-- Select Account Type -->
+            <fieldset>
+                <legend>Account Type</legend>
 
-        <input type="radio" id="admin" name="user_role" value="admin" />
-        <label for="admin"> Admin </label>
-        <br />
+                <input type="radio" id="admin" name="user_role" value="admin" />
+                <label for="admin"> Admin </label>
+                <br />
 
-        <input type="radio" id="user" name="user_role" value="user" />
-        <label for="user"> User </label>
-      </fieldset>
+                <input
+                    type="radio"
+                    id="user"
+                    name="user_role"
+                    value="user"
+                    checked
+                />
+                <label for="user"> User </label>
+            </fieldset>
 
-      <!-- Personal Information -->
-      <fieldset>
-        <legend>Personal Information</legend>
+            <!-- Personal Information -->
+            <fieldset>
+                <legend>Personal Information</legend>
 
-        <br />
+                <br />
 
-        <label> First Name: </label>
-        <br />
-        <input
-          type="text"
-          id="first_name"
-          name="first_name"
-          placeholder="eg. Muhammed"
-          required
-        />
-        <br /><br />
+                <label> First Name: </label>
+                <br />
+                <input
+                    type="text"
+                    id="first_name"
+                    name="first_name"
+                    placeholder="eg. Muhammed"
+                    required
+                />
+                <br /><br />
 
-        <label> Last Name: </label>
-        <br />
-        <input
-          type="text"
-          id="last_name"
-          name="last_name"
-          placeholder="eg. Esmail"
-          required
-        />
-        <br /><br />
+                <label> Last Name: </label>
+                <br />
+                <input
+                    type="text"
+                    id="last_name"
+                    name="last_name"
+                    placeholder="eg. Esmail"
+                    required
+                />
+                <br /><br />
 
-        <label> Username: </label>
-        <br />
-        <input
-          type="text"
-          id="user_name"
-          name="user_name"
-          placeholder="eg. Esmail0"
-          required
-        />
-        <br /><br />
+                <label> Username: </label>
+                <br />
+                <input
+                    type="text"
+                    id="user_name"
+                    name="user_name"
+                    placeholder="eg. Esmail0"
+                    required
+                />
+                <br /><br />
 
-        <label> Email: </label>
-        <br />
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="eg. exmaple@mail.com"
-          required
-        />
-        <br /><br />
-      </fieldset>
-      <!-- Password -->
-      <fieldset>
-        <legend>Password</legend>
+                <label> Email: </label>
+                <br />
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="eg. exmaple@mail.com"
+                    required
+                />
+                <br /><br />
+            </fieldset>
+            <!-- Password -->
+            <fieldset>
+                <legend>Password</legend>
 
-        <br />
+                <br />
 
-        <label> Password </label><br />
-        <input
-          type="password"
-          id="password"
-          name="password"
-          minlength="8"
-          placeholder="At least 8 characters"
-          required
-        />
-        <br /><br />
+                <label> Password </label><br />
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    minlength="8"
+                    placeholder="At least 8 characters"
+                    required
+                />
+                <br /><br />
 
-        <label> Confirm Password </label><br />
-        <input
-          type="password"
-          id="confirm_password"
-          name="confirm_password"
-          minlength="8"
-          placeholder="Repeat your password"
-          required
-        />
-        <br /><br />
-      </fieldset>
+                <label> Confirm Password </label><br />
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    minlength="8"
+                    placeholder="Repeat your password"
+                    required
+                />
+                <br /><br />
+            </fieldset>
 
-      <br />
-      <!-- Create My account + Clear Form button -->
-      <input
-        type="submit"
-        onclick="tempDirectToLogin()"
-        value="Create My Account"
-      />
-      <input type="reset" value="Clear Form" />
-    </form>
-    <hr />
-    <!-- Already Have an account? Sign in -->
-    <p>Already have an account? <a href="login.html">Sign in</a></p>
-  </body>
+            <br />
+            <!-- Create My account + Clear Form button -->
+            <input type="submit" value="Create My Account" />
+            <input type="reset" value="Clear Form" />
+        </form>
+        <hr />
+
+        <!-- Already Have an account? Sign in -->
+        <p>Already have an account? <a href="login.html">Sign in</a></p>
+
+        <!-- Page specific logic -->
+        <script type="module" src="js/handlers/signup-handler.js"></script>
+    </body>
 </html>

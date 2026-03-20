@@ -115,7 +115,7 @@ function deleteRecipe(id){
 }
 
 function renderRecipes() {
-    const container = document.getElementById('Main');
+    const container = document.getElementById('main');
     container.innerHTML = "";
     recipes.forEach(recipe => {
         const article = document.createElement('article');
