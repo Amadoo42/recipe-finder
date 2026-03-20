@@ -99,17 +99,16 @@ export function logout() {
 }
 
 function checkAuth() {
+
     // Check if the current page is a public page first
     // Public pages are ones that do not require a user to be logged in
-    var publicPages = ['signup.html', 'login.html', 'index.html'];
-    const path = window.location.pathname;
+    const authLevel = document.documentElement.dataset.authLevel ?? 'private';
+    console.log("auth level: " + authLevel);
 
-    for (var publicPage of publicPages) {
-        if (path.includes(publicPage)) {
-            console.log('Public Page');
-            initUI(null);
-            return;
-        }
+    if (authLevel === 'public') {
+        console.log('Public Page');
+        initUI(null);
+        return;
     }
 
     // The user is at a private page (dashboards, explore, etc.)
@@ -131,13 +130,14 @@ function checkAuth() {
         return;
     }
 
-    const isAdminPage = path.includes('/admin/');
+    const isAdminPage = authLevel === 'Admin';
 
     const role = checkTokenMessage.data.role;
 
     if (isAdminPage && role !== 'admin') {
         console.log('UNAUTHORIZED ACCESS TO ADMIN PAGES!');
         window.location.replace('/user/dashboard.html');
+        return;
     }
 
     // Feed the UI with the user data
