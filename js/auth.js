@@ -1,6 +1,6 @@
 import {
     checkEmail,
-    checkCredentials,
+    verifyLogin,
     checkToken,
     checkUsername,
     insertNewUser,
@@ -70,16 +70,16 @@ requestLogin(data) function:
 */
 export async function requestLogin(userObject) {
     // Check the password correctness
-    const checkCredentialsMessage = await checkCredentials(
+    const verifyLoginMessage = await verifyLogin(
         userObject.username,
         userObject.password,
     );
 
-    if (checkCredentialsMessage.success === false) {
-        return checkCredentialsMessage;
+    if (verifyLoginMessage.success === false) {
+        return verifyLoginMessage;
     }
 
-    const sessionObject = checkCredentialsMessage.data;
+    const sessionObject = verifyLoginMessage.data;
 
     // Attempt to save the new token locally
     const saveSessionMessage = await saveSession(sessionObject.token);

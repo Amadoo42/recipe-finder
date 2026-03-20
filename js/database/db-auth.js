@@ -61,7 +61,7 @@ export function insertNewUser(newUserObject) {
  * @param {string} hashed_password - The hashed password to check.
  * @returns {Object} - A message object indicating the result of the check.
  */
-export function checkCredentials(username, hashed_password) {
+export function verifyLogin(username, hashed_password) {
     const users = readTable('users') || [];
     let userIndex = -1;
     for(let i = 0; i < users.length; i++) {
