@@ -5,9 +5,9 @@ import {
     checkUsername,
     insertNewUser,
     saveSession,
-    retreiveLocalToken,
+    retrieveLocalToken,
     logoutUser,
-} from './database/db-client.js';
+} from './database/db-auth.js';
 import { initUI } from './init-UI.js';
 import { createMessage } from './utils/create-message.js';
 
@@ -115,14 +115,14 @@ function checkAuth() {
     // The user is at a private page (dashboards, explore, etc.)
     console.log('Private Page');
 
-    const retreiveLocalTokenMessage = retreiveLocalToken();
+    const retrieveLocalTokenMessage = retrieveLocalToken();
 
-    if (retreiveLocalTokenMessage.success === false) {
+    if (retrieveLocalTokenMessage.success === false) {
         window.location.replace('/login.html');
         return;
     }
 
-    const localToken = retreiveLocalTokenMessage.data.token;
+    const localToken = retrieveLocalTokenMessage.data.token;
 
     const checkTokenMessage = checkToken(localToken);
 
