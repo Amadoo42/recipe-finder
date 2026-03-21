@@ -10,7 +10,7 @@ document.getElementById("addRecipe").addEventListener("click", addRecipeHandler)
 function handleOtherUnit() {
     const unitInput = document.getElementById("unit");
     if (unitInput.value == "Other") {
-        const customUnitContainer = document.getElementById("customUnitCotainer");
+        const customUnitContainer = document.getElementById("customUnitContainer");
         customUnitContainer.classList.add("show");
         const customUnitPrompt = document.getElementById("customUnitPrompt");
         customUnitPrompt.classList.add("show");
@@ -23,7 +23,7 @@ function addOtherUnit() {
     const unitInput = document.getElementById("unit");
     const unit = document.querySelector("input[name='custom-unit']").value;
     const customUnitPrompt = document.getElementById("customUnitPrompt");
-    const customUnitContainer = document.getElementById("customUnitCotainer");
+    const customUnitContainer = document.getElementById("customUnitContainer");
     var isThere = false;
 
     const unitErrorMessage = document.getElementById("customUnitErrorMessage");
@@ -58,7 +58,7 @@ function addOtherUnit() {
 function cancelOtherUnit() {
     const unitInput = document.getElementById("unit");
     const customUnitPrompt = document.getElementById("customUnitPrompt");
-    const customUnitContainer = document.getElementById("customUnitCotainer");
+    const customUnitContainer = document.getElementById("customUnitContainer");
     unitInput.selectedIndex = 0;
     customUnitPrompt.classList.remove("show");
     customUnitContainer.classList.remove("show");
@@ -116,6 +116,18 @@ function addNewIngredient() {
     unitInput.value = "Cup";
 }
 
+// this function takes a url and tries to load it into an image object
+// it returns true if the image is loaded indicating this url is for an image
+// it returns false if it failed to load the image
+async function checkImageExists(url) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true); 
+        img.onerror = () => resolve(false);
+        img.src = url; 
+    });
+}
+
 // this function is called when the user presses 'Add Recipe'
 // it gets all the input in all fields and creates a new Recipe object
 // it then converts that object to JSON
@@ -144,7 +156,17 @@ async function addRecipeHandler() {
     if (imageSelector && imageSelector.files && imageSelector.files.length > 0) {
         imageData = await toBase64(imageSelector.files[0]);
     }
-    else imageData = onlineImageSelector.value;
+    else if (onlineImageSelector.value) {
+        const imageURLErrorMessage = document.getElementById("imageURLErrorMessage");
+        if (await checkImageExists(onlineImageSelector.value)) {
+            imageData = onlineImageSelector.value;
+        }
+        else {
+            imageURLErrorMessage.classList.add("show");
+            return;
+        }
+        imageURLErrorMessage.classList.remove("show");
+    }
 
     for (var i = 0; i < names.length; i++) {
         const quantity = parseFloat(quantities[i].textContent);
@@ -153,9 +175,17 @@ async function addRecipeHandler() {
     }
 
     var recipe = createRecipeObject(name, description, course, ingredients, imageData);
-    addRecipe(recipe);
 
+    const result = await addRecipe(recipe);
     // jsonObject = JSON.stringify(recipe);
     // console.log(jsonObject);
-    alert("Added Recipe");
+    if (result && result.success === true) {
+        alert("Added Recipe");
+    }
+    else if (result && result.description) {
+        alert(result.description);
+    }
+    else {
+        alert("Failed to add recipe");
+    }
 }
