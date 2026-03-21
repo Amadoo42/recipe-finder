@@ -44,7 +44,7 @@ async function onSubmit(event) {
         REDIRECT.TO_ADMIN();
     } else {
         handleLoginMessage(
-            createMessage(false, 'Account is associated with borken role!'),
+            createMessage(false, 'Account is associated with broken role!'),
         );
         return;
     }
