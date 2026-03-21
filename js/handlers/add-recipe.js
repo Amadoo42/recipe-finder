@@ -37,7 +37,7 @@ function addOtherUnit() {
     for (var option of unitInput.options) {
         if (option.value.toLowerCase() === unit.toLowerCase()) {
             isThere = true;
-            false;
+            break;
         }
     }
     if (unit && !isThere) {
@@ -48,7 +48,7 @@ function addOtherUnit() {
         unitInput.value = unit;        
     }
     else {
-        unitInput.value = "Cups";
+        unitInput.selectedIndex = 0;
     }
     customUnitPrompt.classList.remove("show");
     customUnitContainer.classList.remove("show");
@@ -59,7 +59,7 @@ function cancelOtherUnit() {
     const unitInput = document.getElementById("unit");
     const customUnitPrompt = document.getElementById("customUnitPrompt");
     const customUnitContainer = document.getElementById("customUnitCotainer");
-    unitInput.value = "Cups";
+    unitInput.selectedIndex = 0;
     customUnitPrompt.classList.remove("show");
     customUnitContainer.classList.remove("show");
 }
@@ -122,6 +122,7 @@ function addNewIngredient() {
 // javascript doesn't allow retrieving the path of a file
 // this function saves the image data as base64 string and stores in the database
 // to load it in another page set src="base64String"
+// uploaded image has higher priority over online image
 async function addRecipeHandler() {
     const name = document.querySelector("input[name='recipe-name']").value;
     const course = document.querySelector("#course").value;
@@ -131,6 +132,7 @@ async function addRecipeHandler() {
     const quantities = document.getElementsByClassName("IngredientQuantity");
     const units = document.getElementsByClassName("IngredientUnit");
     const imageSelector = document.getElementById("imageSelector");
+    const onlineImageSelector = document.getElementById("onlineImageSelector");
     var ingredients = []
     var imageData = "";
 
@@ -139,10 +141,14 @@ async function addRecipeHandler() {
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
     });
-    imageData = await toBase64(imageSelector.files[0]);    
+    if (imageSelector && imageSelector.files && imageSelector.files.length > 0) {
+        imageData = await toBase64(imageSelector.files[0]);
+    }
+    else imageData = onlineImageSelector.value;
 
     for (var i = 0; i < names.length; i++) {
-        const ingredient = createIngredientObject(names[i].textContent, quantities[i].textContent, units[i].textContent);
+        const quantity = parseFloat(quantities[i].textContent);
+        const ingredient = createIngredientObject(names[i].textContent, quantity, units[i].textContent);
         ingredients.push(ingredient);
     }
 
