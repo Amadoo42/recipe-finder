@@ -10,6 +10,7 @@ import {
 } from './database/db-client.js';
 import { initUI } from './init-UI.js';
 import { createMessage } from './utils/create-message.js';
+import { PAGE_AUTH_LEVEL, REDIRECT } from './constants/auth-constants.js';
 
 /*
 
@@ -102,10 +103,10 @@ function checkAuth() {
 
     // Check if the current page is a public page first
     // Public pages are ones that do not require a user to be logged in
-    const authLevel = document.documentElement.dataset.authLevel ?? 'private';
+    const authLevel = document.documentElement.dataset.authLevel ?? PAGE_AUTH_LEVEL.PRIVATE;
     console.log("auth level: " + authLevel);
 
-    if (authLevel === 'public') {
+    if (authLevel === PAGE_AUTH_LEVEL.PUBLIC) {
         console.log('Public Page');
         initUI(null);
         return;
@@ -117,7 +118,7 @@ function checkAuth() {
     const retreiveLocalTokenMessage = retreiveLocalToken();
 
     if (retreiveLocalTokenMessage.success === false) {
-        window.location.replace('/login.html');
+        REDIRECT.TO_LOGIN();
         return;
     }
 
@@ -126,17 +127,25 @@ function checkAuth() {
     const checkTokenMessage = checkToken(localToken);
 
     if (checkTokenMessage.success === false) {
-        window.location.replace('/login.html');
+        REDIRECT.TO_LOGIN();
         return;
     }
 
-    const isAdminPage = authLevel === 'Admin';
+    const isAdminPage = authLevel === PAGE_AUTH_LEVEL.ADMIN;
 
     const role = checkTokenMessage.data.role;
 
-    if (isAdminPage && role !== 'admin') {
+    console.log("ROLE : " + role);
+
+    if (![PAGE_AUTH_LEVEL.USER, PAGE_AUTH_LEVEL.ADMIN].includes(role)) {
+        console.log('UNAUTHORIZED ACCESS TO PRIVATE PAGES!');
+        REDIRECT.TO_LOGIN();
+        return;
+    }
+
+    if (isAdminPage && role !== PAGE_AUTH_LEVEL.ADMIN) {
         console.log('UNAUTHORIZED ACCESS TO ADMIN PAGES!');
-        window.location.replace('/user/dashboard.html');
+        REDIRECT.TO_USER();
         return;
     }
 

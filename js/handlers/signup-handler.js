@@ -2,6 +2,7 @@ import { createUser } from '../auth.js';
 import { createMessage } from '../utils/create-message.js';
 import { hash } from '../utils/hash.js';
 import { validation } from '../validation.js';
+import { PAGE_AUTH_LEVEL, REDIRECT } from '../constants/auth-constants.js';
 
 const signUpForm = document.getElementById('signUpForm');
 
@@ -64,7 +65,7 @@ async function onSubmit(event) {
     handleCreationMessage(message);
 
     if (message.success === true) {
-        window.location.replace('login.html');
+        REDIRECT.TO_LOGIN();
     }
 }
 

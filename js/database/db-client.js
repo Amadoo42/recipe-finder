@@ -25,7 +25,7 @@ export function checkUsername(username) {
 export function checkCredentials(username, hashed_password) {
     return createMessage(true, 'The credentials are valid.', {
         token: generateToken(),
-        role: 'user',
+        role: 'admin',
     });
     /*
     return createMessage(
@@ -53,7 +53,6 @@ export function checkToken(token) {
             'Ahmad',
             'Amin',
             'Amadoo42',
-            'ahmadaminiscool',
             'admin',
             [1213, 1214, 1215],
         ),
