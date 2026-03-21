@@ -1,13 +1,13 @@
 import {
     checkEmail,
-    checkCredentials,
+    verifyLogin,
     checkToken,
     checkUsername,
     insertNewUser,
     saveSession,
-    retreiveLocalToken,
+    retrieveLocalToken,
     logoutUser,
-} from './database/db-client.js';
+} from './database/db-auth.js';
 import { initUI } from './init-UI.js';
 import { createMessage } from './utils/create-message.js';
 
@@ -70,16 +70,16 @@ requestLogin(data) function:
 */
 export async function requestLogin(userObject) {
     // Check the password correctness
-    const checkCredentialsMessage = await checkCredentials(
+    const verifyLoginMessage = await verifyLogin(
         userObject.username,
         userObject.password,
     );
 
-    if (checkCredentialsMessage.success === false) {
-        return checkCredentialsMessage;
+    if (verifyLoginMessage.success === false) {
+        return verifyLoginMessage;
     }
 
-    const sessionObject = checkCredentialsMessage.data;
+    const sessionObject = verifyLoginMessage.data;
 
     // Attempt to save the new token locally
     const saveSessionMessage = await saveSession(sessionObject.token);
@@ -115,14 +115,14 @@ function checkAuth() {
     // The user is at a private page (dashboards, explore, etc.)
     console.log('Private Page');
 
-    const retreiveLocalTokenMessage = retreiveLocalToken();
+    const retrieveLocalTokenMessage = retrieveLocalToken();
 
-    if (retreiveLocalTokenMessage.success === false) {
+    if (retrieveLocalTokenMessage.success === false) {
         window.location.replace('/login.html');
         return;
     }
 
-    const localToken = retreiveLocalTokenMessage.data.token;
+    const localToken = retrieveLocalTokenMessage.data.token;
 
     const checkTokenMessage = checkToken(localToken);
 

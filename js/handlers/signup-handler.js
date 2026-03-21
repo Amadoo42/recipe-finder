@@ -1,6 +1,7 @@
 import { createUser } from '../auth.js';
 import { createMessage } from '../utils/create-message.js';
 import { hash } from '../utils/hash.js';
+import { createUserObject } from '../utils/schema-factories.js';
 import { validation } from '../validation.js';
 
 const signUpForm = document.getElementById('signUpForm');
@@ -39,23 +40,26 @@ async function onSubmit(event) {
     console.log('password :' + password);
     console.log('role' + role);
 
-    var userObject = {
+    /** First we create a validation object with the raw values (including the unhashed password) to pass into the validation function.
+     * This is because the validation function needs to check the password's length which requires access to the raw password value.
+     */
+    var validationObject = {
         firstName: firstName,
         lastName: lastName,
         username: userName,
         email: email,
         password: password,
-        role: role,
-    };
-
-    const validationMessage = validation(userObject);
+        role: role
+    }
+    
+    const validationMessage = validation(validationObject);
 
     if (validationMessage.success === false) {
         handleCreationMessage(validationMessage);
         return;
     }
 
-    userObject.password = hash(password); // given the hashed version directly
+    var userObject = createUserObject(firstName, lastName, userName, email, hash(password), role);
 
     // Pass the object into the createUser function and create the account
     const message = await createUser(userObject);
