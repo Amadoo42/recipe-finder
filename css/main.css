@@ -29,3 +29,16 @@ textarea {
     font-family: inherit;
     font-size: inherit;
 }
+
+/* This is to hide the html by default. Do not change this. */
+body {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.1s ease; /* A simple fade-in transition on page load. */
+}
+
+/* This is the body AFTER authentication. Change this to apply new style. */
+body.ready {
+    visibility: visible;
+    opacity: 1;
+}

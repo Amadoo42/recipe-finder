@@ -1,6 +1,7 @@
 import { requestLogin } from '../auth.js';
 import { createMessage } from '../utils/create-message.js';
 import { hash } from '../utils/hash.js';
+import { PAGE_AUTH_LEVEL, REDIRECT } from '../constants/auth-constants.js';
 
 const loginForm = document.getElementById('loginForm');
 
@@ -37,10 +38,10 @@ async function onSubmit(event) {
     const role = message.data.role;
 
     // Redirect user correctly
-    if (role === 'user') {
-        window.location.replace('user/dashboard.html');
-    } else if (role === 'admin') {
-        window.location.replace('admin/dashboard.html');
+    if (role === PAGE_AUTH_LEVEL.USER) {
+        REDIRECT.TO_USER();
+    } else if (role === PAGE_AUTH_LEVEL.ADMIN) {
+        REDIRECT.TO_ADMIN();
     } else {
         handleLoginMessage(
             createMessage(false, 'Account is associated with broken role!'),
