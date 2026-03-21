@@ -117,7 +117,7 @@ function checkAuth() {
 
     const retrieveLocalTokenMessage = retrieveLocalToken();
 
-    if (retreiveLocalTokenMessage.success === false) {
+    if (retrieveLocalTokenMessage.success === false) {
         REDIRECT.TO_LOGIN();
         return;
     }
