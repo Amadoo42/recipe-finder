@@ -6,33 +6,42 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/add-recipe.css">
     <script type="module" src="../js/auth.js"></script> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
     <title>Add Recipe</title>
 </head>
 <body>
-    <nav></nav>
-    <hr>
+    
+    <nav>
+        <a href="dashboard.html">Admin Dashboard</a> | 
+        <a href="add-recipe.html">Add New Recipe</a> |
+        <a href="view-recipe.html">View Recipes</a> | 
+        <a href="../index.html">Logout</a>
+    </nav>
+    <div class="TitleContainer">
+        <h1 class="Title">
+            Recipe Finder
+        </h1>
+    </div>
 
-    <h1 class="title">
-        Recipe Finder
-    </h1>
+    <div class="MainDiv">
+        <p class="AddRecipeHeader" style="text-align: left;" id="recipe">Add a New Recipe</p>
 
-    <div class="main-div">
-        <p class="add-recipe-header" style="text-align: left;" id="recipe">Add a New Recipe</p>
+        <hr>
 
         <form>
     
-            <h2 class="great-vibes-regular" for="recipe">Recipe Details</h2>
+            <h2 class="GreatVibesRegular" for="recipe">Recipe Details</h2>
 
-            <div class="secondary-div">
+            <div class="SecondaryDiv">
 
                 <div>
-                    <label class="great-vibes-regular" for="recipe-name">Recipe Name</label><br>
-                    <input type="text" class="data-field" name="recipe-name" placeholder="Enter recipe name" id="recipe-name"><br>
+                    <label class="GreatVibesRegular" for="recipe-name">Recipe Name</label><br>
+                    <input type="text" class="DataField" name="recipe-name" placeholder="Enter recipe name" id="recipeName"><br>
                 </div>
         
                 <div>
-                    <label class="great-vibes-regular" for="course">Course</label><br>
-                    <select class="data-field" name="course" id="course">
+                    <label class="GreatVibesRegular" for="course">Course</label><br>
+                    <select class="DataField" name="course" id="course">
                         <option>Appetizers</option>
                         <option>Main</option>
                         <option>Dessert</option>
@@ -40,56 +49,77 @@
                 </div>
             </div>
 
-            <div>
-                <label class="great-vibes-regular" for="description">Description</label><br>
-                <textarea class="data-field" name="description" rows="4" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
+            <div id="descriptionContainer">
+                <label class="GreatVibesRegular" for="description">Description</label>
+                <textarea class="DataField" name="description" rows="6" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
+                <hr style="display: none;">
             </div>
-    
+
+            <div>
+                <label class="GreatVibesRegular">Select Image (Optional)</label><br>
+                <input class="DataField" id="imageSelector" type="file" accept="image/*">
+            </div>
+
+            <div>
+                <label class="GreatVibesRegular">Online Image URL (Optional)</label><br>
+                <input class="DataField" id="onlineImageSelector" type="text">
+                <p id="imageURLErrorMessage" class="ErrorMessage">Please make sure to input a valid image URL.</p>
+            </div>
     
             <hr>
     
-            <h2 class="great-vibes-regular" for="ingredients">Ingredients</h2>
+            <h2 class="GreatVibesRegular" for="ingredients">Ingredients</h2>
 
-            <div class="secondary-div">
+            <div class="SecondaryDiv">
                 <div>
-                    <label class="great-vibes-regular" for="ingredient-name">Ingredient Name</label><br>
-                    <input class="data-field" type="text" id="ingredient-name" name="ingredient-name" placeholder="e.g. Sugar">
+                    <label class="GreatVibesRegular" for="ingredient-name">Ingredient Name</label><br>
+                    <input class="DataField" type="text" id="ingredientName" name="ingredient-name" placeholder="e.g. Sugar">
                 </div>
 
                 <div>
-                    <label class="great-vibes-regular" for="ingredient-name">Ingredient Quantity</label><br>
-                    <input class="data-field" type="number" id="quantity" name="quantity" placeholder="1" min="1">
+                    <label class="GreatVibesRegular" for="ingredient-name">Ingredient Quantity</label><br>
+                    <input class="DataField" type="number" id="quantity" name="quantity" placeholder="Amount" min="1">
                 </div>
-
                 <div>
-                    <label class="great-vibes-regular" for="unit">Unit</label><br>
-                    <select class="data-field" name="unit" id="unit">
-                        <option>Cup</option>
-                        <option>Spoon</option>
-                        <option>Piece</option>
+                    <label class="GreatVibesRegular" for="unit">Unit</label><br>
+                    <select class="DataField" name="unit" id="unit">
+                        <option>Cups</option>
+                        <option>Spoons</option>
+                        <option>Pieces</option>
+                        <option id="otherUnit">Other</option>
                     </select>
                 </div>
                 
                 <div>
-                    <button onclick="addIngredient()" type="button" id="add-ingredient">+</button>
+                    <button type="button" id="addIngredient">Add</button>
                 </div>
         
             </div>
         </form>
-        <p id="error-message">Quantity must be a valid number greater than 0.</p>
+        <p id="quantityErrorMessage" class="ErrorMessage">Quantity must be a valid number greater than 0.</p>
+        <p id="ingredientNameErrorMessage" class="ErrorMessage">Ingredient name cannot include numbers or special characters</p>
+
+        <div id="customUnitContainer">
+            <div id="customUnitPrompt">
+                <label class="GreatVibesRegular">Enter a custom unit</label>
+                <input class="DataField" type="text" name="custom-unit">
+                <div id="customUnitSubmitContainer">
+                    <button id="cancelCustomUnit">Cancel</button>
+                    <button id="addCustomUnit">Add Custom Unit</button>
+                </div>
+                <p id="customUnitErrorMessage" class="ErrorMessage">Ingredient unit cannot include numbers or special characters</p>
+            </div>
+        </div>
     
-        <hr>
-    
-    <button type="button" id="add-recipe">Add Recipe</button>
-        <h2 class="great-vibes-regular">Ingredients List</h3>
-        <ul id="ingredient-list">
+        <ul id="ingredientList">
         </ul>
-    
-        <hr>
         
-        <button type="button" id="add-recipe" onclick="createRecipeObject()">Add Recipe</button>
+        <div id="addRecipeButtonContainer">
+            <button type="button" id="addRecipe">Add Recipe</button>
+        </div>
     </div>
-    <script src="../js/handlers/add-recipe.js"></script>
-    <script src="../js/handlers/edit-recipe.js"></script>
+
+    <script type="module" src="../js/handlers/add-recipe.js"></script>
+    <script type="module" src="../js/handlers/edit-recipe.js"></script>
 </body>
 </html>
