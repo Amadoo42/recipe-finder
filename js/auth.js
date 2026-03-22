@@ -11,6 +11,7 @@ import {
 import { initUI } from './init-UI.js';
 import { createMessage } from './utils/create-message.js';
 import { PAGE_AUTH_LEVEL, REDIRECT } from './constants/auth-constants.js';
+import { isDevActive } from './utils/dev-mode.js';
 
 /*
 
@@ -100,6 +101,14 @@ export function logout() {
 }
 
 function checkAuth() {
+
+    // Check if in dev mode for testing
+    if(isDevActive()){
+        console.log("CAUTION: DEV MODE ACTIVATE");
+        console.log("DISABLE DEV MODE FROM index.html");
+        initUI(null);
+        return;
+    }
 
     // Check if the current page is a public page first
     // Public pages are ones that do not require a user to be logged in
