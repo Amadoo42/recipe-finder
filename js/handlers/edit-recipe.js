@@ -10,6 +10,7 @@ const recipeID = params.get('RecipeID');
 const isEdit = params.get('Edit');
 
 let recipe = getRecipeById(recipeID);
+export let imageLoadedData = "";
 
 /**
  * @brief this only edits the html to make it edit page
@@ -64,6 +65,7 @@ function loadRecipe() {
 
         ingredients.appendChild(item);
     });
+    imageLoadedData = recipe.image;
 }
 
 if (isEdit) {
