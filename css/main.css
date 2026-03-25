@@ -46,3 +46,22 @@ body.ready {
 nav {
     min-height: 30px;
 }
+
+.testingDevMode{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-family:'Courier New', Courier, monospace;
+}
+
+#devModeBtn{
+    color: white;
+}
+
+#devModeBtn[data-dev-mode="active"]{
+    background-color: green;
+}
+
+#devModeBtn[data-dev-mode="disabled"]{
+    background-color: red;
+}
