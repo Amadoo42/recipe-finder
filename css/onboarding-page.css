@@ -74,7 +74,7 @@ body {
 }
 
 .BtnPrimary {
-    background-image: linear-gradient(to bottom right, rgb(212, 0, 0), #ff7860);
+    background-image: linear-gradient(to bottom right, rgb(255, 2, 2), #ff7860);
     background-color: var(--buttons);
     color: white;
     text-decoration: none;
@@ -90,7 +90,7 @@ body {
 }
 
 .SiteFooter {
-    background-image: linear-gradient(to top, #ad0505, #f87f5e);
+    background-image: linear-gradient(to top, #ff0000ed, #ff6a00c8);
     padding: 3rem 2rem;
     display: flex;
     justify-content: space-between;
