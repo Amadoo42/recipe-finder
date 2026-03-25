@@ -1,189 +1,162 @@
 import {createRecipeObject, createIngredientObject} from "../utils/schema-factories.js";
 import {addRecipe, updateRecipe} from "../database/db-recipes.js";
+import {processUploadedImage,  processOnlineImageURL} from "../utils/process-image.js"
+import * as VALIDATOR from "../utils/recipe-validator.js"
 import { imageLoadedData } from "./edit-recipe.js";
 
-document.getElementById("unit").addEventListener("change", handleOtherUnit);
-document.getElementById("addIngredient").addEventListener("click", addNewIngredient);
-document.getElementById("cancelCustomUnit").addEventListener("click", cancelOtherUnit);
-document.getElementById("addCustomUnit").addEventListener("click", addOtherUnit);
-document.getElementById("addRecipe").addEventListener("click", addRecipeHandler);
+// URL parameters to choose between edit mode and creation mode
+let isEdit;
+let recipeID;
 
-function handleOtherUnit() {
-    const unitInput = document.getElementById("unit");
-    if (unitInput.value == "Other") {
-        const customUnitContainer = document.getElementById("customUnitContainer");
-        customUnitContainer.classList.add("show");
-        const customUnitPrompt = document.getElementById("customUnitPrompt");
-        customUnitPrompt.classList.add("show");
-    }
+// A centralized object containing references to all required HTML elements
+const DOM = {
+    form: document.querySelector("form"),
+    // RECIPE INPUT
+    recipeName: document.querySelector("input[name='recipe-name']"),
+    recipeCourse: document.querySelector("#course"),
+    recipeDescription: document.querySelector("textarea"),
+
+    // INGREDIENT LIST VALUES
+    ingredientList: document.getElementById("ingredientList"),
+    ingredientListNames: document.getElementsByClassName("IngredientName"),
+    ingredientListQuantities: document.getElementsByClassName("IngredientQuantity"),
+    ingredientListUnits: document.getElementsByClassName("IngredientUnit"),
+
+    // INGREDIENT INPUT
+    unitSelect: document.getElementById("unit"),
+    ingredientNameInput: document.querySelector("#ingredientName"),
+    ingredientQuantityInput: document.querySelector("#quantity"),
+    ingredientUnitInput: document.querySelector("#unit"),
+    addIngredientBtn: document.getElementById("addIngredient"),
+
+    // CUSTOM INGREDIENT UNIT
+    customUnitModalContainer: document.getElementById("customUnitContainer"),
+    customUnitModal: document.getElementById("customUnitPrompt"),
+    customUnitModalAddBtn: document.getElementById("addCustomUnit"),
+    customUnitModalCancelBtn: document.getElementById("cancelCustomUnit"),
+    otherUnitEntry: document.getElementById("otherUnit"),
+    customUnitInput: document.querySelector("input[name='custom-unit']"),
+
+    // IMAGE INPUT
+    imageInput: document.getElementById("imageSelector"),
+    imageURLInput: document.getElementById("onlineImageSelector"),
+
+    submitRecipeBtn: document.getElementById("addRecipe")
+};
+
+// References to all UI error message elements
+const ERROR_MESSAGES = {
+    ingredientUnitErrorMessage: document.getElementById("customUnitErrorMessage"),
+    ingredientNameErrorMessage: document.getElementById("ingredientNameErrorMessage"),
+    quantityErrorMessage: document.getElementById("quantityErrorMessage"),
+    imageURLErrorMessage: document.getElementById("imageURLErrorMessage")
 }
 
-// this function is called inside the prompt for adding a new ingredient unit
-// it gets the user input, makes sure it's not already there (not case sensitive) and adds it to the drop list right before the 'Other' option
+const CSS_CLASSES = {
+    SHOW: 'show'
+};
+
+const DEFAULT_VALUES = {
+    UNIT: 'Cups'
+};
+
+// Toggle the visibility of an element using the 'show' css class
+function toggleUIComponent(component, value) {
+    component.classList.toggle(CSS_CLASSES.SHOW, value);
+}
+
+// toggle the custom unit input modal
+function toggleOtherUnitModal(val) {
+    toggleUIComponent(DOM.customUnitModalContainer, val)
+    toggleUIComponent(DOM.customUnitModal, val)
+}
+
+// Validates and adds a user-defined unit to the ingredient unit dropdown list
 function addOtherUnit() {
-    const unitInput = document.getElementById("unit");
-    const unit = document.querySelector("input[name='custom-unit']").value;
-    const customUnitPrompt = document.getElementById("customUnitPrompt");
-    const customUnitContainer = document.getElementById("customUnitContainer");
-    var isThere = false;
+    toggleUIComponent(ERROR_MESSAGES.ingredientUnitErrorMessage, false);
 
-    const unitErrorMessage = document.getElementById("customUnitErrorMessage");
-    const regex = /[^\p{L}\s]/u;
-    if (regex.test(unit)) {
-        unitErrorMessage.classList.add("show");
-        return;
+    const inputValidation = VALIDATOR.validateOtherUnitInput(DOM.customUnitInput.value, DOM.ingredientUnitInput.options);
+    if (inputValidation.valid && inputValidation.unique) {
+        let newOption = document.createElement("option");
+        newOption.innerHTML = DOM.customUnitInput.value;
+        DOM.ingredientUnitInput.insertBefore(newOption, DOM.otherUnitEntry);
+        DOM.ingredientUnitInput.value = DOM.customUnitInput.value;       
     }
-    unitErrorMessage.classList.remove("show");
-
-    for (var option of unitInput.options) {
-        if (option.value.toLowerCase() === unit.toLowerCase()) {
-            isThere = true;
-            break;
-        }
-    }
-    if (unit && !isThere) {
-        const otherUnit = document.getElementById("otherUnit")
-        var newOption = document.createElement("option");
-        newOption.innerHTML = unit;
-        unitInput.insertBefore(newOption, otherUnit);
-        unitInput.value = unit;        
+    else if (inputValidation.valid && !inputValidation.unique) {
+        DOM.ingredientUnitInput.value = DOM.customUnitInput.value;
     }
     else {
-        unitInput.selectedIndex = 0;
+        toggleUIComponent(ERROR_MESSAGES.ingredientUnitErrorMessage, true);
+        return;
     }
-    customUnitPrompt.classList.remove("show");
-    customUnitContainer.classList.remove("show");
+    DOM.customUnitInput.value = "";
+    toggleOtherUnitModal(false);
 }
 
-// this function is called when the user presses cancel inside the prompt for adding a new ingredient unit
+// Closes the custom unit modal and resets the selection
 function cancelOtherUnit() {
-    const unitInput = document.getElementById("unit");
-    const customUnitPrompt = document.getElementById("customUnitPrompt");
-    const customUnitContainer = document.getElementById("customUnitContainer");
-    unitInput.selectedIndex = 0;
-    customUnitPrompt.classList.remove("show");
-    customUnitContainer.classList.remove("show");
+    DOM.unitSelect.selectedIndex = 0;
+    toggleOtherUnitModal(false);
 }
 
-// this function is called when the user adds a new ingredient
-// it checks if the input is valid and adds a new entry in the ingredient list
+// Validates the name, quantity inputs and appends a new list item to the ingredient list
 function addNewIngredient() {
-    const list = document.querySelector("#ingredientList");
-    const nameInput = document.querySelector("#ingredientName");
-    const quantInput = document.querySelector("#quantity");
-    const unitInput = document.querySelector("#unit");
+    const invalidName = VALIDATOR.matchAgainstREGEX(DOM.ingredientNameInput.value, VALIDATOR.REGEX.ALPHA_ONLY);
+    toggleUIComponent(ERROR_MESSAGES.ingredientNameErrorMessage, invalidName);
 
-    const nameErrorMessage = document.getElementById("ingredientNameErrorMessage");
-    const quantityErrorMessage = document.getElementById("quantityErrorMessage");
-
-    nameErrorMessage.classList.remove("show");
-    quantityErrorMessage.classList.remove("show");
-
-    const regex = /[^\p{L}\s]/u;
-    if (regex.test(nameInput.value)) {
-        nameErrorMessage.classList.add("show");
-        return;
-    }
-    nameErrorMessage.classList.remove("show");
-
-    const quantity = Number(quantInput.value);
-    if (isNaN(quantity) || quantity <= 0) {
-        quantityErrorMessage.classList.add("show");
-        return;
-    }
-    quantityErrorMessage.classList.remove("show");
-    if (!nameInput.value || !quantInput.value) return;
-
+    const quantity = Number(DOM.ingredientQuantityInput.value);
+    const invalidQuantity = isNaN(quantity) || quantity <= 0;
+    toggleUIComponent(ERROR_MESSAGES.quantityErrorMessage, invalidQuantity)
+    if (invalidName || invalidQuantity) return;
 
     const item = document.createElement("li");
     item.className = "IngredientListItem";
-
     item.innerHTML = `
         <div class="ItemContainer">
-            <p class="IngredientName">${nameInput.value}</p>
+            <p class="IngredientName">${DOM.ingredientNameInput.value}</p>
             <div>
                 <p class="IngredientQuantity">${quantity}</p>
-                <p class="IngredientUnit">${unitInput.value}</p>
+                <p class="IngredientUnit">${DOM.ingredientUnitInput.value}</p>
             </div>
         </div>
         <button class="DeleteBtn">X</button>
     `;
 
     item.querySelector(".DeleteBtn").addEventListener("click", function() { item.remove() });
-    list.appendChild(item);
+    DOM.ingredientList.appendChild(item);
 
-    nameInput.value = "";
-    quantInput.value = "";
-    unitInput.value = "Cup";
+    DOM.ingredientNameInput.value = "";
+    DOM.ingredientQuantityInput.value = "";
+    DOM.ingredientUnitInput.value = DEFAULT_VALUES.UNIT;
 }
 
-/*
-this function takes a url and tries to load it into an image object
-it returns true if the image is loaded indicating this url is for an image
-it returns false if it failed to load the image
-*/
-async function checkImageExists(url) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true); 
-        img.onerror = () => resolve(false);
-        img.src = url; 
-    });
+async function getImageData() {
+    let inputImageData = await processUploadedImage(DOM.imageInput);
+    if (inputImageData) return inputImageData;
+    
+    const result = await processOnlineImageURL(DOM.imageURLInput, ERROR_MESSAGES.imageURLErrorMessage);
+    if (result.valid && result.imageData) return result.imageData;
+    else if (!result.valid) return "INVALID_URL";
+    
+    if (isEdit) return imageLoadedData;
+
+    return "";
 }
 
-/*
-this function is called when the user presses 'Add Recipe'
-it gets all the input in all fields and creates a new Recipe object
-it then converts that object to JSON
-javascript doesn't allow retrieving the path of a file
-this function saves the image data as base64 string and stores in the database
-to load it in another page set src="base64String"
-uploaded image has higher priority over online image
-*/
+// Processes images (local or URL), maps ingredients, and sends the final object to the database.
 async function addRecipeHandler() {
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-    const isEdit = params.get('Edit');
-    const recipeID = params.get('RecipeID');
-    const name = document.querySelector("input[name='recipe-name']").value;
-    const course = document.querySelector("#course").value;
-    const description = document.querySelector("textarea").value; 
+    let imageData = await getImageData();
+    if (imageData === "INVALID_URL") return;
 
-    const names = document.getElementsByClassName("IngredientName");
-    const quantities = document.getElementsByClassName("IngredientQuantity");
-    const units = document.getElementsByClassName("IngredientUnit");
-    const imageSelector = document.getElementById("imageSelector");
-    const onlineImageSelector = document.getElementById("onlineImageSelector");
-    var ingredients = []
-    var imageData = imageLoadedData;
-
-    const toBase64 = file => new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-    });
-    if (imageSelector && imageSelector.files && imageSelector.files.length > 0) {
-        imageData = await toBase64(imageSelector.files[0]);
-    }
-    else if (onlineImageSelector.value) {
-        const imageURLErrorMessage = document.getElementById("imageURLErrorMessage");
-        if (await checkImageExists(onlineImageSelector.value)) {
-            imageData = onlineImageSelector.value;
-        }
-        else {
-            imageURLErrorMessage.classList.add("show");
-            return;
-        }
-        imageURLErrorMessage.classList.remove("show");
-    }
-
-    for (var i = 0; i < names.length; i++) {
-        const quantity = parseFloat(quantities[i].textContent);
-        const ingredient = createIngredientObject(names[i].textContent, quantity, units[i].textContent);
+    let ingredients = []
+    for (let i = 0; i < DOM.ingredientListNames.length; i++) {
+        const quantity = parseFloat(DOM.ingredientListQuantities[i].textContent);
+        const ingredient = createIngredientObject(DOM.ingredientListNames[i].textContent, quantity, DOM.ingredientListUnits[i].textContent);
         ingredients.push(ingredient);
     }
 
-    var recipe = createRecipeObject(name, description, course, ingredients, imageData);
+    let recipe = createRecipeObject(DOM.recipeName.value, DOM.recipeDescription.value, DOM.recipeCourse.value, ingredients, imageData);
+    console.log("Sending Recipe to DB:", recipe);
 
     let result;
     if (isEdit) {
@@ -206,3 +179,20 @@ async function addRecipeHandler() {
         else alert("Failed to edit recipe")
     }
 }
+
+// initalize event listners and fetch URL parameters
+const init = () => {
+    DOM.unitSelect.addEventListener("change", function () {
+        toggleOtherUnitModal(DOM.ingredientUnitInput.value === "Other")
+    });
+    DOM.addIngredientBtn.addEventListener("click", addNewIngredient);
+    DOM.submitRecipeBtn.addEventListener("click", addRecipeHandler);
+    DOM.customUnitModalCancelBtn.addEventListener("click", cancelOtherUnit);
+    DOM.customUnitModalAddBtn.addEventListener("click", addOtherUnit);
+
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    isEdit = params.get('Edit');
+    recipeID = params.get('RecipeID');
+};
+init();
