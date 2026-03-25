@@ -20,13 +20,27 @@ export function loadGoogleFonts() {
     link2.href = 'https://fonts.gstatic.com';
     link2.setAttribute('crossorigin', '');
 
-    // stylesheet
+    // font 1
     const link3 = document.createElement('link');
     link3.rel = 'stylesheet';
     link3.href =
         'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap';
+        
+    // font 2
+    const link4 = document.createElement('link');
+    link4.rel = 'stylesheet';
+    link4.href =
+        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap';
+
+    // icons
+    const link5 = document.createElement('link');
+    link5.rel = 'stylesheet';
+    link5.href = 
+        'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0';
 
     head.append(link1);
     head.append(link2);
     head.append(link3);
+    head.append(link4);
+    head.append(link5);
 }
