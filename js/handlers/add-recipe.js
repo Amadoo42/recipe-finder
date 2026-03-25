@@ -1,5 +1,6 @@
 import {createRecipeObject, createIngredientObject} from "../utils/schema-factories.js";
-import {addRecipe} from "../database/db-recipes.js";
+import {addRecipe, updateRecipe} from "../database/db-recipes.js";
+import { imageLoadedData } from "./edit-recipe.js";
 
 document.getElementById("unit").addEventListener("change", handleOtherUnit);
 document.getElementById("addIngredient").addEventListener("click", addNewIngredient);
@@ -116,9 +117,11 @@ function addNewIngredient() {
     unitInput.value = "Cup";
 }
 
-// this function takes a url and tries to load it into an image object
-// it returns true if the image is loaded indicating this url is for an image
-// it returns false if it failed to load the image
+/*
+this function takes a url and tries to load it into an image object
+it returns true if the image is loaded indicating this url is for an image
+it returns false if it failed to load the image
+*/
 async function checkImageExists(url) {
     return new Promise((resolve) => {
         const img = new Image();
@@ -128,14 +131,20 @@ async function checkImageExists(url) {
     });
 }
 
-// this function is called when the user presses 'Add Recipe'
-// it gets all the input in all fields and creates a new Recipe object
-// it then converts that object to JSON
-// javascript doesn't allow retrieving the path of a file
-// this function saves the image data as base64 string and stores in the database
-// to load it in another page set src="base64String"
-// uploaded image has higher priority over online image
+/*
+this function is called when the user presses 'Add Recipe'
+it gets all the input in all fields and creates a new Recipe object
+it then converts that object to JSON
+javascript doesn't allow retrieving the path of a file
+this function saves the image data as base64 string and stores in the database
+to load it in another page set src="base64String"
+uploaded image has higher priority over online image
+*/
 async function addRecipeHandler() {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+    const isEdit = params.get('Edit');
+    const recipeID = params.get('RecipeID');
     const name = document.querySelector("input[name='recipe-name']").value;
     const course = document.querySelector("#course").value;
     const description = document.querySelector("textarea").value; 
@@ -146,7 +155,7 @@ async function addRecipeHandler() {
     const imageSelector = document.getElementById("imageSelector");
     const onlineImageSelector = document.getElementById("onlineImageSelector");
     var ingredients = []
-    var imageData = "";
+    var imageData = imageLoadedData;
 
     const toBase64 = file => new Promise((resolve) => {
         const reader = new FileReader();
@@ -176,16 +185,24 @@ async function addRecipeHandler() {
 
     var recipe = createRecipeObject(name, description, course, ingredients, imageData);
 
-    const result = await addRecipe(recipe);
-    // jsonObject = JSON.stringify(recipe);
-    // console.log(jsonObject);
+    let result;
+    if (isEdit) {
+        result = await updateRecipe(recipeID, recipe);
+    }
+    else {
+        result = await addRecipe(recipe);
+    }
+
     if (result && result.success === true) {
-        alert("Added Recipe");
+        if (!isEdit) alert("Added Recipe!");
+        else alert("Edited Recipe!")
+        window.location.replace("view-recipe.html");
     }
     else if (result && result.description) {
         alert(result.description);
     }
     else {
-        alert("Failed to add recipe");
+        if (!isEdit) alert("Failed to add recipe");
+        else alert("Failed to edit recipe")
     }
 }
