@@ -1,12 +1,11 @@
 /**
  * 
- * @param {string} courseType 
- * @param {url} image 
- * @param {string} name 
- * @param {string} description 
- * @returns an article element (recipe card)
+ * @param {object} recipe 
+ * @returns this creates an article (recipe card)
  */
-export function createCard(courseType, image, name, description) {
+export function createCard(recipe) {
+    const {courseType, image, name, description} = recipe;
+
     const article = document.createElement('article');
     article.className = "card";
     article.innerHTML = `
@@ -15,5 +14,6 @@ export function createCard(courseType, image, name, description) {
     <p class="RecipeName">${name}</p>
     <p class="RecipeDescription">${description}</p>
     `;
+    
     return article;
 }

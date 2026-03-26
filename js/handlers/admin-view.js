@@ -37,7 +37,7 @@ function renderRecipes() {
     const container = document.getElementById('main');
     container.innerHTML = "";
     recipes.forEach(recipe => {
-        const article = createCard(recipe.courseType, recipe.image, recipe.name, recipe.description);
+        const article = createCard(recipe);
         const id = `A${recipe.id}`;
         article.id = id;
         
@@ -51,12 +51,8 @@ function renderRecipes() {
         deleteBtn.innerText = 'Delete';
         article.appendChild(deleteBtn);
 
-        article.querySelector('.EditBtn').addEventListener('click', () => {
-          editRecipe(recipe.id);
-        });
-        article.querySelector('.DeleteBtn').addEventListener('click', () => {
-          deleteRecipeView(recipe.id);
-        });
+        article.querySelector('.EditBtn').addEventListener('click', () => editRecipe(recipe.id));
+        article.querySelector('.DeleteBtn').addEventListener('click', () => deleteRecipeView(recipe.id));
 
         container.appendChild(article);
     });
