@@ -51,8 +51,8 @@ function renderRecipes() {
         deleteBtn.innerText = 'Delete';
         article.appendChild(deleteBtn);
 
-        article.querySelector('.EditBtn').addEventListener('click', () => editRecipe(recipe.id));
-        article.querySelector('.DeleteBtn').addEventListener('click', () => deleteRecipeView(recipe.id));
+        editBtn.addEventListener('click', () => editRecipe(recipe.id));
+        deleteBtn.addEventListener('click', () => deleteRecipeView(recipe.id));
 
         container.appendChild(article);
     });
