@@ -49,7 +49,7 @@ body.ready {
 }
 
 nav {
-    background-image: linear-gradient(to top,#ff4800, rgba(254, 137, 110, 0.996));
+    background-image: linear-gradient(to top,#ff4800, rgb(254, 137, 110));
     position: sticky;
     top: 0;
     width: 100%;
@@ -67,7 +67,7 @@ nav {
 
 .NavBrand {
     font-family: 'Great Vibes', cursive;
-    font-size: 2.25rem;
+    font-size: 3rem;
     color: whitesmoke;
     text-decoration: none;
 }
