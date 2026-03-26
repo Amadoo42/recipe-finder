@@ -1,7 +1,16 @@
 /**
+ * A recipe object used to render a recipe card.
+ * @typedef {Object} Recipe
+ * @property {string} courseType
+ * @property {string|URL} image
+ * @property {string} name
+ * @property {string} decription
+ */
+
+/**
  * 
- * @param {object} recipe 
- * @returns this creates an article (recipe card)
+ * @param {Recipe} recipe 
+ * @returns {HTMLArticleElement} The created article element representing the recipe.
  */
 export function createCard(recipe) {
     const {courseType, image, name, description} = recipe;
@@ -10,7 +19,7 @@ export function createCard(recipe) {
     article.className = "card";
     article.innerHTML = `
     <p class="CourseType">${courseType}</p>
-    <img class="RecipeImage" src="${image}">
+    <img class="RecipeImage" src="${image}" alt="${name}" loading="lazy">
     <p class="RecipeName">${name}</p>
     <p class="RecipeDescription">${description}</p>
     `;
