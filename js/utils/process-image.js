@@ -1,8 +1,5 @@
 // Logic for handling image data conversion and URL validation.
-
-function toggleUIComponent(component, value) {
-    component.classList.toggle("show", value);
-}
+import { toggleUIComponent } from "../handlers/add-recipe/ui-handler.js";
 
 // checks if a given image url is valid by trying to load it into an image object
 async function checkImageExists(url) {

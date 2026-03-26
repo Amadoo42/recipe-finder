@@ -1,4 +1,5 @@
 import { getRecipeById, getRecipes } from "../database/db-recipes.js";
+import { sharedData } from "./add-recipe/shared-data.js";
 
 /*
 This block of code reads the url and sees if it is edit page
@@ -10,7 +11,6 @@ const recipeID = params.get('RecipeID');
 const isEdit = params.get('Edit');
 
 let recipe = getRecipeById(recipeID);
-export let imageLoadedData = "";
 
 /**
  * @brief this only edits the html to make it edit page
@@ -65,7 +65,10 @@ function loadRecipe() {
 
         ingredients.appendChild(item);
     });
-    imageLoadedData = recipe.image;
+    sharedData.imageLoadedData = recipe.image;
+    sharedData.isEdit = isEdit;
+    sharedData.recipeID = recipeID;
+    sharedData.ingredients = recipe.ingredients;
 }
 
 if (isEdit) {
