@@ -1,4 +1,5 @@
 import { getRecipes, deleteRecipe } from "../database/db-recipes.js";
+import { createCard } from "../utils/create-card.js";
 
 let recipes = [];
 
@@ -36,26 +37,22 @@ function renderRecipes() {
     const container = document.getElementById('main');
     container.innerHTML = "";
     recipes.forEach(recipe => {
-        const article = document.createElement('article');
+        const article = createCard(recipe);
         const id = `A${recipe.id}`;
         article.id = id;
+        
+        const editBtn = document.createElement('button');
+        editBtn.className = 'EditBtn';
+        editBtn.innerText = 'Edit';
+        article.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'DeleteBtn';
+        deleteBtn.innerText = 'Delete';
+        article.appendChild(deleteBtn);
 
-        article.innerHTML = `
-            <img src="${recipe.image}">
-            <p>${recipe.name}</p>
-            <p>${recipe.description}</p>
-            <div>
-                <button class="EditBtn">Edit</button>
-                <button class="DeleteBtn">Delete</button>
-            </div>
-        `;
-
-        article.querySelector('.EditBtn').addEventListener('click', () => {
-          editRecipe(recipe.id);
-        })
-        article.querySelector('.DeleteBtn').addEventListener('click', () => {
-          deleteRecipeView(recipe.id);
-        })
+        editBtn.addEventListener('click', () => editRecipe(recipe.id));
+        deleteBtn.addEventListener('click', () => deleteRecipeView(recipe.id));
 
         container.appendChild(article);
     });
