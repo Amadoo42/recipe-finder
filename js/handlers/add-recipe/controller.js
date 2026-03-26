@@ -61,11 +61,11 @@ async function getImageData() {
     
     const result = await processOnlineImageURL(URL, UI.ERROR_MESSAGES.imageURLErrorMessage);
     if (result.valid && result.imageData) return createMessage(true, "Image URL is valid", result.imageData);
-    else if (!result.valid) return createMessage(false, "Image URL is invalid", "");
+    else if (!result.valid) return createMessage(false, "Image URL is invalid");
     
     if (isEdit) return createMessage(true, "Used the previously set image", loadedImageData);
 
-    return createMessage(true, "No Image Specefied", "");
+    return createMessage(true, "No Image Specefied");
 }
 
 function handleSaveResult(result) {
