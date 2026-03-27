@@ -1,0 +1,18 @@
+export const CSS_CLASSES = {
+    SHOW: 'show'
+};
+
+export const DEFAULT_VALUES = {
+    UNIT: 'Cups'
+};
+
+export const TEXT_VALUES = {
+    CREATE: {
+        HEADER: "Add Recipe",
+        SUBMIT_BUTTON: "Add Recipe"
+    },
+    EDIT: {
+        HEADER: "Edit Recipe",
+        SUBMIT_BUTTON: "Save Changes"
+    }
+}
