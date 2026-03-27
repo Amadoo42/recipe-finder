@@ -80,14 +80,14 @@ body {
     border-radius: 0.5rem;
     transition: all 0.3s ease-in-out;
     border: 4px solid transparent;
-    background: linear-gradient(whitesmoke, whitesmoke) padding-box, linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) border-box;
+    background: linear-gradient(var(--offWhiteColor), var(--offWhiteColor)) padding-box, linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) border-box;
     color: #E03F26;
     box-shadow: 0 4px 12px var(--shadowColor);
 }
 
 .BtnPrimary:hover {
     background: linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) padding-box, linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) border-box; 
-    color: whitesmoke;
+    color: var(--offWhiteColor);
     transform: translateY(-2px);
     box-shadow: 0 8px 24px -4px rgba(255, 2, 2, 0.4);
 }
