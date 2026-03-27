@@ -80,7 +80,7 @@ export function getUserFavourites() {
     if(userIndex === -1) {
         return createMessage(false, 'User not found');
     }
-
+    
     if(!users[userIndex].savedRecipes || users[userIndex].savedRecipes.length === 0) {
         return createMessage(true, 'No favourite recipes found', []);
     }
@@ -96,51 +96,3 @@ export function getUserFavourites() {
 
     return createMessage(true, 'Favourites retrieved successfully', favouriteRecipes);
 }
-
-/** ===============================================================================================
- * The following functions should actually be implemented in the UI layer...
- * We'll keep them here for now until the "Favourites dev" started implementing then
- * Then we can move them there
- */
-
-/**
- * @returns { number } The count of favourite recipes. 
- */
-export function countFavourites() {
-    let response = getUserFavourites();
-    if(response.success === false) {
-        return 0; // If the user is not authenticated or not found, we can consider that they have 0 favourites.
-    }
-    return getUserFavourites().data.length;
-}
-
-/**
- * @returns { boolean } True if the user's favourites list is empty, false otherwise. 
- */
-export function isFavouritesEmpty() {
-    return countFavourites() === 0;
-}
-
-/**
- * Filters the user's favourite recipes by course category.
- * @param { string } courseCategory - The category of courses to filter by.
- * @returns { Object } A message object containing the filtered favourite recipes. If no category is specified or if 'all' is specified, it will return all favourite recipes.
- */
-export function filterFavouriteRecipes(courseCategory) {
-    let response = getUserFavourites();
-    if(response.success === false) {
-        return createMessage(false, 'User not authenticated or not found');
-    }
-    let favourites = response.data;
-    if(!courseCategory || courseCategory.toLowerCase() === 'all') {
-        return createMessage(true, 'No course category specified. All favourite recipes were retrieved.', favourites);
-    }
-    let filtered = [];
-    for(let recipe of favourites) {
-        if(recipe.courseType.toLowerCase() === courseCategory.toLowerCase()) {
-            filtered.push(recipe);
-        }
-    }
-    return createMessage(true, 'Filtered favourite recipes retrieved successfully', filtered);
-}
-
