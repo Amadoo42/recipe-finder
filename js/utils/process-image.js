@@ -1,5 +1,5 @@
 // Logic for handling image data conversion and URL validation.
-import { toggleUIComponent } from "../handlers/add-recipe/ui-handler.js";
+import { createMessage } from "./create-message.js";
 
 // checks if a given image url is valid by trying to load it into an image object
 async function checkImageExists(url) {
@@ -13,37 +13,32 @@ async function checkImageExists(url) {
 
 // Converts a local into a base64 string
 export async function processUploadedImage(imageInputElement) {
-    let imageData = "";
     const toBase64 = file => new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
     });
     if (imageInputElement && imageInputElement.files && imageInputElement.files.length > 0) {
-        imageData = await toBase64(imageInputElement.files[0]);
+        const imageData = await toBase64(imageInputElement.files[0]);
+        return createMessage(true, "Local image stored successfully", imageData);
     }
-    return imageData
+    return createMessage(true, "No local image specified");
 }
 
 // Validates an online image URL and returns the URL string if valid
-export async function processOnlineImageURL(imageInputElement, errorMessageElement) {
-    let imageData = "";
-    let validImage = true;
+export async function processOnlineImageURL(imageInputElement) {
     const url = imageInputElement.value.trim();
 
     if (url) {
         const exists = await checkImageExists(url);
         if (exists) {
-            imageData = url;
-            toggleUIComponent(errorMessageElement, false);
+            return createMessage(true, "URL is valid", url);
         }
         else {
-            toggleUIComponent(errorMessageElement, true);
-            validImage = false;
+            return createMessage(false, "URL is invalid");
         }
     }
     else {
-        toggleUIComponent(errorMessageElement, false);
+        return createMessage(true, "No URL specified");
     }
-    return {imageData: imageData, valid: validImage};
 }

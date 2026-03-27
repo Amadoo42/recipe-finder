@@ -1,10 +1,9 @@
-import {createRecipeObject, createIngredientObject} from "../../utils/schema-factories.js";
-import {addRecipe, updateRecipe} from "../../database/db-recipes.js";
+import {createRecipeObject} from "../../utils/schema-factories.js";
+import {addRecipe, updateRecipe, getRecipeById} from "../../database/db-recipes.js";
 import {processUploadedImage,  processOnlineImageURL} from "../../utils/process-image.js"
-import { getRecipeById, getRecipes } from "../../database/db-recipes.js";
+import { createMessage } from "../../utils/create-message.js";
 import * as UI from "./ui-handler.js"
 import * as VALIDATOR from "../../utils/recipe-validator.js"
-import { createMessage } from "../../utils/create-message.js";
 
 // URL parameters to choose between edit mode and creation mode
 let isEdit;
@@ -17,14 +16,16 @@ let ingredients = [];
 // Validates the name, quantity inputs and appends a new list item to the ingredient list
 function addNewIngredient() {
     const {name, quantity, unit} = UI.getIngredientInput()
-    const {invalidName, invalidQuantity} = VALIDATOR.validateIngredientInput(name, quantity);
+
+
+    const trimmedName = name ? name.trim() : "";
+    const {invalidName: baseInvalidName, invalidQuantity} = VALIDATOR.validateIngredientInput(trimmedName, quantity);
+    const invalidName = baseInvalidName || trimmedName === "";
     
     UI.toggleUIComponent(UI.ERROR_MESSAGES.ingredientNameErrorMessage, invalidName);
     UI.toggleUIComponent(UI.ERROR_MESSAGES.quantityErrorMessage, invalidQuantity)
-
     if (invalidName || invalidQuantity) return;
-
-    ingredients.push({name, quantity, unit});
+    ingredients.push({name: trimmedName, quantity, unit});
 
     UI.renderIngredientList(ingredients, removeIngredient);
     UI.resetIngredientInput();
@@ -56,16 +57,16 @@ function addOtherUnit() {
 async function getImageData() {
     const {localImage, URL} = UI.getImageInput();
 
-    let inputImageData = await processUploadedImage(localImage);
-    if (inputImageData) return createMessage(true, "Loaded local image successfully", inputImageData);
+    let localImageResult = await processUploadedImage(localImage);
+    if (localImageResult.success && localImageResult.data) return createMessage(true, "Loaded local image successfully", localImageResult.data);
     
-    const result = await processOnlineImageURL(URL, UI.ERROR_MESSAGES.imageURLErrorMessage);
-    if (result.valid && result.imageData) return createMessage(true, "Image URL is valid", result.imageData);
-    else if (!result.valid) return createMessage(false, "Image URL is invalid");
+    const urlImageResult = await processOnlineImageURL(URL);
+    if (urlImageResult.success && urlImageResult.data) return createMessage(true, "Image URL is valid", urlImageResult.data);
+    else if (!urlImageResult.success) return createMessage(false, "Image URL is invalid");
     
     if (isEdit) return createMessage(true, "Used the previously set image", loadedImageData);
 
-    return createMessage(true, "No Image Specefied");
+    return createMessage(true, "No Image Specified");
 }
 
 function handleSaveResult(result) {
@@ -119,11 +120,13 @@ function init() {
     recipeID = params.get('RecipeID');
     isEdit = params.get('Edit');
 
-    let recipe = getRecipeById(recipeID);
     UI.renderHeader(isEdit);
-    if (isEdit) UI.renderRecipeDetails(recipe.name, recipe.courseType, recipe.description);
-    ingredients = [...recipe.ingredients];    
+    if (isEdit) {
+        let recipe = getRecipeById(recipeID);
+        UI.renderRecipeDetails(recipe.name, recipe.courseType, recipe.description);
+        ingredients = [...recipe.ingredients]; 
+        loadedImageData = recipe.image;
+    }
     UI.renderIngredientList(ingredients, removeIngredient);
-    loadedImageData = recipe.image;
 };
 init();

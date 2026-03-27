@@ -1,8 +1,9 @@
 // Contains RegEx patterns and logic for validating user input for the add-recipe page.
 
-// this object contains multiple regex pattenrs
+// This object contains multiple regex patterns
 export const REGEX = {
-    ALPHA_ONLY: /[^\p{L}\s]/u
+    ALPHA_ONLY: /[^\p{L}\s]/u,
+    DESCRIPTION_PATTERN: /[^\p{L}\p{N}\s,\/.\-']/u  // allows punctuation characters and digits
 }
 
 // tests a value against a given regex pattern
@@ -12,7 +13,7 @@ export function matchAgainstREGEX(value, regex) {
 
 export function validateRecipeInput(name, description, course) {
     const invalidName = matchAgainstREGEX(name, REGEX.ALPHA_ONLY);
-    const invalidDescription = matchAgainstREGEX(description, REGEX.ALPHA_ONLY);
+    const invalidDescription = matchAgainstREGEX(description, REGEX.DESCRIPTION_PATTERN);
     const invalidCourse = matchAgainstREGEX(course, REGEX.ALPHA_ONLY);
     return {invalidName, invalidDescription, invalidCourse};
 }
