@@ -16,7 +16,10 @@ export function createCard(recipe) {
     const {courseType, image, name, description} = recipe;
 
     const article = document.createElement('article');
+    const id = `A${recipe.id}`;
+    article.id = id;
     article.className = "card";
+    
     article.innerHTML = `
     <p class="CourseType">${courseType}</p>
     <img class="RecipeImage" src="${image}" alt="${name}" loading="lazy">

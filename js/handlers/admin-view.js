@@ -38,8 +38,6 @@ function renderRecipes() {
     container.innerHTML = "";
     recipes.forEach(recipe => {
         const article = createCard(recipe);
-        const id = `A${recipe.id}`;
-        article.id = id;
         
         const editBtn = document.createElement('button');
         editBtn.className = 'EditBtn';
