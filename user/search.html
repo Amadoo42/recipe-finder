@@ -17,27 +17,23 @@
             <button>Search</button>
         </div>
         <div id="filters">
-            <h2>Filter:</h2>
-            <label>Course:</label>
-            <select>
-                <option>All</option>
-                <option>Appetizer</option>
-                <option>Main</option>
-                <option>Dessert</option>
-            </select>
-            <button>Apply Filters</button>
+            <button data-category="All">All</button>
+            <button data-category="Main">Main Dish</button>
+            <button data-category="Appetizers">Appetizers</button>
+            <button data-category="Dessert">Dessert</button>
         </div>
         <hr />
-        <div id="results">
+        <main id="main">
             <article>
                 <p>Recipe Name</p>
                 <p>Short description of the recipe...</p>
                 <a href="recipe_details.html">
                     <button>View Details</button>
                 </a>
-                <br />
+                <br/>
                 <button>Add to Favourites</button>
             </article>
-        </div>
+        </main>
+        <script type="module" src="../js/handlers/user-view.js"></script>
     </body>
 </html>

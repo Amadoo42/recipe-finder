@@ -9,7 +9,7 @@
 
 /**
  * 
- * @param {Recipe} recipe 
+ * @param {Recipe} recipe
  * @returns {HTMLArticleElement} The created article element representing the recipe.
  */
 export function createCard(recipe) {
@@ -27,5 +27,9 @@ export function createCard(recipe) {
     <p class="RecipeDescription">${description}</p>
     `;
     
+    article.addEventListener('click', (e) => {
+        window.location.href = `recipe_details.html?recipeid=${id}`;
+    });
+
     return article;
 }
