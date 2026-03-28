@@ -10,6 +10,21 @@ import { retrieveLocalToken } from './db-auth.js';
 import { getRecipes } from './db-recipes.js';
 
 /**
+ * Gets the index of the currently authenticated user in the users table.
+ * @param { Array<Object> } users - The users collection.
+ * @param { string } sessionToken - The active session token.
+ * @returns { number } The index of the matching user, or -1 if not found.
+ */
+function getCurrentUserIndex(users, sessionToken) {
+    for(let i = 0; i < users.length; i++) {
+        if(users[i].token === sessionToken) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+/**
  * Toggles the favourite status of a recipe for the authenticated user.
  * If the recipe is already in the user's savedRecipes list, it will be removed; otherwise, it will be added.
  * @param { string } recipeId - The ID of the recipe to toggle as a favourite.
@@ -23,14 +38,7 @@ export function toggleFavourite(recipeId) {
     let sessionToken = sessionTokenObject.data.token;
 
     let users = readTable('users');
-    let userIndex = -1;
-
-    for(let i = 0; i < users.length; i++) {
-        if(users[i].token === sessionToken) {
-            userIndex = i;
-            break;
-        }
-    }
+    let userIndex = getCurrentUserIndex(users, sessionToken);
 
     if(userIndex === -1) {
         return createMessage(false, 'User not found');
@@ -68,14 +76,7 @@ export function getUserFavourites() {
     let sessionToken = sessionTokenObject.data.token;
 
     let users = readTable('users');
-    let userIndex = -1;
-
-    for(let i = 0; i < users.length; i++) {
-        if(users[i].token === sessionToken) {
-            userIndex = i;
-            break;
-        }
-    }
+    let userIndex = getCurrentUserIndex(users, sessionToken);
 
     if(userIndex === -1) {
         return createMessage(false, 'User not found');
