@@ -10,10 +10,9 @@
 /**
  * 
  * @param {Recipe} recipe
- * @param {function} onClick - callback fired when the card is clicked.
  * @returns {HTMLArticleElement} The created article element representing the recipe.
  */
-export function createCard(recipe, onClick) {
+export function createCard(recipe) {
     const {courseType, image, name, description} = recipe;
 
     const article = document.createElement('article');
@@ -29,8 +28,8 @@ export function createCard(recipe, onClick) {
     `;
     
     article.addEventListener('click', (e) => {
-        if(onClick) onClick(e);
+        window.location.href = `recipe_details.html?recipeid=${id}`;
     });
-    
+
     return article;
 }

@@ -63,9 +63,7 @@ function renderRecipes(){
     }
 
     recipes.forEach(recipe => {
-        const card = createCard(recipe, (e) => {
-            if(!e.target.classList.contains('FavBtn')) viewRecipe(recipe.id);
-        });
+        const card = createCard(recipe);
 
         const favBtn = document.createElement('button');
         favBtn.className = 'FavBtn';
