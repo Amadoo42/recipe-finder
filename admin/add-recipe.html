@@ -11,12 +11,7 @@
 </head>
 <body>
     
-    <nav>
-        <a href="dashboard.html">Admin Dashboard</a> | 
-        <a href="add-recipe.html">Add New Recipe</a> |
-        <a href="view-recipe.html">View Recipes</a> | 
-        <a href="../index.html">Logout</a>
-    </nav>
+    <nav></nav>
     <div class="TitleContainer">
         <h1 class="Title">
             Recipe Finder
@@ -30,17 +25,17 @@
 
         <form>
     
-            <h2 class="GreatVibesRegular" for="recipe">Recipe Details</h2>
+            <h2 for="recipe">Recipe Details</h2>
 
             <div class="SecondaryDiv">
 
                 <div>
-                    <label class="GreatVibesRegular" for="recipe-name">Recipe Name</label><br>
+                    <label for="recipe-name">Recipe Name</label><br>
                     <input type="text" class="DataField" name="recipe-name" placeholder="Enter recipe name" id="recipeName"><br>
                 </div>
         
                 <div>
-                    <label class="GreatVibesRegular" for="course">Course</label><br>
+                    <label for="course">Course</label><br>
                     <select class="DataField" name="course" id="course">
                         <option>Appetizers</option>
                         <option>Main</option>
@@ -50,38 +45,38 @@
             </div>
 
             <div id="descriptionContainer">
-                <label class="GreatVibesRegular" for="description">Description</label>
+                <label for="description">Description</label>
                 <textarea class="DataField" name="description" rows="6" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
                 <hr style="display: none;">
             </div>
 
             <div>
-                <label class="GreatVibesRegular">Select Image (Optional)</label><br>
+                <label>Select Image (Optional)</label><br>
                 <input class="DataField" id="imageSelector" type="file" accept="image/*">
             </div>
 
             <div>
-                <label class="GreatVibesRegular">Online Image URL (Optional)</label><br>
+                <label>Online Image URL (Optional)</label><br>
                 <input class="DataField" id="onlineImageSelector" type="text">
                 <p id="imageURLErrorMessage" class="ErrorMessage">Please make sure to input a valid image URL.</p>
             </div>
     
             <hr>
     
-            <h2 class="GreatVibesRegular" for="ingredients">Ingredients</h2>
+            <h2 for="ingredients">Ingredients</h2>
 
             <div class="SecondaryDiv">
                 <div>
-                    <label class="GreatVibesRegular" for="ingredient-name">Ingredient Name</label><br>
+                    <label for="ingredient-name">Ingredient Name</label><br>
                     <input class="DataField" type="text" id="ingredientName" name="ingredient-name" placeholder="e.g. Sugar">
                 </div>
 
                 <div>
-                    <label class="GreatVibesRegular" for="ingredient-name">Ingredient Quantity</label><br>
+                    <label for="ingredient-name">Ingredient Quantity</label><br>
                     <input class="DataField" type="number" id="quantity" name="quantity" placeholder="Amount" min="1">
                 </div>
                 <div>
-                    <label class="GreatVibesRegular" for="unit">Unit</label><br>
+                    <label for="unit">Unit</label><br>
                     <select class="DataField" name="unit" id="unit">
                         <option>Cups</option>
                         <option>Spoons</option>
@@ -101,7 +96,7 @@
 
         <div id="customUnitContainer">
             <div id="customUnitPrompt">
-                <label class="GreatVibesRegular">Enter a custom unit</label>
+                <label>Enter a custom unit</label>
                 <input class="DataField" type="text" name="custom-unit">
                 <div id="customUnitSubmitContainer">
                     <button id="cancelCustomUnit">Cancel</button>
@@ -120,5 +115,6 @@
     </div>
 
     <script type="module" src="../js/handlers/add-recipe/controller.js"></script>
+    <script type="module" src="../js/nav.js"></script>
 </body>
 </html>
