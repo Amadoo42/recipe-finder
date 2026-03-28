@@ -1,6 +1,8 @@
 import { createCard } from "../utils/create-card.js";
 import { toggleFavourite } from "../database/db-user.js";
 import { searchRecipes } from "../utils/search-recipes.js";
+import { setupSearch } from "../utils/setup-search.js";
+import { setupFilters } from "../utils/setup-filters.js";
 
 let currentQuery = "";
 let currentSource = "all";
@@ -11,46 +13,15 @@ let recipes = [];
  * @brief Initializes the user view 
  */
 function init() {
-    setupSearch();
-    setupFilters();
-    applySearchAndFilter();
-}
-
-/**
- * @brief Sets up event listeners for the search input and button
- */
-function setupSearch() {
-    const input = document.querySelector('#search input');
-    const button = document.querySelector('#search button');
-
-    button.addEventListener('click', () => {
-        currentQuery = input.value;
+    setupSearch((query) => {
+        currentQuery = query;
         applySearchAndFilter();
     });
-
-    input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            currentQuery = input.value;
-            applySearchAndFilter();
-        }
+    setupFilters((category) => {
+        currentCategory = category;
+        applySearchAndFilter();
     });
-}
-
-/**
- * @brief Sets up event listeners for the filter buttons
- */
-function setupFilters() {
-    const filterButtons = document.querySelectorAll('#filters button');
-
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            filterButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            currentCategory = btn.textContent.trim();
-            applySearchAndFilter();
-        });
-    });
+    applySearchAndFilter();
 }
 
 /**
@@ -92,7 +63,9 @@ function renderRecipes(){
     }
 
     recipes.forEach(recipe => {
-        const card = createCard(recipe);
+        const card = createCard(recipe, (e) => {
+            if(!e.target.classList.contains('FavBtn')) viewRecipe(recipe.id);
+        });
 
         const favBtn = document.createElement('button');
         favBtn.className = 'FavBtn';
@@ -103,8 +76,7 @@ function renderRecipes(){
             e.stopPropagation();
             handleFavorites(recipe.id);
         });
-        card.addEventListener('click', (e) => { if(!e.target.classList.contains('FavBtn'))viewRecipe(recipe.id)});
-
+        
         container.appendChild(card);
     })
 }
