@@ -28,7 +28,8 @@ export function createCard(recipe) {
     `;
     
     article.addEventListener('click', (e) => {
-        window.location.href = `recipe_details.html?recipeid=${id}`;
+        const targetPath = '/user/recipe_details.html'; 
+        window.location.href = `${window.location.origin}${targetPath}?recipeid=${id}`;
     });
 
     return article;
