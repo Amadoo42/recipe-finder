@@ -43,14 +43,6 @@ function handleFavorites(id){
 }
 
 /**
- * @brief Redirects the user to the recipe details page
- * @param {number} id 
- */
-function viewRecipe(id){
-    window.location.href = `recipe_details.html?recipeid=${id}`;
-}
-
-/**
  * @brief displays all recipe cards
  */
 function renderRecipes(){
