@@ -10,7 +10,7 @@ let currentCategory = "all";
 let recipes = [];
 
 /**
- * @brief this function initilizes the recipes array from database
+ * @brief this function initializes the recipes array from database
  * and sets up the search and filters
  */
 function init() {
@@ -26,7 +26,7 @@ function init() {
 }
 
 /**
- * @brief 
+ * @brief this is a wrapper function to get recipes and view them
  */
 function updateView(){
     recipes = searchRecipes(currentQuery, currentSource, currentCategory).data;
