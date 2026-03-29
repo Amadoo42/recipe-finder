@@ -19,10 +19,12 @@ export function createCard(recipe) {
     const id = `A${recipe.id}`;
     article.id = id;
     article.className = "card";
-    
+
+    const displayImage = image || '../assets/Egyptian-Koshari-1.jpg';
+
     article.innerHTML = `
     <p class="CourseType">${courseType}</p>
-    <img class="RecipeImage" src="${image}" alt="${name}" loading="lazy">
+    <img class="RecipeImage" src="${displayImage}" alt="${name}" loading="lazy">
     <p class="RecipeName">${name}</p>
     <p class="RecipeDescription">${description}</p>
     `;
