@@ -3,19 +3,14 @@ import { createMessage } from "./create-message.js";
 
 // checks if a given image url is valid by trying to load it into an image object
 async function checkImageExists(url) {
-    try {
-        if (!url.startsWith("http")) return false;
-        const res =  new Promise((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve(true); 
-            img.onerror = () => resolve(false);
-            img.src = url; 
-        });
-        return res;
-    }
-    catch(error) {
-        console.log(error);
-    }
+    const result = new Promise((resolve, reject) => {
+        if (!url.startsWith("http")) reject(new Error("Invalid URL"));
+        const img = new Image();
+        img.src = url;
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error("Invalid URL"));
+    });
+    return result;
 }
 
 // Converts a local into a base64 string
@@ -35,23 +30,15 @@ export async function processUploadedImage(imageInputElement) {
 // Validates an online image URL and returns the URL string if valid
 export async function processOnlineImageURL(imageInputElement) {
     const url = imageInputElement.value.trim();
-    let exist = false;
 
-    if (url) {
-        try {
-            exist = await checkImageExists(url);
-        }
-        catch (err) {
-            console.log(err);
-        }
-        if (exist) {
-            return createMessage(true, "URL is valid", url);
-        }
-        else {
-            return createMessage(false, "URL is invalid");
-        }
+    if (!url) return createMessage(true, "No URL specified");
+    
+    try {
+        await checkImageExists(url)
+        return createMessage(true, "URL is valid", url);
     }
-    else {
-        return createMessage(true, "No URL specified");
+    catch(error) {
+        console.log(error);
+        return createMessage(false, "URL is invalid");
     }
 }

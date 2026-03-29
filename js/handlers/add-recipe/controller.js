@@ -69,6 +69,7 @@ async function getImageData() {
     catch (err) {
         console.log(err);
     }
+    console.log(typeof(urlImageResult));
     if (urlImageResult.success && urlImageResult.data) return createMessage(true, "Image URL is valid", urlImageResult.data);
     else if (!urlImageResult.success) {
         UI.toggleUIComponent(UI.ERROR_MESSAGES.imageURLErrorMessage, true);
