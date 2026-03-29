@@ -24,8 +24,13 @@ export function searchRecipes(query, source, courseCategory = "all") {
 
     let found =[];
     for(let recipe of recipes) {
-        if(recipe.name.toLowerCase().includes(query.trim().toLowerCase()))
+        if(
+            recipe.name.toLowerCase().includes(query.trim().toLowerCase()) ||
+            recipe.description.toLowerCase().includes(query.trim().toLowerCase()) ||
+            recipe.ingredients.some(ingredient => ingredient.name.toLowerCase().includes(query.trim().toLowerCase()))    
+        ) {
             found.push(recipe);
+        }
     }
 
     return createMessage(true, `${found.length} recipes found matching the query.`, found);
