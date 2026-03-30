@@ -1,34 +1,30 @@
 import { readTable, writeTable } from "../database/db-core.js";
-
-const DEV_VALUES = {
-    ACTIVE: 'active',
-    DISABLED: 'disabled'
-};
+import { DEV_VALUES } from "../constants/devMode-constants.js";
 
 // Dev testing button
-const btn = document.getElementById('devModeBtn'); 
+const btn = document.getElementById('devModeBtn');
 
 /**
  * @brief Sets the correct data value for the button to give it a background color indicating its state.
  * @returns {void} no return value.
  */
-function setBtnData(){
-    if(btn)
-        btn.dataset.devMode = isDevActive() 
-        ? DEV_VALUES.ACTIVE : DEV_VALUES.DISABLED;
+function setBtnData() {
+    if (btn)
+        btn.dataset.devMode = isDevActive()
+            ? DEV_VALUES.ACTIVE : DEV_VALUES.DISABLED;
 }
 
 /**
  * @brief Toggles the dev mode for easier testing. bypasses authentication.
  * @returns {void} no return value.
  */
-export function toggleDevMode(e){
+export function toggleDevMode(e) {
     const newStateActive = !isDevActive();
 
-    if(newStateActive){
+    if (newStateActive) {
         writeTable('dev', DEV_VALUES.ACTIVE);
     }
-    else{
+    else {
         writeTable('dev', DEV_VALUES.DISABLED);
     }
 
@@ -40,16 +36,16 @@ export function toggleDevMode(e){
  * @brief Checks if the dev mode is active. Used by checkAuth() in auth.js. 
  * @returns {boolean} dev mode active or disabled.
  */
-export function isDevActive(){
+export function isDevActive() {
     const devAccess = readTable('dev');
-    if(devAccess)
+    if (devAccess)
         return devAccess === DEV_VALUES.ACTIVE;
     return false;
 }
 
 
 // Only works inside index.html
-if(btn){
+if (btn) {
     btn.addEventListener('click', toggleDevMode);
     setBtnData();
 }
