@@ -111,7 +111,7 @@ async function addRecipeHandler() {
     const image = await getImageData();
     if (!image.success) return;
 
-    const {name, description} = UI.getRecipeInput();
+    const {name, description, course} = UI.getRecipeInput();
     const {invalidName, invalidDescription} = VALIDATOR.validateRecipeInput(name, description);
     if (invalidName) {
         alert("Recipe name cannot include numbers or special characters");
