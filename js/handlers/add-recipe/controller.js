@@ -111,10 +111,14 @@ async function addRecipeHandler() {
     const image = await getImageData();
     if (!image.success) return;
 
-    const {name, description, course} = UI.getRecipeInput();
-    const {invalidName, invalidDescription, invalidCourse} = VALIDATOR.validateRecipeInput(name, description, course);
-    if (invalidName || invalidDescription || invalidCourse) {
-        alert("Recipe details cannot include numbers or special characters");
+    const {name, description} = UI.getRecipeInput();
+    const {invalidName, invalidDescription} = VALIDATOR.validateRecipeInput(name, description);
+    if (invalidName) {
+        alert("Recipe name cannot include numbers or special characters");
+        return;
+    }
+    else if (invalidDescription) {
+        alert("Recipe description can only include alphabet letters, numbers, spaces, commas, slashes (/), periods (.), hyphens (-), and apostrophes (')");
         return;
     }
 
