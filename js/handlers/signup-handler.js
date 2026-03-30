@@ -5,7 +5,7 @@ import { createUserObject } from '../utils/schema-factories.js';
 import { validation } from '../validation.js';
 import { REDIRECT } from '../constants/auth-constants.js';
 
-const signUpForm = document.getElementById('signUpForm');
+const signUpForm = document.getElementsByName('createUserForm')[0];
 
 /**
  * @summary Handles the success/failure messages and displays it to the user

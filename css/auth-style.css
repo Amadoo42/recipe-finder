@@ -1,58 +1,219 @@
-#btns {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    flex-direction: column;
-    gap: 10px;
+/* ─── Variables ─────────────────────────────────────────── */
+:root {
+    --clearGray: rgba(0, 0, 0, 0.4);
 }
 
-#submit {
-    padding: 15px;
+/* ─── Reset / Base ──────────────────────────────────────── */
+* {
+    box-sizing: border-box;
 }
 
-#clear {
-    padding: 5px;
+body {
+    min-height: 100vh;
 }
 
-#titleContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+p {
+    margin: 0;
 }
 
-#footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#mainCard {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin: 40px;
+img {
+    margin: 0;
 }
 
 h1 {
     margin: 32px;
 }
 
-input {
+/* ─── Links ─────────────────────────────────────────────── */
+a {
+    text-decoration: none;
+    color: rgb(255, 2, 2);
+}
+
+div#switchAuth a:hover {
+    color: blue;
+}
+
+/* ─── Card Layout ───────────────────────────────────────── */
+#cardContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 40px;
+}
+
+#cardWrapper {
+    display: grid;
+    place-items: center;
+}
+
+#ribbon,
+#mainCard {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#mainCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 100%;
+    max-width: 800px;
+    padding: 90px 40px 50px 40px;
+    border: 6px solid var(--navFooterColor);
+    box-shadow: 5px 5px 10px var(--shadowColor);
+    transition: box-shadow 0.3s ease;
+}
+
+#mainCard:hover {
+    box-shadow: 8px 8px 20px var(--shadowColor);
+}
+
+/* ─── Ribbon ────────────────────────────────────────────── */
+#ribbon {
+    align-self: start;
+    z-index: 10;
+    margin-top: -25px;
+    width: 350px;
+    display: grid;
+    place-items: center;
+}
+
+#ribbon img {
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    align-self: center;
+    display: block;
+}
+
+#ribbon h2 {
+    margin: 0;
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 40px;
+    padding-bottom: 40px;
+    color: var(--offWhiteColor);
+    font-family: 'Great Vibes', cursive;
+}
+
+/* ─── Form ──────────────────────────────────────────────── */
+#form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    width: 80%;
+}
+
+label {
+    font-weight: 600;
+    font-size: 20px;
+    margin-top: 8px;
+    letter-spacing: 1px;
+}
+
+.TextInputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* ─── Input Wrapper (icon + input row) ──────────────────── */
+.InputWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.InputWrapper i {
+    position: absolute;
+    width: 60px;
+    font-size: 25px;
+    color: gray;
+    text-align: center;
+    pointer-events: none;
+}
+
+form .InputWrapper input {
+    flex: 1;
+    height: 60px;
+    width: 100%;
+    padding-left: 50px;
+    border: none;
+    background-color: var(--backgroundColor);
+    transition: box-shadow 0.3s ease;
+}
+
+form .InputWrapper input:hover {
+    box-shadow: inset 0px 0px 5px var(--shadowColor);
+}
+
+/* ─── Buttons ───────────────────────────────────────────── */
+#btns {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+}
+
+#btns > input,
+#btns > button {
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#submit {
+    flex: 2;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#clear {
+    flex: 1;
     padding: 10px;
+    background:
+        linear-gradient(var(--offWhiteColor), var(--offWhiteColor)) padding-box,
+        linear-gradient(var(--clearGray), var(--clearGray)) border-box;
+    color: var(--clearGray);
 }
 
-input[type='text'],
-input[type='email'],
-input[type='password'] {
-    margin: 10px;
-    width: 400px;
+/* ─── Switch Auth (Sign in / Sign up link) ──────────────── */
+#switchAuth {
+    margin-top: 30px;
 }
 
-#cardTitle {
-    margin-top: 0px;
+#switchAuth p {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
 }
 
-fieldset {
-    border: 1px solid;
+/* ─── font awesome icons ──────────────────────────────── */
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.icon svg {
+    width: 30px;
+    height: 30px;
+    fill: var(--clearGray);
+}
+
+#submit svg {
+    fill: currentColor;
 }

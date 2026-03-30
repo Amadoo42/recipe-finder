@@ -1,80 +1,82 @@
 <!doctype html>
 <html data-auth-level="public">
-    <head>
-        <meta name="author" content="Muhammed Esmail" />
-        <meta charset="UTF-8" />
-        <title>Log In — Recipe Finder</title>
-        <script type="module" src="js/auth.js"></script>
-        <link rel="stylesheet" href="css/main.css" />
-        <link rel="stylesheet" href="css/auth-style.css" />
-    </head>
 
-    <body>
-        <nav></nav>
+<head>
+    <meta name="author" content="Muhammed Esmail" />
+    <meta charset="UTF-8" />
+    <title>Log In — Recipe Finder</title>
+    <script type="module" src="js/auth.js"></script>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/onboarding-page.css" />
+    <link rel="stylesheet" href="css/auth-style.css" />
+</head>
 
-        <hr />
-
-        <!-- H1 header -->
-
-        <div id="titleContainer">
-            <h1>Recipe Finder</h1>
-        </div>
-        <hr />
-
-        <!-- Sign in -->
-        <div id="mainCard">
-            <div id="cardTitleContainer">
-                <h2 id="cardTitle">Sign In</h2>
+<body>
+    <nav></nav>
+    
+    <!-- Page -->
+    <section id="cardContainer">
+        <img src="assets/leaf.png" class="BgLeaf TopLeaf" alt="Hand drawn leaf doodle">
+        <!-- <img src="assets/leaf.png" class="BgLeaf BottomLeaf" alt="Hand drawn leaf doodle"> -->
+        <div id="cardWrapper">
+            <div id="ribbon">
+                <img src="assets/ribbon.svg" aria-hidden="true"/>
+                <h2> Sign In </h2>
             </div>
-
-            <form name="loginUserForm" id="loginForm">
-                <!-- Credentials -->
-                <fieldset>
-                    <legend>Your Credentials</legend>
-
-                    <br />
-
-                    <label> Username: </label>
-                    <br />
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        placeholder="eg. Esmail0"
-                        required
-                    />
-                    <br /><br />
-
-                    <br />
-
-                    <label> Password </label><br />
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        minlength="8"
-                        placeholder="At least 8 characters"
-                        required
-                    />
-                    <br /><br />
-                </fieldset>
-
-                <br />
-
-                <!-- Sign in + Clear Form button -->
-                <div id="btns">
-                    <input type="submit" value="Sign In" id="submit" />
-                    <input type="reset" value="Clear" id="clear" />
+            <div id="mainCard">
+                <div id="pattern" aria-hidden="true">
+                    <img src="assets/pattern.svg">
                 </div>
-            </form>
+                <form name="loginUserForm" id="form">
+                    <!-- Credentials -->
+                    <div class="TextInputGroup">
+                        <label> USERNAME </label>
+                        <div class="InputWrapper">
+                            <i class="user icon"></i>
+                            <input type="text" id="username" name="username" placeholder="eg. Esmail0" required />
+                        </div>
+                    </div>
+
+                    <div class="TextInputGroup">
+                        <label> PASSWORD </label>
+                        <div class="InputWrapper">
+                            <i class="lock icon"></i>
+                            <input type="password" id="password" name="password" minlength="8"
+                                placeholder="At least 8 characters" required />
+                        </div>
+                    </div>
+
+                    <!-- Sign in + Clear Form button -->
+                    <div id="btns">
+                        <button type="submit" id="submit" class="BtnPrimary">
+                            <i class="signin icon"></i>
+                            Sign In
+                        </button>
+                        <input type="reset" value="Clear" id="clear" class="BtnPrimary" />
+                    </div>
+                </form>
+                <div id="switchAuth">
+                    <p>
+                        New to the kitchen? <a href="signup.html">Create new account</a>
+                    </p>
+                </div>
+            </div>
         </div>
-        <hr />
-        <!-- Footer -->
-        <div id="footer">
-            <p>
-                Don't have an account? <a href="signup.html">Create one here</a>
-            </p>
+    </section>
+    <!-- Footer -->
+    <footer class="SiteFooter">
+        <div class="FooterBrand">
+            <span class="GreatVibesRegular BrandText">Recipe Finder</span>
+            <span class="Copyright">&copy; Recipe Finder. All rights reserved.</span>
         </div>
-        <script type="module" src="js/handlers/login-handler.js"></script>
-    </body>
+        <div class="FooterLinks">
+            <!-- Add these pages later, hansebha zeena for now -->
+            <a href="/index.html">Privacy Policy</a>
+            <a href="/index.html">Terms of Service</a>
+            <a href="/index.html">Contact Us</a>
+        </div>
+    </footer>
+    <script type="module" src="js/handlers/login-handler.js"></script>
+</body>
+
 </html>
