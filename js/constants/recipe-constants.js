@@ -3,7 +3,8 @@ export const CSS_CLASSES = {
 };
 
 export const DEFAULT_VALUES = {
-    UNIT: 'Cups'
+    UNIT: 'Cups',
+    IMAGE: '/assets/Egyptian-Koshari-1.jpg'
 };
 
 export const TEXT_VALUES = {

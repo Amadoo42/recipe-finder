@@ -64,12 +64,12 @@ function renderRecipes() {
         
         const editBtn = document.createElement('button');
         editBtn.className = 'EditBtn';
-        editBtn.innerText = 'Edit';
+        editBtn.innerHTML = '<span>✎</span> Edit';
         article.appendChild(editBtn);
         
         const deleteBtn = document.createElement('button');
         deleteBtn.className = 'DeleteBtn';
-        deleteBtn.innerText = 'Delete';
+        deleteBtn.innerText = '🗑';
         article.appendChild(deleteBtn);
 
         editBtn.addEventListener('click', (e) => {

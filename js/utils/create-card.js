@@ -1,3 +1,4 @@
+import { DEFAULT_VALUES } from "../constants/recipe-constants.js";
 /**
  * A recipe object used to render a recipe card.
  * @typedef {Object} Recipe
@@ -20,7 +21,7 @@ export function createCard(recipe) {
     article.id = id;
     article.className = "card";
 
-    const displayImage = image || '../assets/Egyptian-Koshari-1.jpg';
+    const displayImage = image || DEFAULT_VALUES.IMAGE;
 
     article.innerHTML = `
     <p class="CourseType">${courseType}</p>
