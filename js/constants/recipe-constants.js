@@ -8,7 +8,7 @@ export const DEFAULT_VALUES = {
 
 export const TEXT_VALUES = {
     CREATE: {
-        HEADER: "Add Recipe",
+        HEADER: "Add a New Recipe",
         SUBMIT_BUTTON: "Add Recipe"
     },
     EDIT: {

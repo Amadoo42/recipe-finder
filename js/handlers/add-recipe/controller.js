@@ -58,12 +58,25 @@ async function getImageData() {
     const {localImage, URL} = UI.getImageInput();
 
     let localImageResult = await processUploadedImage(localImage);
-    if (localImageResult.success && localImageResult.data) return createMessage(true, "Loaded local image successfully", localImageResult.data);
+    if (localImageResult.success && localImageResult.data) {
+        return createMessage(true, "Loaded local image successfully", localImageResult.data);
+    }
     
-    const urlImageResult = await processOnlineImageURL(URL);
+    let urlImageResult;
+    try {
+        urlImageResult = await processOnlineImageURL(URL);
+    }
+    catch (err) {
+        console.log(err);
+    }
+    console.log(typeof(urlImageResult));
     if (urlImageResult.success && urlImageResult.data) return createMessage(true, "Image URL is valid", urlImageResult.data);
-    else if (!urlImageResult.success) return createMessage(false, "Image URL is invalid");
-    
+    else if (!urlImageResult.success) {
+        UI.toggleUIComponent(UI.ERROR_MESSAGES.imageURLErrorMessage, true);
+		return createMessage(false, "Image URL is invalid");
+	}
+    UI.toggleUIComponent(UI.ERROR_MESSAGES.imageURLErrorMessage, false);
+ 
     if (isEdit) return createMessage(true, "Used the previously set image", loadedImageData);
 
     return createMessage(true, "No Image Specified");
