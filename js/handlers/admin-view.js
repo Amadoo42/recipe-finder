@@ -40,7 +40,6 @@ function updateView(){
 function editRecipe(id){
     window.location.href = `add-recipe.html?RecipeID=${id}&Edit=1`;
 }
-
 /**
  * @brief this function deletes a recipe of certain id
  * @param {int} id 
