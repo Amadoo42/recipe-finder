@@ -26,7 +26,7 @@ export function initDB() {
     }
 
     let currentSession = localStorage.getItem('session');
-    if(currentSession === null || currentSession === undefined || currentSession === 'null'|| currentSession.trim() === '' || currentSession === 'undefined') {
+    if(currentSession === null || currentSession === undefined) {
         localStorage.removeItem('session'); // Just to be safe and ensure it's not set to some invalid value
     }
 }
