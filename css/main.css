@@ -1,7 +1,11 @@
 :root {
-    --backgroundColor: #f8eac5;
+    --backgroundColor: #faf1e0;
     --buttons: #ff654a;
     --textPrimary: #4c4842;
+    --navFooterColor: #E05843;
+    --fontBody: 'Plus Jakarta Sans', sans-serif;
+    --shadowColor: #8a94a5cb;
+    --offWhiteColor: #f5f1ea;
 }
 
 .GreatVibesRegular {
@@ -35,6 +39,8 @@ body {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.1s ease; /* A simple fade-in transition on page load. */
+    margin: 0;
+    padding: 0;
 }
 
 /* This is the body AFTER authentication. Change this to apply new style. */
@@ -44,7 +50,51 @@ body.ready {
 }
 
 nav {
-    min-height: 30px;
+    background-image: linear-gradient(to top,#ff4800, rgb(254, 137, 110));
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 50; /* This is to make it above everything else*/
+    box-shadow: 0 12px 32px -4px var(--shadowColor);
+}
+
+.NavContainer {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.NavBrand {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.NavLinks {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.NavLinks a {
+    text-decoration: none;
+    color: #691000;
+    font-family: var(--fontBody);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid transparent; 
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.NavLinks a:hover {
+    color: whitesmoke;
+    border-bottom: 2px solid whitesmoke;
 }
 
 .testingDevMode{

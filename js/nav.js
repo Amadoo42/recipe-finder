@@ -9,26 +9,37 @@ export function buildNav() {
     if (path.includes('/admin/')) pageType = 'Admin';
 
     const adminLinks = `
-      <a href="/admin/dashboard.html">Admin Dashboard</a> |
-      <a href="/admin/add-recipe.html">Add New Recipe</a> |
-      <a href="/admin/view-recipe.html">View Recipes</a> |
-      <a href="../index.html" id='logout-btn'>Logout</a>
+        <div class="NavContainer">
+            <a class="NavBrand" href="/admin/dashboard.html">Recipe Finder</a>
+            <div class="NavLinks">
+                <a href="/admin/add-recipe.html"><span class="material-symbols-rounded">add_circle</span>Add Recipe</a>
+                <a href="/admin/view-recipe.html"><span class="material-symbols-rounded">visibility</span>View Recipes</a>
+                <a href="../index.html" id="logout-btn"><span class="material-symbols-rounded">logout</span>Logout</a>
+            </div>
+        </div>
     `;
 
     const userLinks = `
-      <a href="/user/dashboard.html">User Dashboard</a> |
-      <a href="/user/search.html">Search & Browse</a> |
-      <a href="/user/favourites.html">My Favourites</a> |
-      <a href="../index.html" id='logout-btn'>Logout</a>
+        <div class="NavContainer">
+            <a class="NavBrand" href="/user/dashboard.html">Recipe Finder</a>
+            <div class="NavLinks">
+                <a href="/user/search.html"><span class="material-symbols-rounded">search</span>Browse</a>
+                <a href="/user/favourites.html"><span class="material-symbols-rounded">favorite</span>Favourites</a>
+                <a href="../index.html" id="logout-btn"><span class="material-symbols-rounded">logout</span>Logout</a>
+            </div>
+        </div>
     `;
 
     const guestLinks = `
-      <a href="/index.html">Home</a> |
-      <a href="/login.html">Login</a> |
-      <a href="/signup.html">Sign Up</a>
+        <div class="NavContainer">
+            <a class="NavBrand" href="/index.html">Recipe Finder</a>
+            <div class="NavLinks">
+                <a href="/index.html"><span class="material-symbols-rounded">home</span>Home</a>
+                <a href="/login.html"><span class="material-symbols-rounded">login</span>Login</a>
+                <a href="/signup.html"><span class="material-symbols-rounded">person_add</span>Sign Up</a>
+            </div>
+        </div>
     `;
-
-    console.log(pageType);
 
     switch (pageType) {
         case 'Admin':

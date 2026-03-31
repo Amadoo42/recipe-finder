@@ -1,0 +1,138 @@
+body {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+    font-family: var(--fontBody);
+    background-color: #FCF3D7;
+    color: var(--textPrimary);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.BgLeaf {
+    position: absolute;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: -9999;
+}
+
+.TopLeaf {
+    left: -4.5rem;
+    width: 22rem;
+    height:22rem;
+    object-fit: contain;
+}
+
+.BottomLeaf {
+    bottom: -5rem;
+    right: -4.5rem;
+    width: 22rem;
+    height: 22rem;
+    transform: rotate(180deg);
+    object-fit: contain;
+}
+
+.HeroSection {
+    flex: 1; /* This basically causes the hero section to grow and fill the empty space to place the footer at the bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+.HeroContent {
+    max-width: 78rem;
+}
+
+.HeroContent h1 {
+    font-size: clamp(3.75rem, 8vw, 6rem);
+    line-height: 1.1;
+    margin: 0 0 2rem 0;
+}
+
+.HeroContent p {
+    font-size: clamp(1.05rem, 2vw, 1.15rem);
+    line-height: 1.625;
+    max-width: 36rem;
+    margin: 0 auto 2rem auto;
+}
+
+.HeroActions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.BtnPrimary {
+    text-decoration: none;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    border: 4px solid transparent;
+    background: linear-gradient(var(--offWhiteColor), var(--offWhiteColor)) padding-box, linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) border-box;
+    color: #E03F26;
+    box-shadow: 0 4px 12px var(--shadowColor);
+}
+
+.BtnPrimary:hover {
+    background: linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) padding-box, linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) border-box; 
+    color: var(--offWhiteColor);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -4px rgba(255, 2, 2, 0.4);
+}
+
+.SiteFooter {
+    background-image: linear-gradient(to top, #ff0000, #ff6a00);
+    padding: 3rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.FooterBrand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.FooterBrand .BrandText {
+    color: whitesmoke;
+    font-size: 1.5rem;
+}
+
+.FooterBrand .Copyright {
+    font-size: 0.85rem;
+    color: #691000;
+}
+
+.FooterLinks {
+    display: flex;
+    gap: 2rem;
+}
+
+.FooterLinks a {
+    color: #691000;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    opacity: 0.8;
+}
+
+.FooterLinks a:hover {
+    color: whitesmoke;
+    opacity: 1;
+}
