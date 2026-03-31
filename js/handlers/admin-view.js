@@ -1,13 +1,36 @@
-import { getRecipes, deleteRecipe } from "../database/db-recipes.js";
+import { deleteRecipe } from "../database/db-recipes.js";
 import { createCard } from "../utils/create-card.js";
+import { setupSearch } from "../utils/setup-search.js";
+import { setupFilters } from "../utils/setup-filters.js";
+import { searchRecipes } from "../utils/search-recipes.js";
 
+let currentQuery = "";
+let currentSource = "all";
+let currentCategory = "all";
 let recipes = [];
 
 /**
- * @brief this function initilizes the recipes array from database
+ * @brief this function initializes the recipes array from database
+ * and sets up the search and filters
  */
 function init() {
-    recipes = getRecipes();
+    setupSearch((query)=>{
+        currentQuery = query;
+        updateView();
+    });
+    setupFilters((category)=>{
+        currentCategory = category;
+        updateView();
+    });
+    updateView();
+}
+
+/**
+ * @brief this is a wrapper function to get recipes and view them
+ */
+function updateView(){
+    recipes = searchRecipes(currentQuery, currentSource, currentCategory).data;
+    renderRecipes();
 }
 
 /**
@@ -38,8 +61,6 @@ function renderRecipes() {
     container.innerHTML = "";
     recipes.forEach(recipe => {
         const article = createCard(recipe);
-        const id = `A${recipe.id}`;
-        article.id = id;
         
         const editBtn = document.createElement('button');
         editBtn.className = 'EditBtn';
@@ -51,12 +72,17 @@ function renderRecipes() {
         deleteBtn.innerText = 'Delete';
         article.appendChild(deleteBtn);
 
-        editBtn.addEventListener('click', () => editRecipe(recipe.id));
-        deleteBtn.addEventListener('click', () => deleteRecipeView(recipe.id));
+        editBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            editRecipe(recipe.id)
+        });
+        deleteBtn.addEventListener('click', (e) => { 
+            e.stopPropagation();
+            deleteRecipeView(recipe.id) 
+        });
 
         container.appendChild(article);
     });
 }
 
 init();
-renderRecipes();

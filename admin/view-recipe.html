@@ -1,49 +1,48 @@
 <!doctype html>
 <html lang="en" data-auth-level="admin">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <!-- this is commented until i decide on the layout of this css page -->
-        <!-- <link rel = "stylesheet" href = "../css/main.css"> -->
-        <!-- <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> -->
-        <link href="../css/main.css" rel="stylesheet" />
-        <script type="module" src="../js/auth.js"></script>
-        <title>All recipes</title>
-    </head>
-    <body>
-        <nav></nav>
-        <hr />
-        <header>
-            <h1>Available Recipes</h1>
-            <div>
-                <input type="text" placeholder="Search for a recipe..." />
-                <button>Search</button>
-            </div>
-        </header>
-        <section>
-            <h2>Filter:</h2>
-            <label>Course:</label>
-            <select>
-                <option>All</option>
-                <option>Appetizer</option>
-                <option>Main</option>
-                <option>Dessert</option>
-            </select>
-            <button>Apply Filters</button>
-        </section>
-        <hr />
-        <main id="main">
-            <article>
-                <img src="" />
-                <p>Recipe Name</p>
-                <p>Short description of the recipe...</p>
-                <div>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                </div>
-            </article>
-        </main>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- this is commented until i decide on the layout of this css page -->
+    <!-- <link rel = "stylesheet" href = "../css/main.css"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"> -->
+    <link href="../css/main.css" rel="stylesheet" />
+    <script type="module" src="../js/auth.js"></script>
+    <title>All recipes</title>
+  </head>
 
-        <script type="module" src="../js/handlers/admin-view.js"></script>
-    </body>
+  <body>
+    <nav></nav>
+    <hr />
+    <header>
+      <h1>Available Recipes</h1>
+      <div id="search">
+        <input type="text" placeholder="Search for a recipe..." />
+        <button>Search</button>
+      </div>
+      <section>
+        <div id="filters">
+          <button data-category="All">All</button>
+          <button data-category="Main">Main Dish</button>
+          <button data-category="Appetizers">Appetizers</button>
+          <button data-category="Dessert">Dessert</button>
+        </div>
+      </section>
+    </header>
+
+    <hr />
+    <main id="main">
+      <article>
+        <img src="" />
+        <p>Recipe Name</p>
+        <p>Short description of the recipe...</p>
+        <div>
+          <button>Edit</button>
+          <button>Delete</button>
+        </div>
+      </article>
+    </main>
+
+    <script type="module" src="../js/handlers/admin-view.js"></script>
+  </body>
 </html>

@@ -3,12 +3,14 @@ import { createMessage } from "./create-message.js";
 
 // checks if a given image url is valid by trying to load it into an image object
 async function checkImageExists(url) {
-    return new Promise((resolve) => {
+    const result = new Promise((resolve, reject) => {
+        if (!url.startsWith("http")) reject(new Error("Invalid URL"));
         const img = new Image();
-        img.onload = () => resolve(true); 
-        img.onerror = () => resolve(false);
-        img.src = url; 
+        img.src = url;
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error("Invalid URL"));
     });
+    return result;
 }
 
 // Converts a local into a base64 string
@@ -29,16 +31,14 @@ export async function processUploadedImage(imageInputElement) {
 export async function processOnlineImageURL(imageInputElement) {
     const url = imageInputElement.value.trim();
 
-    if (url) {
-        const exists = await checkImageExists(url);
-        if (exists) {
-            return createMessage(true, "URL is valid", url);
-        }
-        else {
-            return createMessage(false, "URL is invalid");
-        }
+    if (!url) return createMessage(true, "No URL specified");
+    
+    try {
+        await checkImageExists(url)
+        return createMessage(true, "URL is valid", url);
     }
-    else {
-        return createMessage(true, "No URL specified");
+    catch(error) {
+        console.log(error);
+        return createMessage(false, "URL is invalid");
     }
 }
