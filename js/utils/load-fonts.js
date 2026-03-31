@@ -1,9 +1,11 @@
 /**
- * @brief Dynamically injects Google Fonts into the document head.
+ * @brief Dynamically injects Google Fonts and Material Symbols into the document head.
  * * @details Specifically, it:
- * - Creates preconnect links for each required font.
+ * - Creates preconnect links for fonts.googleapis.com and fonts.gstatic.com.
  * - Serves as a robust font injector and a single point of change to apply to all pages.
- * - Appends a link element for the Great Vibes CSS stylesheet.
+ * - Loads the Great Vibes font family for decorative text.
+ * - Loads the Plus Jakarta Sans font family (weights 200-800, normal and italic) for body text.
+ * - Loads the Material Symbols Rounded icon set for UI icons.
  * * @return {void} This function does not return a value.
  */
 export function loadGoogleFonts() {
@@ -36,7 +38,7 @@ export function loadGoogleFonts() {
     const link5 = document.createElement('link');
     link5.rel = 'stylesheet';
     link5.href = 
-        'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0';
+        'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap';
 
     head.append(link1);
     head.append(link2);

@@ -41,8 +41,6 @@ export function buildNav() {
         </div>
     `;
 
-    console.log(pageType);
-
     switch (pageType) {
         case 'Admin':
             document.querySelector('nav').innerHTML = adminLinks;
