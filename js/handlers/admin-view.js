@@ -64,12 +64,14 @@ function renderRecipes() {
         const editBtn = document.createElement('button');
         editBtn.className = 'EditBtn';
         editBtn.innerHTML = '<span>✎</span> Edit';
-        article.appendChild(editBtn);
         
         const deleteBtn = document.createElement('button');
+        const span = document.createElement('span');
         deleteBtn.className = 'DeleteBtn';
-        deleteBtn.innerText = '🗑';
-        article.appendChild(deleteBtn);
+        span.className = 'DeleteIcon';
+        span.classList.add('material-icons-outlined');
+        span.textContent = 'delete';
+        deleteBtn.append(span);
 
         editBtn.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -79,6 +81,14 @@ function renderRecipes() {
             e.stopPropagation();
             deleteRecipeView(recipe.id) 
         });
+
+        const subContainer = document.createElement('div');
+        subContainer.className = 'buttons';
+        subContainer.append(editBtn);
+        subContainer.append(deleteBtn);
+        
+        const details = article.querySelector('.Details');
+        details.append(subContainer);
 
         container.appendChild(article);
     });

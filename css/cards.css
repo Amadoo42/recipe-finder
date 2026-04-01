@@ -1,3 +1,10 @@
+:root {
+    --cardBackground: #fcf8f1;
+    --buttonHoverColorBg: #d84315;
+    --editColor: #930004;
+    --recipeNameColor: #332222;
+    --recipeDescriptionColor: #665555;
+}
 #main {
     display: grid;
     grid-template-columns: 1fr; 
@@ -23,12 +30,11 @@
 .card {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
     overflow: hidden;
-    background-color: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    background-color: var(--cardBackground);
+    box-shadow: 0 10px 20px var(--shadowColor);
     transform: translateY(-5px);
-    transition: all 1s ease;
+    transition: all 0.5s ease;
     position: relative;
     border-radius: 16px;
     cursor: pointer;
@@ -38,12 +44,11 @@
 .card:hover {
     transform: translateY(0);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    outline: 4px solid red;
+    outline: 4px solid var(--buttons);
 }
 
 .RecipeImage {
-    width: calc(100% + 2rem);
-    margin: -1rem -1rem 1rem -1rem;
+    width: 100%;
     object-fit: cover;
     height: 250px;
 }
@@ -54,7 +59,7 @@
     left: 0.5rem;
     z-index: 10;
 
-    background-color: #B1C5FF;
+    background-color: var(--buttons);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     margin: 0;
@@ -65,67 +70,20 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.DeleteBtn, .FavBtn {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    z-index: 10;
-
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: #eb665a;
-    color: white;
-    border: none;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
-}
-
-.DeleteBtn:hover {
-    transform: scale(1.1);
-    background-color: #d84315;
-}
-
-.EditBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: auto;
-
-    padding: 0.6rem 2rem;
-    background: transparent;
-    color: #930004;
-    border: 1.5px solid #930004;
-    border-radius: 50px;
-
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.5s ease;
-}
-
-.EditBtn:hover {
-    background-color: #930004;
-    color: white;
+.Details {
+    padding: 1rem;
 }
 
 .RecipeName {
     font-family: 'Georgia', serif; /*place holder*/
-    color: #332222; /*place holder*/
+    color: var(--recipeNameColor); /*place holder*/
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
 }
 
 .RecipeDescription {
-    font-family: 'Arial', sans-serif; /*place holder*/
-    color: #665555; /*place holder*/
+    font-family: var(--fontBody), 'Arial', sans-serif; /*place holder*/
+    color: var(--recipeDescriptionColor); /*place holder*/
     font-size: 0.9rem;
     line-height: 1.4;
     margin-bottom: 1.5rem;
