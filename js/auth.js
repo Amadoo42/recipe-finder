@@ -129,6 +129,7 @@ function devModeLogin() {
     return false;
 }
 
+
 /**
  * @summary Retrieves the user object associated with the local session token, if valid
  * @returns {UserWithoutSensitiveInfo|null} the user object if a valid session exists; otherwise, null
@@ -154,6 +155,27 @@ function getUserObjectFromLocalToken() {
 
     return userObject;
 }
+/**
+ * @summary strategy map for page autherization.
+ *
+ */
+const ACCESS_POLICIES = {
+    // always allow access to public pages
+    [PAGE_AUTH_LEVEL.PUBLIC]: (role) => {
+        console.log("Public Page: No Authentication Required");
+        return true;
+    },
+    // only allow access to admin pages for users with admin role
+    [PAGE_AUTH_LEVEL.PRIVATE]: (role) => {
+        console.log('Private Page: User Page');
+        return [PAGE_AUTH_LEVEL.USER, PAGE_AUTH_LEVEL.ADMIN].includes(role);
+    },
+    // allow access to private pages for logged in clients
+    [PAGE_AUTH_LEVEL.ADMIN]: (role) => {
+        console.log('Private Page: Admin Page');
+        return role === PAGE_AUTH_LEVEL.ADMIN;
+    }
+};
 
 /**
  * @summary Validates the user's access to a specific page based on their role and the page's authentication requirements
@@ -162,23 +184,12 @@ function getUserObjectFromLocalToken() {
  * @returns {boolean} - True if the user has access; otherwise, false
  */
 function validateAccess(role, requiredAuthLevel) {
-    // always allow access to public pages
-    if (requiredAuthLevel === PAGE_AUTH_LEVEL.PUBLIC) {
-        console.log("Public Page: No Authentication Required");
-        return true;
-    }
-    // allow access to private pages for logged in clients
-    else if (requiredAuthLevel === PAGE_AUTH_LEVEL.PRIVATE) {
-        console.log('Private Page: User Page');
-        return [PAGE_AUTH_LEVEL.USER, PAGE_AUTH_LEVEL.ADMIN].includes(role);
-    }
-    // only allow access to admin pages for users with admin role
-    else if (requiredAuthLevel === PAGE_AUTH_LEVEL.ADMIN) {
-        console.log('Private Page: Admin Page');
-        return role === PAGE_AUTH_LEVEL.ADMIN;
-    }
+    const policy = ACCESS_POLICIES[requiredAuthLevel];
     // if the requiredAuthLevel is not recognized, deny access by default
-    return false;
+    if (!policy)
+        return false;
+
+    return policy(role);
 }
 
 /**
