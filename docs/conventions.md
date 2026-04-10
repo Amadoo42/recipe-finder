@@ -26,6 +26,28 @@ To keep our history and issue tracker clean and readable, all commit messages an
 * `fix: resolve crash on login page`
 * `styl: update primary button color to match branding`
 
+## Issue Formatting Standard
+When creating a new issue, use the following structure to ensure clarity for all team members:
+
+### 1. Title
+Format: `<prefix>: Brief description of the task`, where `<prefix>` is one of: `feat`, `fix`, `styl`, `idea`, `refactor`, `docs`, `test`, `chore` (e.g., `feat: Add tooltips to all icons`).
+
+### 2. Description
+Provide a high-level summary of why this change is necessary and what it aims to achieve.
+
+### 3. Proposed Changes
+List specific UI elements or logic modules that will be affected. Use bullet points for readability:
+* **UI Components**: Mention specific buttons, nav bars, or pages.
+* **Styling**: Note if new CSS classes or global styles are required.
+
+### 4. Technical Details
+Identify the specific files or utility functions that need modification (e.g., `main.css`, `auth.js`).
+
+### 5. Acceptance Criteria
+Include a checklist of requirements that must be met for the issue to be considered "Done":
+* [ ] Requirement 1
+* [ ] Requirement 2
+
 ## Naming Standards
 | Target | Convention | Example |
 | :--- | :--- | :--- |
