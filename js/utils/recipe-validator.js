@@ -11,11 +11,10 @@ export function matchAgainstREGEX(value, regex) {
     return regex.test(value);
 }
 
-export function validateRecipeInput(name, description, course) {
+export function validateRecipeInput(name, description) {
     const invalidName = matchAgainstREGEX(name, REGEX.ALPHA_ONLY);
     const invalidDescription = matchAgainstREGEX(description, REGEX.DESCRIPTION_PATTERN);
-    const invalidCourse = matchAgainstREGEX(course, REGEX.ALPHA_ONLY);
-    return {invalidName, invalidDescription, invalidCourse};
+    return {invalidName, invalidDescription};
 }
 
 export function validateIngredientInput(name, quantity) {

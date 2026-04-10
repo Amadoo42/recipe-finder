@@ -1,0 +1,59 @@
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.DeleteIcon {
+  font-size: 40px;
+  color: inherit;
+
+  transition: transform 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+
+.DeleteBtn {
+    padding: 0.3rem;
+    border-radius: 50%;
+    background-color: var(--buttons);
+    color: white;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+.DeleteBtn:hover {
+    transform: scale(1.1);
+    background-color: var(--buttonHoverColorBg);
+    color: #000;
+}
+
+.EditBtn {
+    padding: 0.6rem 2rem;
+    background: transparent;
+    color: var(--editColor);/*place holder*/
+    border: 1.5px solid var(--editColor);/*place holder*/
+    border-radius: 50px;
+
+    width: 75%;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.35s ease;
+}
+
+.EditBtn:hover {
+    background-color: var(--buttons); /*place holder*/
+    color: white;
+    border-color: var(--buttons);
+}
