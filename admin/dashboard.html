@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="en" data-auth-level="admin">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Admin Dashboard</title>
-        <link href="../css/main.css" rel="stylesheet" />
-        <script type="module" src="../js/auth.js"></script>
-        <!-- <style>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link href="../css/main.css" rel="stylesheet" />
+    <link href="../css/dashboard.css" rel="stylesheet" />
+    <script type="module" src="../js/auth.js"></script>
+    <!-- <style>
         body{
             padding-top: 100px;
         }
@@ -22,27 +24,36 @@
             gap: 10px;
         }
     </style> -->
-    </head>
-    <body>
-        <nav></nav>
-        <hr />
-        <main>
-            <header>
-                <h1>Welcome!</h1>
-                <h2 data-username>Admin</h2>
-            </header>
-            <hr />
-            <section>
-                <nav>
-                    <a href="add-recipe.html">
-                        <button>Add recipes</button>
-                    </a>
-                    <br />
-                    <a href="view-recipe.html">
-                        <button>View recipes</button>
-                    </a>
-                </nav>
-            </section>
+</head>
+
+<body>
+    <nav></nav>
+
+    <div class="Page">
+        <main class="Container">
+            <div class="DashboardLeft">
+                <header>
+                    <h1>Welcome!</h1>
+                    <h2 class="Username" data-firstName>Admin</h2>
+                    <p class="Description">Create, edit, and help others find their new favorite meal.</p>
+                </header>
+
+                <section class="Actions">
+                        <a href="add-recipe.html">
+                            <button class="Btn">Add recipes</button>
+                        </a>
+                        
+                        <a href="view-recipe.html">
+                            <button class="Btn">View recipes</button>
+                        </a>
+                </section>
+            </div>
+
+            <div class="DashboardRight">
+                <img src="../assets/nutella tiramesu.jpg" alt="nutella tiramesu" />
+            </div>
         </main>
-    </body>
+    </div>
+</body>
+
 </html>

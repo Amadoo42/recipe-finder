@@ -4,11 +4,7 @@
  */
 export function setupSearch(onSearch) {
     const input = document.querySelector('#search input');
-    const button = document.querySelector('#search button');
-
-    button.addEventListener('click', () => {
-        onSearch(input.value);
-    });
+    
 
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {

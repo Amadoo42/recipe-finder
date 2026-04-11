@@ -1,0 +1,81 @@
+.Page {
+    display: flex;
+    align-items: center;
+    padding: 8vh 6vw;
+    background-color: var(--backgroundColor);
+}
+
+.Btn {
+    text-decoration: none;
+    font-weight: 600;
+    padding: 1rem 2.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    border: 4px solid transparent;
+    background: linear-gradient(var(--offWhiteColor), var(--offWhiteColor)) padding-box, linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) border-box;
+    color: #E03F26;
+    box-shadow: 0 4px 12px var(--shadowColor);
+    cursor: pointer;
+}
+
+.Btn:hover {
+    background: linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) padding-box, linear-gradient(to bottom right, rgb(255, 2, 2), #FF7860) border-box;
+    color: var(--offWhiteColor);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -4px rgba(255, 2, 2, 0.4);
+}
+
+.Container {
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10vw;
+}
+
+.DashboardLeft {
+    flex: 1;
+}
+
+.DashboardLeft h1 {
+    margin: 0 0 0.3rem 0;
+    line-height: 1;
+    font-size: clamp(4rem, 8vw, 7rem);
+}
+
+.Username {
+    font-family: var(--fontBody);
+    font-size: clamp(1.6rem, 3vw, 2.8rem);
+    font-weight: 500;
+    color: var(--textPrimary);
+    margin: 0 0 1.2rem 0;
+}
+
+.Description {
+    font-family: var(--fontBody);
+    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    color: #6b6460;
+    line-height: 1.75;
+    max-width: 480px;
+    margin: 0 0 3rem 0;
+}
+
+.Actions {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.DashboardRight {
+    flex: 0 0 clamp(620px, 42vw, 700px);
+}
+
+.DashboardRight img {
+    width: 100%;
+    height: clamp(620px, 55vh, 420px);
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 12px 32px -4px var(--shadowColor);
+    display: block;
+}

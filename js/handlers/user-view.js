@@ -59,7 +59,7 @@ function renderRecipes(){
 
         const favBtn = document.createElement('button');
         favBtn.className = 'FavBtn';
-        favBtn.innerText = 'Add to Favourites';
+        favBtn.innerHTML = '<span class="material-symbols-rounded">favorite</span>';
         card.appendChild(favBtn);
 
         favBtn.addEventListener('click', (e) => {
