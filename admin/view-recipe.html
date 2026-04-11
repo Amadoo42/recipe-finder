@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel = "stylesheet" href = "../css/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link href="../css/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
+    <link rel = "stylesheet" href = "../css/main.css">
     <link href="../css/cards.css" rel="stylesheet" />
     <link href="../css/search.css" rel="stylesheet" />
     <link href="../css/admin-buttons.css" rel="stylesheet" />
@@ -17,18 +16,17 @@
   <body>
     <nav></nav>
 
-    <header>
+    <header id="navigation">
       <div id="search">
         <input type="text" placeholder="Search for a recipe..." />
+        <span class="material-symbols-outlined" id="searchIcon">search</span>
       </div>
-      <section>
-        <div id="filters">
-          <button data-category="All">All</button>
-          <button data-category="Main">Main Dish</button>
-          <button data-category="Appetizers">Appetizers</button>
-          <button data-category="Dessert">Dessert</button>
-        </div>
-      </section>
+      <div id="filters">
+        <button data-category="All">All</button>
+        <button data-category="Main">Main Dish</button>
+        <button data-category="Appetizers">Appetizers</button>
+        <button data-category="Dessert">Dessert</button>
+      </div>
     </header>
 
 

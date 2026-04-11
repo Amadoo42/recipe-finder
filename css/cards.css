@@ -5,12 +5,14 @@
     --recipeNameColor: #332222;
     --recipeDescriptionColor: #665555;
 }
+
 #main {
     display: grid;
     grid-template-columns: 1fr; 
     width: 100%;
     gap: 1.5rem;
     padding: 1rem;
+    padding-top: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }

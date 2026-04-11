@@ -45,7 +45,7 @@ function editRecipe(id){
  * @param {int} id 
  */
 function deleteRecipeView(id){
-    if(confirm("Do you want to marry me?<3")){
+    if(confirm("Are you sure you want to delete this recipe?")){
         const article = document.getElementById(`A${id}`);
         article.remove();
         deleteRecipe(id);

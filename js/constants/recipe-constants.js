@@ -4,7 +4,7 @@ export const CSS_CLASSES = {
 
 export const DEFAULT_VALUES = {
     UNIT: 'Cups',
-    IMAGE: '/assets/recipeImage.png'
+    IMAGE: '../../assets/recipeImage.png'
 };
 
 export const TEXT_VALUES = {

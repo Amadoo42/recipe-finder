@@ -8,8 +8,6 @@
 
 .DeleteIcon {
   font-size: 40px;
-  color: inherit;
-
   transition: transform 0.2s ease, color 0.2s ease;
   cursor: pointer;
 }
@@ -18,7 +16,7 @@
 .DeleteBtn {
     padding: 0.3rem;
     border-radius: 50%;
-    background-color: var(--buttons);
+    background-color: #c5282d;
     color: white;
     border: none;
 
@@ -34,15 +32,14 @@
 
 .DeleteBtn:hover {
     transform: scale(1.1);
-    background-color: var(--buttonHoverColorBg);
-    color: #000;
+    background-color: #d30007;
 }
 
 .EditBtn {
     padding: 0.6rem 2rem;
     background: transparent;
-    color: var(--editColor);/*place holder*/
-    border: 1.5px solid var(--editColor);/*place holder*/
+    color: var(--buttons);/*place holder*/
+    border: 1.5px solid var(--buttons);/*place holder*/
     border-radius: 50px;
 
     width: 75%;
