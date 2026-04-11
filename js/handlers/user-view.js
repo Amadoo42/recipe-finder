@@ -49,8 +49,9 @@ function renderRecipes(){
     const container = document.getElementById('main');
     container.innerHTML = "";
 
-    const favIds = getUserFavourites().success ? getUserFavourites().data.map(r => String(r.id)) : [];
-
+    const favouritesResult = getUserFavourites();
+    const favIds = favouritesResult.success ? favouritesResult.data.map(r => String(r.id)) : [];
+    
     if (recipes.length === 0) {
         container.innerHTML = "<p>No recipes found.</p>";
         return;
