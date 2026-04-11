@@ -1,15 +1,13 @@
 /* === Variables === */
 :root {
-    --primary-red: #ac0000;
-    --error-red: #ae2012;
-    --bg-main: #f9eeee;
-    --bg-alt-light: #F7F1E5;
-    --bg-alt-dark: #dfd6c4;
-    --text-primary: #333;
-    --white: #ffffff;
-    --bg-error: rgba(255, 255, 255, 0.4);
-    --border-error: rgba(174, 32, 18, 0.2);
-    --transition-standard: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --primaryRed: #ac0000;
+    --errorRed: #ae2012;
+    --bgMain: #f9eeee;
+    --bgAltLight: #F7F1E5;
+    --bgAltDark: #dfd6c4;
+    --bgError: rgba(255, 255, 255, 0.4);
+    --borderError: rgba(174, 32, 18, 0.2);
+    --transitionStandard: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 
@@ -50,7 +48,7 @@ button:active {
 }
 
 h2 {
-    border-left: 5px solid var(--primary-red);
+    border-left: 5px solid var(--primaryRed);
     border-radius: 5px;
     padding-left: 10px;
 }
@@ -69,9 +67,9 @@ form > * {
     margin: auto;
     max-width: 70%;
     padding: 1rem;
-    border: solid 5px var(--primary-red);
+    border: solid 5px var(--primaryRed);
     border-radius: 20px;
-    background-color: var(--bg-main);
+    background-color: var(--bgMain);
 }
 
 .MainDiv > * {
@@ -158,11 +156,11 @@ li button {
 }
 
 #ingredientList li:nth-child(odd) {
-    background-color: var(--bg-alt-dark);
+    background-color: var(--bgAltDark);
 }
 
 #ingredientList li:nth-child(even) {
-    background-color: var(--bg-alt-light);
+    background-color: var(--bgAltLight);
 }
 
 .ItemContainer {
@@ -192,7 +190,7 @@ li button {
 }
 
 .DeleteBtn {
-    background-color: var(--white);
+    background-color: white;
     color: var(--buttons);
 }
 
@@ -218,9 +216,9 @@ li button {
 
 #customUnitPrompt {
     position: relative;
-    color: var(--error-red);
-    background-color: var(--bg-error);
-    border: 1px solid var(--border-error);
+    color: var(--errorRed);
+    background-color: var(--bgError);
+    border: 1px solid var(--borderError);
     border-radius: 6px;
     padding: 10px 14px;
     margin-top: 10px;
@@ -229,7 +227,7 @@ li button {
     max-height: 0px;
     overflow: hidden;
     transform: translateY(-10px);
-    transition: var(--transition-standard);
+    transition: var(--transitionStandard);
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -250,9 +248,9 @@ li button {
 /* === Error Messages === */
 .ErrorMessage {
     position: relative;
-    color: var(--error-red);
-    background-color: var(--bg-error);
-    border: 1px solid var(--border-error);
+    color: var(--errorRed);
+    background-color: var(--bgError);
+    border: 1px solid var(--borderError);
     border-radius: 6px;
     font-size: 0.95rem;
     font-weight: 500;
@@ -262,7 +260,7 @@ li button {
     overflow: hidden;
     display: block;
     transform: translateY(-10px);
-    transition: var(--transition-standard);
+    transition: var(--transitionStandard);
 }
 
 .ErrorMessage.show {
