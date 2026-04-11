@@ -41,6 +41,7 @@ body {
     transition: opacity 0.1s ease; /* A simple fade-in transition on page load. */
     margin: 0;
     padding: 0;
+    background-color: var(--backgroundColor);
 }
 
 /* This is the body AFTER authentication. Change this to apply new style. */

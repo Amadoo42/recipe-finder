@@ -1,0 +1,102 @@
+:root {
+    --cardBackground: #fcf8f1;
+    --buttonHoverColorBg: #d84315;
+    --editColor: #930004;
+    --recipeNameColor: #332222;
+    --recipeDescriptionColor: #665555;
+}
+
+#main {
+    display: grid;
+    grid-template-columns: 1fr; 
+    width: 100%;
+    gap: 1.5rem;
+    padding: 1rem;
+    padding-top: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@media (min-width: 700px) {
+    #main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1000px) {
+    #main {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--cardBackground);
+    box-shadow: 0 10px 20px var(--shadowColor);
+    transform: translateY(-5px);
+    transition: all 0.5s ease;
+    position: relative;
+    border-radius: 16px;
+    cursor: pointer;
+    outline: 4px solid rgba(0, 0, 0, 0);
+}
+
+.card:hover {
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    outline: 4px solid var(--buttons);
+}
+
+.RecipeImage {
+    width: 100%;
+    object-fit: cover;
+    height: 250px;
+}
+
+.CourseType {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 10;
+
+    background-color: var(--buttons);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: lighter;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.Details {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.RecipeName {
+    font-family: 'Georgia', serif; /*place holder*/
+    color: var(--recipeNameColor); /*place holder*/
+    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+}
+
+.RecipeDescription {
+    font-family: var(--fontBody), 'Arial', sans-serif; /*place holder*/
+    color: var(--recipeDescriptionColor); /*place holder*/
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    word-break:break-all;
+}
