@@ -74,6 +74,9 @@
 
 .Details {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .RecipeName {
@@ -89,4 +92,11 @@
     font-size: 0.9rem;
     line-height: 1.4;
     margin-bottom: 1.5rem;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    word-break:break-all;
 }
