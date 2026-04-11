@@ -1,5 +1,5 @@
 import { createCard } from "../utils/create-card.js";
-import { toggleFavourite } from "../database/db-user.js";
+import { toggleFavourite, getUserFavourites } from "../database/db-user.js";
 import { searchRecipes } from "../utils/search-recipes.js";
 import { setupSearch } from "../utils/setup-search.js";
 import { setupFilters } from "../utils/setup-filters.js";
@@ -49,6 +49,8 @@ function renderRecipes(){
     const container = document.getElementById('main');
     container.innerHTML = "";
 
+    const favIds = getUserFavourites().success ? getUserFavourites().data.map(r => String(r.id)) : [];
+
     if (recipes.length === 0) {
         container.innerHTML = "<p>No recipes found.</p>";
         return;
@@ -56,15 +58,26 @@ function renderRecipes(){
 
     recipes.forEach(recipe => {
         const card = createCard(recipe);
+        const isFavourited = favIds.includes(String(recipe.id));
 
         const favBtn = document.createElement('button');
         favBtn.className = 'FavBtn';
-        favBtn.innerHTML = '<span class="material-symbols-rounded">favorite</span>';
+        
+        const iconName = isFavourited ? 'favorite' : 'favorite_border';
+        favBtn.innerHTML = `<span class="material-symbols-outlined">${iconName}</span>`;
+        
+        if (isFavourited) favBtn.classList.add('active');
+
         card.appendChild(favBtn);
 
         favBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             handleFavorites(recipe.id);
+
+            const iconSpan = favBtn.querySelector('span');
+            const isActive = favBtn.classList.toggle('active');
+
+            iconSpan.textContent = isActive ? 'favorite' : 'favorite_border';
         });
         
         container.appendChild(card);

@@ -25,3 +25,10 @@
     transform: scale(1.1);
     background-color: var(--buttonHoverColorBg);
 }
+.FavBtn .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0; 
+}
+
+.FavBtn.active .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1;
+}

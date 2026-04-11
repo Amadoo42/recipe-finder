@@ -73,7 +73,7 @@
 
 .DashboardRight img {
     width: 100%;
-    height: clamp(620px, 55vh, 420px);
+    height: clamp(420px, 55vh, 620px);
     object-fit: cover;
     border-radius: 20px;
     box-shadow: 0 12px 32px -4px var(--shadowColor);
