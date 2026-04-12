@@ -1,18 +1,31 @@
-body {
-    background-color: var(--backgroundColor);
-    margin: 0;
-    padding: 0;
-    color: var(--textPrimary);
+/* === Variables === */
+:root {
+    --primaryRed: #ac0000;
+    --errorRed: #ae2012;
+    --bgMain: #f9eeee;
+    --bgAltLight: #F7F1E5;
+    --bgAltDark: #dfd6c4;
+    --bgError: rgba(255, 255, 255, 0.4);
+    --borderError: rgba(174, 32, 18, 0.2);
+    --transitionStandard: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-textarea {
-    width: 100%;
-    resize: none;
+
+/* === Base === */
+* {
     box-sizing: border-box;
 }
 
+body {
+    background-color: var(--backgroundColor);
+    color: var(--textPrimary);
+    margin: 0;
+    padding: 0;
+}
+
 button {
-    color: var(--buttons);
+    background-color: var(--buttons);
+    color: white;
     border: none;
     padding: 12px 24px;
     border-radius: 8px;
@@ -34,13 +47,29 @@ button:active {
     filter: brightness(80%);
 }
 
+h2 {
+    border-left: 5px solid var(--primaryRed);
+    border-radius: 5px;
+    padding-left: 10px;
+}
+
+label {
+    font-size: 1.2rem;
+}
+
+form > * {
+    margin-top: 25px;
+}
+
+
+/* === Main Container === */
 .MainDiv {
     margin: auto;
-    max-width: 65%;
-    padding: 15px;
-    border: solid 5px #ac0000;;
+    max-width: 70%;
+    padding: 1rem;
+    border: solid 5px var(--primaryRed);
     border-radius: 20px;
-    background-color: rgb(249, 238, 238);
+    background-color: var(--bgMain);
 }
 
 .MainDiv > * {
@@ -51,18 +80,6 @@ button:active {
     margin-top: 0;
 }
 
-label {
-    font-size: 20px;
-}
-
-#descriptionContainer {
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    min-height: 15vh;  
-}
-
 .AddRecipeHeader {
     font-weight: 400;
     font-style: normal;
@@ -70,26 +87,8 @@ label {
     color: var(--buttons);
 }
 
-h2 {
-    border-left: 5px solid #ac0000;
-    border-radius: 5px;
-    padding-left: 10px;
-}
 
-.DataField {
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    outline: none;
-    font-size: 20px;
-    padding: 8px 30px;
-    box-sizing: border-box;
-    background-color: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(2px);
-}
-
-#recipeName:focus {
-    border-color: brown;
-}
+/* === Recipe Details === */
 .SecondaryDiv {
     display: flex;
     gap: 40px;
@@ -97,10 +96,34 @@ h2 {
     align-items: flex-end;
 }
 
-form > * {
-    margin-top: 25px;
+#descriptionContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 8rem;  
 }
 
+.DataField {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    outline: none;
+    font-size: 1.1rem;
+    padding: 0.6rem 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(2px);
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+}
+
+#recipeName:focus {
+    border-color: brown;
+}
+
+
+/* === Ingredients === */
 #addIngredient {
     background-color: var(--buttons);
     color: white;
@@ -120,25 +143,24 @@ li {
     margin-bottom: 10px;
 }
 
-.IngredientName {
-    color: black;
-}
-
 li button {
     color: var(--buttons);
 }
 
+.IngredientName {
+    color: black;
+}
 
 #ingredientList li {
     margin: 0;
 }
 
 #ingredientList li:nth-child(odd) {
-    background-color: #dfd6c4;
+    background-color: var(--bgAltDark);
 }
 
 #ingredientList li:nth-child(even) {
-    background-color: #F7F1E5;
+    background-color: var(--bgAltLight);
 }
 
 .ItemContainer {
@@ -147,7 +169,7 @@ li button {
     align-items: center;
     flex: 1;
     background: none;
-    font-size: 20px;
+    font-size: 1.2rem;
     padding: 10px 15px;
     margin-bottom: 10px;
 }
@@ -157,98 +179,22 @@ li button {
     gap: 5px;
 }
 
-.ItemContainer div p {
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    color: var(--textPrimary);
-}
-
 .ItemContainer p {
     margin: 0;
     padding: 0;
     line-height: 1.2;
 }
 
-#addRecipeButtonContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.ItemContainer div p {
+    color: var(--textPrimary);
 }
 
-#addRecipe {
-    background-color: var(--buttons);
-    color: white;
-    width: 30%;
+.DeleteBtn {
+    background-color: white;
+    color: var(--buttons);
 }
 
-.ErrorMessage {
-    position: relative;
-    color: #ae2012;
-    background-color: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(174, 32, 18, 0.2);
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin-top: 10px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
-
-    height: 0px;
-    opacity: 0;
-    overflow: hidden;
-    transform: translateY(-10px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ErrorMessage.show {
-    transform: translateY(0);
-    height: 3vh;
-    opacity: 1;
-}
-
-#customUnitPrompt {
-    position: relative;
-    color: #ae2012;
-    background-color: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(174, 32, 18, 0.2);
-    border-radius: 8px;
-    padding: 10px 14px;
-    margin-top: 10px;
-    border-radius: 6px;
-    font-size: 0.95rem;
-    font-weight: 500;
-    max-height: 0px;
-    overflow: hidden;
-    transform: translateY(-10px);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 30%;
-
-    display: flex;
-    flex-direction: column;
-    gap: 20px;    
-}
-
-#customUnitPrompt.show {
-    transform: translateY(0);
-    max-height: 500px;
-}
-
-#customUnitSubmitContainer {
-    display: flex;
-    justify-content: space-between;
-}
-
-#addCustomUnit {
-    background-color: var(--buttons);
-    color: white;
-}
-
-#cancelCustomUnit {
-    background-color: var(--buttons);
-    color: white;
-}
-
+/* === Custom Unit Modal === */
 #customUnitContainer {
     position: fixed;
     top: 0;
@@ -268,7 +214,79 @@ li button {
     height: 100%;
 }
 
+#customUnitPrompt {
+    position: relative;
+    color: var(--errorRed);
+    background-color: var(--bgError);
+    border: 1px solid var(--borderError);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    max-height: 0px;
+    overflow: hidden;
+    transform: translateY(-10px);
+    transition: var(--transitionStandard);
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;    
+}
 
+#customUnitPrompt.show {
+    transform: translateY(0);
+    max-height: 500px;
+}
+
+#customUnitSubmitContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* === Error Messages === */
+.ErrorMessage {
+    position: relative;
+    color: var(--errorRed);
+    background-color: var(--bgError);
+    border: 1px solid var(--borderError);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-top: 1vh;
+    max-height: 0px;
+    opacity: 0;
+    overflow: hidden;
+    display: block;
+    transform: translateY(-10px);
+    transition: var(--transitionStandard);
+}
+
+.ErrorMessage.show {
+    transform: translateY(0);
+    height: auto;
+    max-height: 200px;
+    opacity: 1;
+    padding: 10px 14px;
+}
+
+
+/* === Add Recipe Button === */
+#addRecipeButtonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#addRecipe {
+    background-color: var(--buttons);
+    color: white;
+    width: 30%;
+}
+
+
+/* === Media Queries === */
 @media (max-width: 1300px) {
     .MainDiv {
         max-width: 90%;
@@ -279,6 +297,20 @@ li button {
         align-items: stretch;
     }
 
+    #descriptionContainer {
+        min-height: 8rem;
+    }
+
+    .DataField {
+        font-size: 16px;
+    }
+
+    textarea {
+        max-width: 100%;
+        height: 120px;
+        line-height: 30px;
+    }
+
     #customUnitPrompt {
         width: 80%;
         max-height: 200px;
@@ -287,24 +319,30 @@ li button {
     .ItemContainer {
         font-size: 16px;
     }
+}
+
+@media (max-width: 768px) {
+    .MainDiv {
+        max-width: 100%;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        padding: 1.5rem;
+    }
 
     #descriptionContainer {
-        width: 100%;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        min-height: 30vh;
+        min-height: 6rem;
     }
-    textarea {
-        max-width: 100%;
-        height: 120px;
-        line-height: 30px;
-        box-sizing: border-box;
+
+    #addRecipe {
+        width: 60%;
     }
+
     .DataField {
-        font-size: 16px;
+        max-width: 90%;
     }
-    .ErrorMessage.show {
-        height: 10vh;
+
+    #customUnitPrompt {
+        width: 80%;
     }
 }
