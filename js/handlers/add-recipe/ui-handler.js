@@ -1,4 +1,4 @@
-import * as CONST from '../../constants/recipe-constants.js'
+import * as CONST from '/js/constants/recipe-constants.js'
 
 // A centralized object containing references to all required HTML elements
 const DOM = {
@@ -41,6 +41,8 @@ const DOM = {
 export const ERROR_MESSAGES = {
     ingredientUnitErrorMessage: document.getElementById("customUnitErrorMessage"),
     ingredientNameErrorMessage: document.getElementById("ingredientNameErrorMessage"),
+    recipeNameErrorMessage: document.getElementById("recipeNameErrorMessage"),
+    recipeDescriptionErrorMessage: document.getElementById("recipeDescriptionErrorMessage"),
     quantityErrorMessage: document.getElementById("quantityErrorMessage"),
     imageURLErrorMessage: document.getElementById("imageURLErrorMessage")
 }

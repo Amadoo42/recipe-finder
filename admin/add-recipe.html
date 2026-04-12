@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/add-recipe.css">
-    <script type="module" src="../js/auth.js"></script> 
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/add-recipe.css">
+    <link rel="stylesheet" href="/css/error-message.css">
+    <script type="module" src="/js/auth.js"></script> 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
     <title>Add Recipe</title>
 </head>
@@ -44,6 +45,8 @@
                 <textarea class="DataField" name="description" rows="6" cols="40" placeholder="Write a short description of the recipe..."  id="description"></textarea><br>
                 <hr style="display: none;">
             </div>
+            <p id="recipeNameErrorMessage" class="ErrorMessage">Recipe name cannot include numbers or special characters</p>
+            <p id="recipeDescriptionErrorMessage" class="ErrorMessage">Recipe description can only include alphabet letters, numbers, spaces, commas, slashes (/), periods (.), hyphens (-), and apostrophes (')</p>
 
             <div>
                 <label>Select Image (Optional)</label><br>

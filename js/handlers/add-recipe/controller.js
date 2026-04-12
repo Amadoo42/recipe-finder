@@ -1,9 +1,10 @@
-import {createRecipeObject} from "../../utils/schema-factories.js";
-import {addRecipe, updateRecipe, getRecipeById} from "../../database/db-recipes.js";
-import {processUploadedImage,  processOnlineImageURL} from "../../utils/process-image.js"
-import { createMessage } from "../../utils/create-message.js";
+import {createRecipeObject} from "/js/utils/schema-factories.js";
+import {addRecipe, updateRecipe, getRecipeById} from "/js/database/db-recipes.js";
+import {processUploadedImage,  processOnlineImageURL} from "/js/utils/process-image.js"
+import { createMessage } from "/js/utils/create-message.js";
+import { toggleErrorMessage } from "/js/utils/error-message.js"
 import * as UI from "./ui-handler.js"
-import * as VALIDATOR from "../../utils/recipe-validator.js"
+import * as VALIDATOR from "/js/utils/recipe-validator.js"
 
 // URL parameters to choose between edit mode and creation mode
 let isEdit;
@@ -22,8 +23,8 @@ function addNewIngredient() {
     const {invalidName: baseInvalidName, invalidQuantity} = VALIDATOR.validateIngredientInput(trimmedName, quantity);
     const invalidName = baseInvalidName || trimmedName === "";
     
-    UI.toggleUIComponent(UI.ERROR_MESSAGES.ingredientNameErrorMessage, invalidName);
-    UI.toggleUIComponent(UI.ERROR_MESSAGES.quantityErrorMessage, invalidQuantity)
+    toggleErrorMessage(UI.ERROR_MESSAGES.ingredientNameErrorMessage, invalidName);
+    toggleErrorMessage(UI.ERROR_MESSAGES.quantityErrorMessage, invalidQuantity)
     if (invalidName || invalidQuantity) return;
     ingredients.push({name: trimmedName, quantity, unit});
 
@@ -38,7 +39,7 @@ function removeIngredient(index) {
 
 // Validates and adds a user-defined unit to the ingredient unit dropdown list
 function addOtherUnit() {
-    UI.toggleUIComponent(UI.ERROR_MESSAGES.ingredientUnitErrorMessage, false);
+    toggleErrorMessage(UI.ERROR_MESSAGES.ingredientUnitErrorMessage, false);
 
     const {newUnit, options} = UI.getOtherUnitData();
     const inputValidation = VALIDATOR.validateOtherUnitInput(newUnit, options);
@@ -47,7 +48,7 @@ function addOtherUnit() {
         UI.addOtherUnitOption(inputValidation.unique);
     }
     else {
-        UI.toggleUIComponent(UI.ERROR_MESSAGES.ingredientUnitErrorMessage, true);
+        toggleErrorMessage(UI.ERROR_MESSAGES.ingredientUnitErrorMessage, true);
         return;
     }
 
@@ -72,10 +73,10 @@ async function getImageData() {
     console.log(typeof(urlImageResult));
     if (urlImageResult.success && urlImageResult.data) return createMessage(true, "Image URL is valid", urlImageResult.data);
     else if (!urlImageResult.success) {
-        UI.toggleUIComponent(UI.ERROR_MESSAGES.imageURLErrorMessage, true);
+        toggleErrorMessage(UI.ERROR_MESSAGES.imageURLErrorMessage, true);
 		return createMessage(false, "Image URL is invalid");
 	}
-    UI.toggleUIComponent(UI.ERROR_MESSAGES.imageURLErrorMessage, false);
+    toggleErrorMessage(UI.ERROR_MESSAGES.imageURLErrorMessage, false);
  
     if (isEdit) return createMessage(true, "Used the previously set image", loadedImageData);
 
@@ -108,19 +109,18 @@ async function saveRecipe(recipe) {
 
 // Processes images (local or URL), maps ingredients, and sends the final object to the database.
 async function addRecipeHandler() {
+    toggleErrorMessage(UI.ERROR_MESSAGES.recipeNameErrorMessage, false);
+    toggleErrorMessage(UI.ERROR_MESSAGES.recipeDescriptionErrorMessage, false);
+
     const image = await getImageData();
     if (!image.success) return;
 
     const {name, description, course} = UI.getRecipeInput();
     const {invalidName, invalidDescription} = VALIDATOR.validateRecipeInput(name, description);
-    if (invalidName) {
-        alert("Recipe name cannot include numbers or special characters");
-        return;
-    }
-    else if (invalidDescription) {
-        alert("Recipe description can only include alphabet letters, numbers, spaces, commas, slashes (/), periods (.), hyphens (-), and apostrophes (')");
-        return;
-    }
+        toggleErrorMessage(UI.ERROR_MESSAGES.recipeNameErrorMessage, invalidName);
+        toggleErrorMessage(UI.ERROR_MESSAGES.recipeDescriptionErrorMessage, invalidDescription);
+
+    if (invalidName || invalidDescription) return;
 
     let recipe = createRecipeObject(name, description, course, ingredients, image.data);
     if (await saveRecipe(recipe)) {
