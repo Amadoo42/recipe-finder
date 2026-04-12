@@ -1,6 +1,11 @@
 /* ─── Variables ─────────────────────────────────────────── */
 :root {
     --clearGray: rgba(0, 0, 0, 0.4);
+    --clearGrayShadow: rgba(0, 0, 0, 0.6);
+    --errorMessageColor: #FF9C7C;
+    --errorBorderColor: #FF9C7C;
+    --successMessageColor: green;
+    --messageBackgroundColor: rgba(0, 0, 0, 0.8);
 }
 
 /* ─── Reset / Base ──────────────────────────────────────── */
@@ -187,6 +192,10 @@ form .InputWrapper input:hover {
     color: var(--clearGray);
 }
 
+#clear:hover {
+    box-shadow: 0 8px 24px -4px var(--clearGrayShadow);
+}
+
 /* ─── Switch Auth (Sign in / Sign up link) ──────────────── */
 #switchAuth {
     margin-top: 30px;
@@ -216,4 +225,32 @@ form .InputWrapper input:hover {
 
 #submit svg {
     fill: currentColor;
+}
+
+/* ─── Error message ──────────────────────────────── */
+.StatusMessage {
+    display: none;
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 5px;
+    font-size: 20px;
+    margin: 20px 0px;
+    text-align: center;
+    color: white;
+    background-color: var(--messageBackgroundColor);
+}
+
+.StatusMessage.Error,
+.StatusMessage.Success {
+    display: block;
+}
+
+.StatusMessage.Error {
+    border: 3px solid var(--errorBorderColor);
+    color: var(--errorMessageColor);
+}
+
+.StatusMessage.Success {
+    border: 2px solid var(--successMessageColor);
+    color: var(--successMessageColor);
 }

@@ -4,16 +4,9 @@ import { hash } from '../utils/hash.js';
 import { createUserObject } from '../utils/schema-factories.js';
 import { validation } from '../validation.js';
 import { REDIRECT } from '../constants/auth-constants.js';
+import { handleStatusMessage, clearMessage } from '/js/utils/error-message.js';
 
 const signUpForm = document.getElementsByName('createUserForm')[0];
-
-/**
- * @summary Handles the success/failure messages and displays it to the user
- * @param {Message} message The message object to display
- */
-function handleCreationMessage(message) {
-    alert(message.description);
-}
 
 /**
  * @summary Handles the form submission for the sign-up process, including validation and user creation
@@ -32,7 +25,7 @@ async function onSubmit(event) {
     const confirmPassword = userInput.confirmPassword;
 
     if (password !== confirmPassword) {
-        handleCreationMessage(createMessage(false, 'Passwords do not match!'));
+        handleStatusMessage(createMessage(false, 'Passwords do not match!'));
         return;
     }
     console.log(userInput);
@@ -40,7 +33,7 @@ async function onSubmit(event) {
     const validationMessage = validation(userInput);
 
     if (validationMessage.success === false) {
-        handleCreationMessage(validationMessage);
+        handleStatusMessage(validationMessage);
         return;
     }
 
@@ -59,7 +52,7 @@ async function onSubmit(event) {
     const message = await createUser(newUserObject);
 
     // Pass the message to the handler
-    handleCreationMessage(message);
+    handleStatusMessage(message);
 
     if (message.success === true) {
         REDIRECT.TO_LOGIN();
@@ -68,4 +61,5 @@ async function onSubmit(event) {
 
 if (signUpForm) {
     signUpForm.addEventListener('submit', onSubmit);
+    signUpForm.addEventListener('reset', clearMessage);
 }
