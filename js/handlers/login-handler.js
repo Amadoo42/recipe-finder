@@ -3,7 +3,7 @@ import { createMessage } from '../utils/create-message.js';
 import { hash } from '../utils/hash.js';
 import { PAGE_AUTH_LEVEL, REDIRECT } from '../constants/auth-constants.js';
 
-const loginForm = document.getElementById('loginForm');
+const loginForm = document.getElementsByName('loginUserForm')[0];
 
 /**
  * @summary Handles the success/failure messages and displays it to the user
