@@ -145,7 +145,9 @@ Tips:
 Set `session` in parsed object to:
 
 - `null` to start fully logged out
-- JSON string/object expected by your auth/session layer to simulate logged-in state
+- a plain token string (for example, `"demo-token"`) to simulate a restored logged-in session
+To pre-seed an authenticated session correctly, the matching user record in `users` must also have the same token value in its `token` field. For example, if `session` is set to `"demo-token"`, the user you expect to be logged in must include `token: "demo-token"`.
+If `session` is set but no user has the same `token`, session restore will not behave as an authenticated login. If unsure, keep `session: null` and log in normally after seeding.
 
 If unsure, keep `session: null` and log in normally after seeding.
 
