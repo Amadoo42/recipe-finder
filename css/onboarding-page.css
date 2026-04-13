@@ -22,17 +22,17 @@ body {
 }
 
 .TopLeaf {
-    left: -4.5rem;
-    width: 22rem;
-    height:22rem;
+    left: -1.5rem;
+    width: 16rem;
+    height: 16rem;
     object-fit: contain;
 }
 
 .BottomLeaf {
     bottom: -5rem;
-    right: -4.5rem;
-    width: 22rem;
-    height: 22rem;
+    right: -1.5rem;
+    width: 16rem;
+    height: 16rem;
     transform: rotate(180deg);
     object-fit: contain;
 }
