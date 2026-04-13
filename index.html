@@ -12,13 +12,62 @@
 </head>
 
 <body>
-    <img src="assets/laurel_leaf.svg" class="BgLeaf TopLeaf" alt="Hand drawn leaf doodle">
+    <img src="assets/leaf.png" class="BgLeaf TopLeaf" alt="Hand drawn leaf doodle">
     
     <nav></nav>
     
     <!-- <div class="testingDevMode">
         <button id="devModeBtn">Testing: Enable Developer Mode</button>
     </div> -->
+    
+    <main class="HeroSection">
+        <img src="assets/leaf.png" class="BgLeaf BottomLeaf" alt="Hand drawn leaf doodle">
+        <div class="HeroContent">
+            <h1>Welcome to Recipe Finder</h1>
+            <p>Connect with others, browse available recipes, and discover detailed cooking instructions.</p>
+            <div class="HeroActions">
+                <a href="login.html" class="BtnPrimary">Login</a>
+                <a href="signup.html" class="BtnPrimary">Sign Up</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="SiteFooter">
+        <div class="FooterBrand">
+            <span class="GreatVibesRegular BrandText">Recipe Finder</span>
+            <span class="Copyright">&copy; Recipe Finder. All rights reserved.</span>
+        </div>
+        <div class="FooterLinks">
+            <!-- Add these pages later, hansebha zeena for now -->
+            <a href="/index.html">Privacy Policy</a>
+            <a href="/index.html">Terms of Service</a>
+            <a href="/index.html">Contact Us</a>
+        </div>
+    </footer>
+</body>
+<!DOCTYPE html>
+<html lang="en" data-auth-level="public">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder - Home</title>
+
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/onboarding-page.css" rel="stylesheet">
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/utils/seed-data.js"></script>
+
+</head>
+
+<body>
+    <img src="assets/laurel_leaf.svg" class="BgLeaf TopLeaf" alt="Hand drawn leaf doodle">
+    
+    <nav></nav>
+    
+    <div class="testingDevMode">
+        <button id="devModeBtn">Testing: Enable Developer Mode</button>
+        <button id="seedData" onclick="seedDatabase()">Load dummy data</button>
+    </div>
     
     <main class="HeroSection">
         <img src="assets/laurel_leaf.svg" class="BgLeaf BottomLeaf" alt="Hand drawn leaf doodle">
