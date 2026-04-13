@@ -6,27 +6,27 @@
     --recipeDescriptionColor: #665555;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
 #main {
     display: grid;
-    grid-template-columns: 1fr; 
+    justify-content: center;
+
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     width: 100%;
     gap: 1.5rem;
-    padding: 1rem;
-    padding-top: 2rem;
-    max-width: 1200px;
+    padding: 2rem 5vw;
+    max-width: 1400px;
     margin: 0 auto;
-}
-
-@media (min-width: 700px) {
-    #main {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 1000px) {
-    #main {
-        grid-template-columns: repeat(3, 1fr);
-    }
 }
 
 .card {
@@ -41,6 +41,11 @@
     border-radius: 16px;
     cursor: pointer;
     outline: 4px solid rgba(0, 0, 0, 0);
+    height: 100%;
+
+    max-width: 450px; 
+    width: 100%;
+    margin: 0 auto;
 }
 
 .card:hover {
@@ -51,8 +56,10 @@
 
 .RecipeImage {
     width: 100%;
+
+    aspect-ratio: 16/9;
     object-fit: cover;
-    height: 250px;
+    display: block;
 }
 
 .CourseType {
@@ -62,6 +69,7 @@
     z-index: 10;
 
     background-color: var(--buttons);
+    color: white;
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     margin: 0;
@@ -83,7 +91,7 @@
     font-family: 'Georgia', serif; /*place holder*/
     color: var(--recipeNameColor); /*place holder*/
     margin-bottom: 0.5rem;
-    font-size: 1.4rem;
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
 }
 
 .RecipeDescription {
@@ -94,9 +102,22 @@
     margin-bottom: 1.5rem;
 
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
     overflow: hidden;
 
-    word-break:break-all;
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
+
+@media (max-width: 480px) {
+    #main {
+        grid-template-columns: 1fr; 
+        padding: 1.5rem 1rem;
+    }
+    
+    .card {
+        max-width: 100%;
+    }
+}
+
