@@ -7,14 +7,13 @@
 }
 
 .DeleteIcon {
-  font-size: 40px;
   transition: transform 0.2s ease, color 0.2s ease;
   cursor: pointer;
 }
 
 
 .DeleteBtn {
-    padding: 0.3rem;
+    padding: 0.65rem;
     border-radius: 50%;
     background-color: #c5282d;
     color: white;
