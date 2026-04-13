@@ -1,0 +1,116 @@
+:root {
+    /* we'll keep a variable for the spacing of doodles here and adjust it later */
+    --doodle-spacing: 8vw;
+}
+
+.RecipeDetailsContainer {
+    width: calc(100% - (var(--doodle-spacing) * 2)); /* remove the doodle spacing form both sides */
+    max-width: 900px;
+    margin: 3rem auto 5rem auto;
+    padding: 2.5rem;
+    background-color: whitesmoke;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: var(--fontBody);
+    color: var(--textPrimary);
+}
+
+#recipeName {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.HeroImageContainer {
+    position: relative;
+    width: 100%;
+    max-height: 450px;
+    background-color: whitesmoke;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+#recipeImage {
+    width: 100%;
+    height: 100%;
+    max-height: 450px;
+    aspect-ratio: 16 / 9;
+    object-fit: scale-down;
+}
+
+#favBtn {
+    top: 1rem;
+    right: 1rem;
+    width: 45px;
+    height: 45px;
+}
+
+#course {
+    font-size: 1rem;
+    text-transforM: uppercase;
+    letter-spacing: 2px;
+    color: var(--buttons);
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
+#recipeDescription {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    color: var(--textPrimary);
+    overflow-x: hidden;
+}
+
+.IngredientsSection {
+    border-top: 2px solid rgba(0, 0, 0, 0.05);
+    padding-top: 2rem;
+}
+
+.IngredientsSection h2 {
+    color: var(--buttons);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+#ingredientList {
+    padding-left: 1.25rem;
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+#ingredientList li {
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    display: list-item;
+}
+
+#ingredientList li:last-child {
+    border-bottom: none;
+}
+
+.IngAmount {
+    display: inline-block;
+    background-color: whitesmoke;
+    color: var(--buttons);
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-right: 0.75rem;
+    min-width: 80px;
+    text-align: center;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.IngName {
+    font-weight: 500;
+    color: var(--textPrimary);
+}
