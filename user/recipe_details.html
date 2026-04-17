@@ -5,8 +5,10 @@
         <title>Recipe Details</title>
         <link href="../css/main.css" rel="stylesheet" />
         <link href="../css/recipe-details.css" rel="stylesheet" />
+        <link href="../css/favourite-button.css" rel="stylesheet" />
         <script type="module" src="../js/auth.js"></script>
         <script type="module" src="../js/handlers/recipe-details.js"></script>
+
     </head>
     <body>
         <nav></nav>
@@ -15,7 +17,9 @@
             <div id ="recipeUp">
                 
                    <span id="courseBadge"><p id="course"></p></span>
-                   <button id="favBtn">♡</button>
+                   <button class="FavBtn" id="favBtn">
+                        <span class="material-symbols-rounded">favorite</span>
+                   </button>
                    <img src="placeholder.png" alt="Main Dish" id="recipeImage" />
 
                 <div id="bottom">
