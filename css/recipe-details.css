@@ -13,20 +13,31 @@
 
 #recipeUp {
     position: relative;
-    width: 60%;
-    height: 500px;
+    background: rgba(255, 112, 68, 0.285);
+    height:500px;
     overflow: hidden;
     border-radius: 16px 16px 0 0;  /* rounds only top corners to match the card */
     margin: 0 auto;
                    
 }
+.ImgContainer{
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 
 #recipeImage {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
+    max-height: 500px;
+    aspect-ratio: 16/9;
+    border-radius:1.5 rem;
+    margin-bottom: 1.5rem;
+    object-fit: scale-down;
+    
 }
 #courseBadge {
     position: absolute;
@@ -44,9 +55,12 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;                          /* stretch full width */
+    right: 0;                          
     padding: 2rem 1rem 1rem;
     background: linear-gradient(transparent, rgba(44, 1, 1, 0.647));
+}
+#recipeName{
+    font-family: var(--fontBody);
 }
 
 #course {
@@ -72,8 +86,7 @@
     background: rgba(255, 55, 0, 0.05);   /* soft tint matching your orange theme */
     border-left: 3px solid rgb(255, 55, 0);
     border-radius: 0 8px 8px 0;
-    overflow-wrap: break-word;             /* prevents long words from overflowing */
-    font-style: italic;                    /* gives it a nice "quote" feel */
+    overflow-wrap: break-word;             /* prevents long words from overflowing */                
 }
 #recipeBody {
     padding: 1rem 2rem 1.5rem 0.5rem;  /* left padding smaller */
