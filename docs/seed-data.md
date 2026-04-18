@@ -18,15 +18,16 @@ This utility is intentionally destructive by design (for local development only)
 
 When called, `seedDatabase`:
 
-1. Parses a hardcoded JSON string (`dummyData`) into an object.
-2. Shows a confirmation dialog warning that existing local data will be replaced.
-3. If confirmed:
+1. Shows a confirmation dialog warning that existing local data will be replaced.
+2. If confirmed:
    - clears `localStorage`
-   - writes each non-null key from parsed data into `localStorage`
-4. Logs success in the browser console.
-5. Asks whether to reload the page.
-6. If accepted, reloads so UI reflects new data.
-7. If parsing fails, logs an error.
+   - dynamically generates matching password hashes for all dummy users
+   - serializes the `users` and `recipes` JavaScript arrays into the stringified JSON format expected by the DB
+   - writes each non-null key into `localStorage`
+3. Logs success in the browser console.
+4. Asks whether to reload the page.
+5. If accepted, reloads so UI reflects new data.
+6. If an error occurs during the process, it logs the error to the console.
 
 ### Side effects
 
@@ -57,7 +58,7 @@ This works because `index.html` also loads `js/utils/seed-data.js`, which expose
 
 ## How to use it
 
-## Option 1: Run from browser console (quickest)
+### Option 1: Run from browser console (quickest)
 
 1. Open the app in your browser.
 2. Open DevTools console.
@@ -70,7 +71,7 @@ window.seedDatabase();
 4. Confirm the warning prompts.
 5. Reload when prompted.
 
-## Option 2: Import and call from code
+### Option 2: Import and call from code
 
 Use this for custom developer actions, temporary debug buttons, or scripted setup during development.
 
@@ -84,29 +85,20 @@ Use with care because it clears storage.
 
 ## Storage shape expected by this seeder
 
-`dummyData` is a JSON string that parses into an object with keys like:
-
-- `users`
-- `recipes`
-- `session`
-
-Important detail: in the current implementation, `users` and `recipes` are themselves JSON-encoded strings (not direct arrays). That means after `JSON.parse(dummyData)`, those fields are still strings that your DB layer parses later.
+Unlike the raw database which expects double-stringified JSON, this seeder relies on standard JavaScript arrays for ease of editing. The script handles the serialization automatically.
 
 Current pattern in file:
 
-```json
-{
-  "users": "[{...}, {...}]",
-  "recipes": "[{...}, {...}]",
-  "session": null
-}
+```javascript
+const users = [ { ... }, { ... } ];
+const recipes = [ { ... }, { ... } ];
 ```
 
 ## How to customize the data
 
 ### 1. Edit users
 
-Inside `dummyData`, update the JSON string assigned to `users`.
+Inside the file, update the standard JavaScript array assigned to `users`.
 
 User object fields currently used:
 
@@ -114,7 +106,7 @@ User object fields currently used:
 - `lastName`
 - `username`
 - `email`
-- `passwordHash`
+- `passwordHash` (Can be left as placeholder text; it is auto-hashed upon seeding)
 - `role` (`user` or `admin`)
 - `savedRecipes` (array of recipe IDs or objects depending on your app logic)
 - `token` (usually `null` in seed)
@@ -123,7 +115,7 @@ If you add or remove user fields, make sure auth/profile rendering code can hand
 
 ### 2. Edit recipes
 
-Inside `dummyData`, update the JSON string assigned to `recipes`.
+Inside the file, update the standard JavaScript array assigned to `recipes`.
 
 Recipe object fields currently used:
 
@@ -142,67 +134,23 @@ Tips:
 
 ### 3. Edit session
 
-Set `session` in parsed object to:
+Set `session` in the `dataToStore` object to:
 
 - `null` to start fully logged out
 - a plain token string (for example, `"demo-token"`) to simulate a restored logged-in session
+
 To pre-seed an authenticated session correctly, the matching user record in `users` must also have the same token value in its `token` field. For example, if `session` is set to `"demo-token"`, the user you expect to be logged in must include `token: "demo-token"`.
+
 If `session` is set but no user has the same `token`, session restore will not behave as an authenticated login. If unsure, keep `session: null` and log in normally after seeding.
-
-If unsure, keep `session: null` and log in normally after seeding.
-
-## Safer editing workflow
-
-Because this file uses nested JSON strings, manual editing is easy to break. Recommended workflow:
-
-1. Prepare your `users` and `recipes` as normal JavaScript arrays first.
-2. Convert them to JSON strings with `JSON.stringify`.
-3. Paste resulting strings into `dummyData`.
-4. Run seeder and verify app loads without parse errors.
-
-Example helper approach:
-
-```js
-const users = [
-  {
-    firstName: "Test",
-    lastName: "User",
-    username: "testuser",
-    email: "test@example.com",
-    passwordHash: "...",
-    role: "user",
-    savedRecipes: [],
-    token: null
-  }
-];
-
-const recipes = [
-  {
-    id: 1,
-    name: "Example Recipe",
-    description: "Example",
-    courseType: "Main",
-    ingredients: [{ name: "Salt", quantity: 1, unit: "tsp" }],
-    image: "https://example.com/image.jpg"
-  }
-];
-
-const dummyData = JSON.stringify({
-  users: JSON.stringify(users),
-  recipes: JSON.stringify(recipes),
-  session: null
-});
-```
 
 ## Password and authentication notes
 
-Seeded users must contain password hashes that match your auth checker.
+Seeded users' passwords are automatically hashed to **`password123`** via the app's native `hash()` utility during the seeding process. You do not need to manually hash passwords in this file. 
 
 If login fails for newly added users, most likely causes are:
 
-- hash format does not match the app's hash utility
-- password hash was copied incorrectly
-- auth validator expects additional fields
+- role or required auth fields are missing
+- user object structure has typos
 
 Use existing working user entries as a template when adding new accounts.
 
@@ -225,39 +173,30 @@ Pre-fill `savedRecipes` and optionally session data to simulate specific user st
 ### "Failed to seed database"
 
 Cause:
-
-- `dummyData` is invalid JSON
-- nested `users`/`recipes` JSON string is malformed
+- Syntax error in the JavaScript arrays (missing commas, unclosed brackets).
 
 Fix:
-
-- validate JSON
-- check quotes and escaping
-- rebuild strings using `JSON.stringify`
+- Check your IDE for syntax highlighting errors.
+- Ensure all newly added recipe and user objects are properly formatted JavaScript objects.
 
 ### Seeding succeeds but UI looks empty
 
 Cause:
-
 - schema mismatch between seeded objects and UI expectations
 - empty arrays in `users` or `recipes`
 
 Fix:
-
 - verify required fields for recipe cards and user display
 - inspect `localStorage` values in DevTools Application tab
 
 ### Login does not work with seeded user
 
 Cause:
-
-- wrong `passwordHash`
 - role or required auth fields missing
 
 Fix:
-
-- copy a known working user and edit carefully
-- regenerate hash using project hash utility workflow
+- Remember that all seeded accounts default to the password **`password123`**.
+- copy a known working user and edit carefully.
 
 ## Security and environment warning
 
