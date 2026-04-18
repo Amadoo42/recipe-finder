@@ -1,6 +1,6 @@
 /**
  * DB Seeder Utility
- * Loads dummyData JSON string into localStorage.
+ * Loads dummyData JSON string into localStorage. There is already some dummyData here, but you can replace it and run your own.
  * This tracked file is intended for local development seed data only; do not store real secrets or sensitive data here.
  */
 import { hash } from './hash.js'; 
