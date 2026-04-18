@@ -74,13 +74,13 @@ body {
     right: 50px;
 }
 
-.spoon {
-    width: clamp(180px, 28vw, 410px);
+.lollii {
+    width: clamp(70px, 30vw, 280px);
     height: auto;
     position: absolute;
-    top: 30px;          /* adjust to move up/down */
-    right: -50px;         /* adjust gap from right edge */
-    transform: rotate(22deg) scale(0.9, 0.9) skewX(1deg);
+    top: 140px;          /* adjust to move up/down */
+    right: 40px;         /* adjust gap from right edge */
+    /* transform: rotate(22deg) scale(0.9, 0.9) skewX(1deg); */
     z-index: -1;
 }
 
