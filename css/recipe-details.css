@@ -1,6 +1,6 @@
 .detailPage{
     
-    margin-top: 2%;
+    margin-top: 3.5%;
     height: auto;
     min-height: 80vh;      
     margin-left: 12%;
@@ -13,7 +13,7 @@
 
 #recipeUp {
     position: relative;
-    background: rgba(255, 112, 68, 0.285);
+    background: rgba(255, 199, 176, 0.285);
     height:500px;
     overflow: hidden;
     border-radius: 16px 16px 0 0;  /* rounds only top corners to match the card */
@@ -42,12 +42,12 @@
 #courseBadge {
     position: absolute;
     top: 20px;
-    left: 12px;
+    left: 17px;
     z-index: 2;
-    background: rgb(255, 55, 0);
+    background: rgb(251, 71, 55);
     color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
+    padding: 0.5px 10px;
+    border-radius: 17px;
     font-size: 20px;
 }
 
@@ -71,8 +71,9 @@
 }
 
 #recipeName {
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
     margin: 0;
     color: whitesmoke;
 }
@@ -84,53 +85,58 @@
     margin: 0;
     padding: 0.75rem 1rem;
     background: rgba(255, 55, 0, 0.05);   /* soft tint matching your orange theme */
-    border-left: 3px solid rgb(255, 55, 0);
-    border-radius: 0 8px 8px 0;
+    /* border-left: 3px solid rgb(255, 55, 0);
+    border-right: 3px solid rgb(186, 40, 0);
+    border-top: 3px solid rgb(255, 55, 0);
+    border-bottom: 5px solid rgb(186, 40, 0); */
     overflow-wrap: break-word;             /* prevents long words from overflowing */                
 }
 #recipeBody {
     padding: 1rem 2rem 1.5rem 0.5rem;  /* left padding smaller */
+    border-top: 7px solid rgb(255, 81, 33);
 }
 #recipeDescription {
     padding: 0.75rem 1rem 0.75rem 0.5rem;
+    margin-left: 1.5rem;
 }
 
 #recipeBody h2 {
     font-size: 1.1rem;
     font-weight: 600;
     margin: 0 0 0.75rem;
-    color: #222;
+    color: rgb(124, 37, 0);
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    padding: 1rem 2rem 1.5rem 1.5rem;
+    padding: 1rem 2rem 0.5rem 0.5rem;
+    /* border-bottom: 3px  rgb(255, 81, 33);
+    display: inline-block; */
 }
 
 #ingredientList {
     list-style: none;        /* remove default numbers */
-    padding: 0;
+    padding: 0.75rem 1rem 0.75rem 0.5rem;  
+    background: rgba(255, 55, 0, 0.05);     
+    overflow-wrap: break-word;
     margin: 0;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    margin-left: 1.5rem;
 }
 
 #ingredientList li {
     font-size: 1rem;
     line-height: 1.6;
     color: #444;
-    padding: 0.5rem 0.75rem;
-    background: #fff;
+    padding: 0.1rem;
+    /* background: #fff;
     border-radius: 8px;
     border: 1px solid rgba(0,0,0,0.07);
-    counter-increment: ingredients;        /* custom counter instead of ol numbers */
+    counter-increment: ingredients;    */     /* custom counter instead of ol numbers */
 }
 
 #ingredientList li::before {
-    content: counter(ingredients) ". ";
-    color: rgb(255, 55, 0);               /* orange number matching your theme */
+    content: "■";
+    color: rgb(255, 55, 0);               
     font-weight: 600;
-}
-
-#ingredientList {
-    counter-reset: ingredients;
 }
