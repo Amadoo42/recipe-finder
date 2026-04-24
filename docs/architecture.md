@@ -1,27 +1,44 @@
 # System Architecture
 
-The Recipe Finder application is a frontend-only web application built with HTML, CSS, and Vanilla JavaScript. It simulates a full-stack environment by utilizing the browser's `localStorage` API as a persistent, synchronous database.
+The Recipe Finder application is a web application built with HTML, CSS, and Vanilla JavaScript served by a django python server. It is a full-stack environment by utilizing django's model API as a persistent, synchronous database.
 
 ## Directory Structure
 
-The project is organized into modular directories to separate UI, logic, and database operations:
+The project is organized into modular directories to separate frontend, backend and database operations:
 
 ```text
 recipe-finder/
-├── admin/                  # Admin-specific pages (dashboard, add-recipe, view-recipe)
-├── assets/                 # Static images and icons
-├── css/                    # Global and page-specific stylesheets
-├── docs/                   # Project documentation and schemas
-├── js/                     # Application logic
-│   ├── constants/          # System-wide configuration constants
-│   ├── database/           # Simulated DB operations via localStorage
-│   ├── handlers/           # DOM manipulation and event listeners
-│   └── utils/              # Pure functions, helpers, and validators
-├── user/                   # User-specific pages (dashboard, search, favorites)
-└── index.html              # Entry point
+├── backend/            # Main backend folder
+|   |
+│   ├── backend/        # Backend specific logic
+│   │   
+│   └── core/           # Core app: serves index/login/signup pages
+│       
+│          
+├── docs/               # Project documentation and schemas
+└── frontend/
+    ├── api/            # Client-side API (e.g. `auth.js`) 
+    ├── components/     # Custom components used in different pages
+    ├── constants/      # Constants files (e.g. `auth-constants.js`)
+    ├── pages/          # All HTML pages organized by level
+    │   ├── admin/
+    │   │   ├── css/
+    │   │   └── js/
+    │   ├── core/
+    │   │   ├── css/
+    │   │   └── js/
+    │   └── user/
+    │       ├── css/
+    │       └── js/
+    └── shared/         # Common files used by multiple page in different levels 
+        ├── assets/
+        ├── css/
+        ├── database/
+        ├── js/
+        └── utils/
 ```
 
-## Layered Design Pattern
+## Layered Design Pattern (legacy)
 
 To prevent tight coupling between the UI and the data layer, the application enforces a strict unidirectional flow:
 
