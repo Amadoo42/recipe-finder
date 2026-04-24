@@ -1,0 +1,322 @@
+body {
+    background-color: var(--backgroundColor);
+    position: relative;
+    overflow-x: hidden;
+}
+
+.TopSection {
+    display: grid;
+    grid-template-columns: minmax(350px, 1fr) minmax(0, 870px) minmax(350px, 1fr);    
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.DecorationWrapper {
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    z-index: -1;
+}
+
+.SearchGroup {
+    min-width: 0;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 1.5rem;
+    width: 100%;
+    justify-self: center; 
+}
+
+#search {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    border-radius: 100px;
+    border:1px solid #757575;
+    background-color: whitesmoke;
+
+    width: 100%;
+    padding: 5px 20px;
+    max-width: 870px;
+}
+
+#search input {
+    flex: 1;
+    outline: none;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: var(--textPrimary);
+    padding: 8px 0;
+    width: 100%;
+}
+
+#searchIcon {
+    color: #555;
+    cursor: pointer;
+    user-select: none;
+    font-size: 20px;
+}
+
+.mala7a {
+    width: clamp(180px, 28vw, 410px);
+    height: auto;
+    position: absolute;
+    z-index: -1;
+    top: 140px;
+    right: 50px;
+}
+
+.lollii {
+    width: clamp(70px, 30vw, 280px);
+    height: auto;
+    position: absolute;
+    top: 140px;          /* adjust to move up/down */
+    right: 40px;         /* adjust gap from right edge */
+    /* transform: rotate(22deg) scale(0.9, 0.9) skewX(1deg); */
+    z-index: -1;
+}
+
+
+.pattern {
+    margin: 4rem auto;
+    display: block;
+    width: 95%;
+    height: 6.25rem;
+}
+
+.BtnContainer button {
+    font-size: 25px;
+    min-width: 80px;
+    background-color: whitesmoke;
+    border: none;
+    color: var(--buttons);
+    border-radius: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.09s ease;
+    flex: 0 1 auto;
+    gap: clamp(5px, 1.5vw, 18px);
+    min-width: 0;
+    width: auto;         
+    padding: 5px 12px;
+}
+
+.BtnContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 870px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.BtnContainer button:hover, .BtnContainer button.active {
+    transform: scale(1.02);
+    cursor: pointer;
+    background: linear-gradient(to bottom right, rgb(233, 11, 11), orange);
+    box-shadow: 10px 0 15px -2px rgba(255, 68, 0, 0.823), -13px 0 22px rgba(255, 0, 0, 0.556);
+    color: whitesmoke;
+}
+
+.BtnContainer button.active {
+    transform: scale(1.00);
+}
+
+.centered {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.cont {
+    flex-shrink: 0;
+    display: inline-flex; 
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    margin: 3rem 0;
+    z-index: 1;
+    justify-self: start; 
+}
+
+.cont::before {
+    content: '';
+    position: absolute;
+    top: -22%;
+    left: -5%;
+    width: 135%;
+    height: 210%;
+    background-image: url('../assets/shreet.svg');
+    background-position: left center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    z-index: -1; 
+    pointer-events: none;
+}
+
+.title {
+    margin: 0;
+    padding-left: 20px;
+    font-size: clamp(1rem, 6vw, 2.5rem);
+    color: var(--backgroundColor); 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+    line-height: 1;
+}
+
+.BtnText {
+    font-size: 1.2rem;
+    padding: 5px;
+    transition: color 0.09s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.FilterBtn::after {
+    content: '';
+    position: absolute;
+    inset: -3px;   
+    border-radius: 100px;
+    background-image: linear-gradient(to bottom right, rgb(233, 11, 11), orange);
+    z-index: -1; 
+}
+
+.IconContainer {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+/* Used this amazing site to compute the exact filter values: https://codepen.io/sosuke/pen/Pjoqqp */
+.CustomIcon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: filter 0.09s ease;
+    filter: brightness(0) invert(52%) sepia(47%) saturate(2661%) hue-rotate(330deg) brightness(101%) contrast(101%);
+}
+
+.BtnContainer button:hover .CustomIcon, .BtnContainer button.active .CustomIcon {
+    filter: none;
+}
+
+.CountBadge {
+    position: absolute;
+    font-size: 18px; 
+    font-weight: 800;
+    font-family: var(--fontBody);
+    color: var(--buttons); 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); 
+    transition: color 0.09s ease;
+}
+
+.BtnContainer button:hover .CountBadge, .BtnContainer button.active .CountBadge {
+    color: whitesmoke;
+}
+
+
+.IconAll .CountBadge { 
+    top: 47%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+}
+
+
+.IconMain .CountBadge { 
+    top: 46%; 
+    left: 35%; 
+    transform: translate(-50%, -50%); 
+} 
+
+.IconAppetizer .CountBadge { 
+    top: 80%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+}
+
+.IconAppetizer .CustomIcon {
+    width: 100px;
+}
+
+.IconDessert .CountBadge { 
+    top: 65%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+}
+
+.herb-column {
+    position: fixed; 
+    top: 550px;        /* start just below the vein */
+    width: 110px;
+    height: calc(100vh - 300px);  /* fill from that point to bottom */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: -5;
+}
+
+.herb-column.left  { left: 0; }
+.herb-column.right { right: 0; }
+
+.herb-column img {
+    width: 140px;
+    opacity: 1;
+    transform: rotate(-25deg);
+}
+
+.herb-column.left img {
+  transform: scaleX(-1) rotate(-25deg);
+}
+
+@media (max-width: 900px) {
+    .DecorationWrapper {
+        display: none;
+    }
+}
+
+@media (max-width: 1350px) {
+    .TopSection {
+        display: flex; 
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cont {
+        order: -1;
+        align-self: flex-start;
+    }
+
+    .DecorationWrapper {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .BtnContainer {
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .FilterBtn {
+        padding: 5px 10px;
+        font-size: 16px;
+    }
+
+    .cont {
+        align-self: flex-start;
+    }
+}

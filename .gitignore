@@ -1,3 +1,6 @@
 uml.drawio
 .vscode/
 .idea/
+.*/
+__pycache__/
+*.sqlite*

@@ -1,0 +1,184 @@
+{% load static %} <!doctype html>
+<html data-auth-level="public">
+<head>
+    <meta name="author" content="Muhammed Esmail" />
+    <meta charset="UTF-8" />
+    <title>Sign Up — Recipe Finder</title>
+    <script type="module" src="{% static 'api/auth.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'shared/css/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'shared/css/onboarding-page.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/core/css/auth-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'pages/core/css/signup.css' %}" />
+</head>
+
+<body>
+    <nav></nav>
+
+    <!-- Page -->
+    <section id="cardContainer">
+        <img
+            src="{% static 'shared/assets/leaf.png' %}"
+            class="BgLeaf TopLeaf"
+            alt="Hand drawn leaf doodle"
+        />
+        <div id="cardWrapper">
+            <div id="ribbon">
+                <img src="{% static 'shared/assets/ribbon.svg' %}" aria-hidden="true"/>
+                <h2>Sign Up</h2>
+            </div>
+            <div id="mainCard">
+                <div id="pattern" aria-hidden="true">
+                    <img src="{% static 'shared/assets/auth_pattern.svg' %}" />
+                </div>
+                <form name="createUserForm" id="form">
+                    <div class="RadioInputGroup">
+                        <!-- Select Account Type -->
+                        <div class="RadioOption">
+                            <input
+                                type="radio"
+                                id="user"
+                                name="userRole"
+                                value="user"
+                                checked
+                            />
+                            <label for="user"> User </label>
+                        </div>
+                        <div class="RadioOption">
+                            <input
+                                type="radio"
+                                id="admin"
+                                name="userRole"
+                                value="admin"
+                            />
+                            <label for="admin"> Admin </label>
+                        </div>
+                    </div>
+                    <!-- Personal Information -->
+                    <div class="NameInputGroup">
+                        <div class="TextInputGroup">
+                            <label> FIRST NAME </label>
+                            <div class="InputWrapper">
+                                <i class="user icon"></i>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    placeholder="eg. Muhammed"
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div class="TextInputGroup">
+                            <label> LAST NAME </label>
+                            <div class="InputWrapper">
+                                <i class="user icon"></i>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    placeholder="eg. Esmail"
+                                    required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="TextInputGroup">
+                        <label> USERNAME </label>
+                        <div class="InputWrapper">
+                            <i class="user icon"></i>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="eg. Esmail0"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div class="TextInputGroup">
+                        <label> EMAIL </label>
+                        <div class="InputWrapper">
+                            <i class="envelope icon"></i>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="user@domain.com"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <hr />
+                    <!-- Password -->
+                    <div class="TextInputGroup">
+                        <label> PASSWORD </label>
+                        <div class="InputWrapper">
+                            <i class="lock icon"></i>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                minlength="8"
+                                placeholder="At least 8 characters"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div class="TextInputGroup">
+                        <label> CONFIRM PASSWORD </label>
+                        <div class="InputWrapper">
+                            <i class="lock icon"></i>
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                minlength="8"
+                                placeholder="Repeat your password"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Create My account + Clear Form button -->
+                    <div id="btns">
+                        <button type="submit" id="submit" class="BtnPrimary">
+                            <i class="signup icon"></i>
+                            Create My Account
+                        </button>
+                        <input
+                            type="reset"
+                            value="Clear"
+                            id="clear"
+                            class="BtnPrimary"
+                        />
+                    </div>
+                    <!-- Already Have an account? Sign in -->
+                </form>
+                <div id="switchAuth">
+                    <p>
+                        Already have an account?
+                        <a href="login.html">Sign in</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="SiteFooter">
+        <div class="FooterBrand">
+            <span class="GreatVibesRegular BrandText">Recipe Finder</span>
+            <span class="Copyright"
+                >&copy; Recipe Finder. All rights reserved.</span
+            >
+        </div>
+        <div class="FooterLinks">
+            <!-- Add these pages later, hansebha zeena for now -->
+            <a href="/index.html">Privacy Policy</a>
+            <a href="/index.html">Terms of Service</a>
+            <a href="/index.html">Contact Us</a>
+        </div>
+    </footer>
+
+    <!-- Page specific logic -->
+    <script type="module" src="{% static 'pages/core/js/signup-handler.js' %}"></script>
+</body>
+</html>
