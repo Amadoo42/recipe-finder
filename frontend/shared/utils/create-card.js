@@ -1,4 +1,4 @@
-import { DEFAULT_VALUES } from "../constants/recipe-constants.js";
+import { DEFAULT_VALUES } from "/static/constants/recipe-constants.js";
 /**
  * A recipe object used to render a recipe card.
  * @typedef {Object} Recipe

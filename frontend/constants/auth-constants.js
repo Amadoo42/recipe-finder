@@ -8,5 +8,5 @@ export const PAGE_AUTH_LEVEL = {
 export const REDIRECT = {
     TO_LOGIN: () => window.location.replace('/login/'),
     TO_USER: () => window.location.replace('/user/dashboard/'),
-    TO_ADMIN: () => window.location.replace('/admin/dashboard/')
+    TO_ADMIN: () => window.location.replace('/admins/')
 };

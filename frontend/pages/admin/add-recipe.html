@@ -1,12 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" data-auth-level="admin">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/add-recipe.css">
-    <link rel="stylesheet" href="/css/error-message.css">
-    <script type="module" src="/js/auth.js"></script> 
+    <link rel="stylesheet" href="{% static '/shared/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/admin/css/add-recipe.css' %}">
+    <link rel="stylesheet" href="{% static 'pages/admin/css/error-message.css' %}">
+    <script type="module" src="{% static 'api/auth.js' %}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">   
     <title>Add Recipe</title>
 </head>
@@ -112,7 +113,7 @@
         </div>
     </div>
 
-    <script type="module" src="../js/handlers/add-recipe/controller.js"></script>
-    <script type="module" src="../js/nav.js"></script>
+    <script type="module" src="{% static 'pages/admin/js/controller.js' %}"></script>
+    <script type="module" src="{% static 'shared/js/nav.js' %}"></script>
 </body>
 </html>

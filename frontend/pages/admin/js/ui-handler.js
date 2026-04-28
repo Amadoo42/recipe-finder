@@ -1,4 +1,4 @@
-import * as CONST from '/js/constants/recipe-constants.js'
+import * as CONST from '/static/constants/recipe-constants.js'
 
 // A centralized object containing references to all required HTML elements
 const DOM = {

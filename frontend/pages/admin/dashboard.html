@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en" data-auth-level="admin">
 
@@ -5,9 +6,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard</title>
-    <link href="../css/main.css" rel="stylesheet" />
-    <link href="../css/dashboard.css" rel="stylesheet" />
-    <script type="module" src="../js/auth.js"></script>
+    <link href="{% static 'shared/css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/dashboard.css' %}" rel="stylesheet" />
+    <script type="module" src="{% static 'api/auth.js' %}"></script>
 </head>
 
 <body>
@@ -23,18 +24,18 @@
                 </header>
 
                 <section class="Actions">
-                        <a href="add-recipe.html">
+                        <a href="add">
                             <button class="Btn">Add recipes</button>
                         </a>
                         
-                        <a href="view-recipe.html">
+                        <a href="explore">
                             <button class="Btn">View recipes</button>
                         </a>
                 </section>
             </div>
 
             <div class="DashboardRight">
-                <img src="../assets/nutella tiramesu.jpg" alt="nutella tiramesu" />
+                <img src="{% static 'shared/assets/nutella tiramesu.jpg' %}" alt="nutella tiramesu" />
             </div>
         </main>
     </div>
