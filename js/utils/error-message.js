@@ -1,4 +1,3 @@
-
 /**
  * @summary Handles the success/failure messages and displays it to the user
  * @param {Message} message The message object to display
@@ -19,4 +18,14 @@ export function clearMessage() {
     if (!messageElement) return;
     messageElement.textContent = '';
     messageElement.classList.remove('Success', 'Error');
+}
+
+/**
+ * @summary Auth error messages
+ */
+export function toggleErrorMessage(element, show, message=null) {
+    if (message) {
+        element.textContent = message;
+    }
+    element.classList.toggle('show', show);
 }
