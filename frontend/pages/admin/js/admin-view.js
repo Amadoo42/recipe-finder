@@ -1,9 +1,9 @@
-import { deleteRecipe } from "../../../shared/database/db-recipes.js";
-import { createCard } from "../../../shared/utils/create-card.js";
-import { setupSearch } from "../../../shared/utils/setup-search.js";
-import { setupFilters } from "../../../shared/utils/setup-filters.js";
-import { searchRecipes } from "../../../shared/utils/search-recipes.js";
-import { fillHerbs } from "../../core/js/favourites.js";
+import { deleteRecipe } from "/static/shared/database/db-recipes.js";
+import { createCard } from "/static/shared/utils/create-card.js";
+import { setupSearch } from "/static/shared/utils/setup-search.js";
+import { setupFilters } from "/static/shared/utils/setup-filters.js";
+import { searchRecipes } from "/static/shared/utils/search-recipes.js";
+import { fillHerbs } from "/static/shared/utils/favourites.js";
 
 let currentQuery = "";
 let currentSource = "all";
@@ -39,7 +39,7 @@ function updateView() {
  * @param {int} id 
  */
 function editRecipe(id) {
-    window.location.href = `add-recipe.html?RecipeID=${id}&Edit=1`;
+    window.location.href = `/admins/add?RecipeID=${id}&Edit=1`;
 }
 /**
  * @brief this function deletes a recipe of certain id

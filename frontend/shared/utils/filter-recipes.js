@@ -1,5 +1,5 @@
-import { getUserFavourites } from "../database/db-user.js";
-import { getRecipes } from "../database/db-recipes.js";
+import { getUserFavourites } from "/static/shared/database/db-user.js";
+import { getRecipes } from "/static/shared/database/db-recipes.js";
 import { createMessage } from "./create-message.js";
 
 /**

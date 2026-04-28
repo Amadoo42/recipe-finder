@@ -1,6 +1,6 @@
-import { toggleFavourite } from '../../../shared/database/db-user.js'
-import { filterRecipesByCategory } from '../../../shared/utils/filter-recipes.js';
-import { createCard } from '../../../shared/utils/create-card.js';
+import { toggleFavourite } from '../database/db-user.js'
+import { filterRecipesByCategory } from './filter-recipes.js';
+import { createCard } from './create-card.js';
 
 let currentCategory = 'all';
 
@@ -77,7 +77,7 @@ if (document.getElementById('countAll')) {
 }
 
 export function fillHerbs() {
-    const herbs = ['../assets/origano.svg', '../assets/basil.svg'];
+    const herbs = ['/static/shared/assets/origano.svg', '/static/shared/assets/basil.svg'];
     const cols = [document.getElementById('herbLeft'), document.getElementById('herbRight')];
 
     cols.forEach((col) => {
