@@ -3,6 +3,7 @@ import { toggleFavourite, getUserFavourites } from "../database/db-user.js";
 import { searchRecipes } from "../utils/search-recipes.js";
 import { setupSearch } from "../utils/setup-search.js";
 import { setupFilters } from "../utils/setup-filters.js";
+import { fillHerbs } from "../handlers/favourites.js";
 
 let currentQuery = "";
 let currentSource = "all";
@@ -64,8 +65,7 @@ function renderRecipes(){
         const favBtn = document.createElement('button');
         favBtn.className = 'FavBtn';
         
-        const iconName = isFavourited ? 'favorite' : 'favorite_border';
-        favBtn.innerHTML = `<span class="material-symbols-outlined">${iconName}</span>`;
+        favBtn.innerHTML = `<span class="material-symbols-rounded">favorite</span>`;
         
         if (isFavourited) favBtn.classList.add('active');
 
@@ -75,10 +75,7 @@ function renderRecipes(){
             e.stopPropagation();
             handleFavorites(recipe.id);
 
-            const iconSpan = favBtn.querySelector('span');
-            const isActive = favBtn.classList.toggle('active');
-
-            iconSpan.textContent = isActive ? 'favorite' : 'favorite_border';
+            favBtn.classList.toggle('active');
         });
         
         container.appendChild(card);
@@ -86,3 +83,5 @@ function renderRecipes(){
 }
 
 init();
+fillHerbs();
+window.addEventListener('resize', fillHerbs);

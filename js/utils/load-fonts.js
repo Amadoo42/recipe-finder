@@ -38,7 +38,7 @@ export function loadGoogleFonts() {
     const link5 = document.createElement('link');
     link5.rel = 'stylesheet';
     link5.href = 
-        'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap';
+        'https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap';
 
     head.append(link1);
     head.append(link2);

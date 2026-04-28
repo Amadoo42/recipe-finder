@@ -4,33 +4,39 @@
         <meta charset="UTF-8" />
         <title>Recipe Details</title>
         <link href="../css/main.css" rel="stylesheet" />
+        <link href="../css/recipe-details.css" rel="stylesheet" />
+        <link href="../css/favourite-button.css" rel="stylesheet" />
         <script type="module" src="../js/auth.js"></script>
+        <script type="module" src="../js/handlers/recipe-details.js"></script>
+
     </head>
     <body>
         <nav></nav>
-        <hr />
+        <main class="detailPage">
+        
+            <div id ="recipeUp">
+                
+                   <span id="courseBadge"><p id="course"></p></span>
+                   <div class="ImgContainer">
+                        <button class="FavBtn" id="favBtn">
+                            <span class="material-symbols-rounded">favorite</span>
+                        </button>
+                        <img src="placeholder.png" alt="Main Dish" id="recipeImage" />
+                   </div>
 
-        <h1>Recipe Name</h1>
-        <!-- Adjust width and height here later -->
-        <img src="placeholder.png" alt="Main Dish" />
-        <br />
-        <h3>Main Dish</h3>
-
-        <div>
-            <h2>Ingredients</h2>
-            <ol>
-                <li>Ingredient 1</li>
-                <li>Ingredient 2</li>
-                <li>Ingredient 3</li>
-            </ol>
-        </div>
-
-        <button>Add to Favourites</button>
-
-        <br />
-        <br />
-        <nav>
-            <button>Back to User Dashboard</button>
-        </nav>
+                <div id="bottom">
+                   <h1 id="recipeName">Recipe Name</h1>
+                </div>       
+            </div>
+            <div id="recipeBody">
+                <h2>Description</h2>
+                <p id="recipeDescription"></p>
+                <div>
+                    <h2>Ingredients</h2>
+                    <ol id="ingredientList"></ol>
+                </div>
+            </div>  
+            </main>
+             
     </body>
 </html>

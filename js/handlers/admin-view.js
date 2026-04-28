@@ -3,6 +3,7 @@ import { createCard } from "../utils/create-card.js";
 import { setupSearch } from "../utils/setup-search.js";
 import { setupFilters } from "../utils/setup-filters.js";
 import { searchRecipes } from "../utils/search-recipes.js";
+import { fillHerbs } from "../handlers/favourites.js";
 
 let currentQuery = "";
 let currentSource = "all";
@@ -69,7 +70,7 @@ function renderRecipes() {
         const span = document.createElement('span');
         deleteBtn.className = 'DeleteBtn';
         span.className = 'DeleteIcon';
-        span.classList.add('material-icons-outlined');
+        span.classList.add('material-symbols-rounded');
         span.textContent = 'delete';
         deleteBtn.append(span);
 
@@ -95,3 +96,5 @@ function renderRecipes() {
 }
 
 init();
+fillHerbs();
+window.addEventListener('resize', fillHerbs);

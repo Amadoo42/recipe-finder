@@ -1,11 +1,12 @@
 :root {
-    --backgroundColor: #faf1e0;
+    --backgroundColor: #f7efdb;
     --buttons: #ff654a;
     --textPrimary: #4c4842;
     --navFooterColor: #E05843;
     --fontBody: 'Plus Jakarta Sans', sans-serif;
     --shadowColor: #8a94a5cb;
     --offWhiteColor: #f5f1ea;
+    --buttonHoverColorBg: #d84315;
 }
 
 .GreatVibesRegular {
@@ -96,6 +97,14 @@ nav {
 .NavLinks a:hover {
     color: whitesmoke;
     border-bottom: 2px solid whitesmoke;
+}
+
+.NavLinks a .material-symbols-rounded {
+    transition: color 0.3s ease;
+}
+
+.NavLinks a:hover .material-symbols-rounded {
+    color: whitesmoke;
 }
 
 .testingDevMode{
