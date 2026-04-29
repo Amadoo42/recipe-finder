@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'admins.apps.AdminsConfig',
+    'core.apps.CoreConfig',
+    'admin_app.apps.AdminAppConfig',
+    'user_app.apps.UserAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,9 +58,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / "frontend" / "pages" / "admin",
-            BASE_DIR / "frontend" / "pages" / "user",
-            BASE_DIR / "frontend" / "pages" / "core",
+            BASE_DIR / "frontend" / "pages",
         ],
         'APP_DIRS': True,
         'OPTIONS': {

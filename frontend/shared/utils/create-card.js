@@ -33,7 +33,7 @@ export function createCard(recipe) {
     `;
     
     article.addEventListener('click', (e) => {
-        const targetUrl = new URL('../user/recipe_details.html', window.location.href);
+        const targetUrl = new URL('/user/recipe-details/', window.location.origin);
         targetUrl.searchParams.set('recipeid', recipe.id);
         window.location.href = targetUrl.toString();
     });

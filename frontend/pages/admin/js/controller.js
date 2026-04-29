@@ -124,7 +124,7 @@ async function addRecipeHandler() {
 
     let recipe = createRecipeObject(name, description, course, ingredients, image.data);
     if (await saveRecipe(recipe)) {
-        window.location.replace("/admins/explore");
+        window.location.replace("/admin/explore/");
     }
 }
 
