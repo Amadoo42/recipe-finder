@@ -1,6 +1,5 @@
-
-import { createMessage } from "./create-message.js";
-import { filterRecipesByCategory } from "./filter-recipes.js";
+import { createMessage } from "/static/shared/utils/create-message.js";
+import { filterRecipesByCategory } from "/static/shared/utils/filter-recipes.js";
 
 /**
  * Searches for recipes based on a query to match with recipe names and a source, and optional course category.

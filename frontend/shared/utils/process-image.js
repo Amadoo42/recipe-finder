@@ -1,5 +1,5 @@
 // Logic for handling image data conversion and URL validation.
-import { createMessage } from "./create-message.js";
+import { createMessage } from "/static/shared/utils/create-message.js";
 
 // checks if a given image url is valid by trying to load it into an image object
 async function checkImageExists(url) {

@@ -3,7 +3,7 @@ import { addRecipe, updateRecipe, getRecipeById } from "/static/shared/database/
 import { processUploadedImage, processOnlineImageURL } from "/static/shared/utils/process-image.js"
 import { createMessage } from "/static/shared/utils/create-message.js";
 import { toggleErrorMessage } from "/static/shared/utils/error-message.js"
-import * as UI from "./ui-handler.js"
+import * as UI from "/static/pages/admin/js/ui-handler.js";
 import * as VALIDATOR from "/static/shared/utils/recipe-validator.js"
 
 // URL parameters to choose between edit mode and creation mode

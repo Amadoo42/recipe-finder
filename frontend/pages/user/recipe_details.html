@@ -1,13 +1,14 @@
+{% load static %}
 <!doctype html>
 <html lang="en" data-auth-level="private">
     <head>
         <meta charset="UTF-8" />
         <title>Recipe Details</title>
-        <link href="../css/main.css" rel="stylesheet" />
-        <link href="../css/recipe-details.css" rel="stylesheet" />
-        <link href="../css/favourite-button.css" rel="stylesheet" />
-        <script type="module" src="../js/auth.js"></script>
-        <script type="module" src="../js/handlers/recipe-details.js"></script>
+        <link href="{% static 'shared/css/main.css' %}" rel="stylesheet" />
+        <link href="{% static 'shared/css/recipe-details.css' %}" rel="stylesheet" />
+        <link href="{% static 'shared/css/favourite-button.css' %}" rel="stylesheet" />
+        <script type="module" src="{% static 'api/auth.js' %}"></script>
+        <script type="module" src="{% static 'pages/core/js/recipe-details.js' %}"></script>
 
     </head>
     <body>
@@ -21,7 +22,7 @@
                         <button class="FavBtn" id="favBtn">
                             <span class="material-symbols-rounded">favorite</span>
                         </button>
-                        <img src="placeholder.png" alt="Main Dish" id="recipeImage" />
+                        <img src="{% static 'shared/assets/recipeImage.png' %}" alt="Main Dish" id="recipeImage" />
                    </div>
 
                 <div id="bottom">

@@ -4,9 +4,9 @@
  * Depends on: db-core.js
  */
 
-import { createMessage } from '../utils/create-message.js';
-import { generateToken } from '../utils/generate-token.js';
-import { readTable, writeTable } from './db-core.js';
+import { createMessage } from '/static/shared/utils/create-message.js';
+import { generateToken } from '/static/shared/utils/generate-token.js';
+import { readTable, writeTable } from '/static/shared/database/db-core.js';
 
 /**
  * Checks if an email is already in use.

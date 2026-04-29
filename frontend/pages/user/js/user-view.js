@@ -1,9 +1,9 @@
-import { createCard } from "../../../shared/utils/create-card.js";
-import { toggleFavourite, getUserFavourites } from "../../../shared/database/db-user.js";
-import { searchRecipes } from "../../../shared/utils/search-recipes.js";
-import { setupSearch } from "../../../shared/utils/setup-search.js";
-import { setupFilters } from "../../../shared/utils/setup-filters.js";
-import { fillHerbs } from "../handlers/favourites.js";
+import { createCard } from "/static/shared/utils/create-card.js";
+import { toggleFavourite, getUserFavourites } from "/static/shared/database/db-user.js";
+import { searchRecipes } from "/static/shared/utils/search-recipes.js";
+import { setupSearch } from "/static/shared/utils/setup-search.js";
+import { setupFilters } from "/static/shared/utils/setup-filters.js";
+import { fillHerbs } from "/static/shared/utils/favourites.js";
 
 let currentQuery = "";
 let currentSource = "all";

@@ -4,10 +4,10 @@
  * Depends on: db-core.js, db-auth.js, db-recipes.js
  */
 
-import { readTable, writeTable } from './db-core.js';
-import { createMessage } from '../utils/create-message.js'
-import { retrieveLocalToken } from './db-auth.js';
-import { getRecipes } from './db-recipes.js';
+import { readTable, writeTable } from '/static/shared/database/db-core.js';
+import { createMessage } from '/static/shared/utils/create-message.js';
+import { retrieveLocalToken } from '/static/shared/database/db-auth.js';
+import { getRecipes } from '/static/shared/database/db-recipes.js';
 
 /**
  * Gets the index of the currently authenticated user in the users table.

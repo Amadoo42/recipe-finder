@@ -1,6 +1,6 @@
-import { getRecipeById } from '../../../shared/database/db-recipes.js'
-import { toggleFavourite, getUserFavourites } from '../../../shared/database/db-user.js'
-import { DEFAULT_VALUES } from '../constants/recipe-constants.js';
+import { getRecipeById } from '/static/shared/database/db-recipes.js';
+import { toggleFavourite, getUserFavourites } from '/static/shared/database/db-user.js';
+import { DEFAULT_VALUES } from '/static/constants/recipe-constants.js';
 
 const params = new URLSearchParams(window.location.search);
 const recipeId = params.get('recipeid');
