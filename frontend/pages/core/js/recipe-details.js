@@ -6,12 +6,24 @@ const params = new URLSearchParams(window.location.search);
 const recipeId = params.get('recipeid');
 
 const recipe = getRecipeById(recipeId);
+const wrapper = document.getElementById('recipeContentWrapper');
+const pageHeading = document.getElementById('pageHeading');
 if (!recipe) {
-    document.querySelector('h1').textContent = 'Recipe not found';
-    const wrapper = document.getElementById('recipeContentWrapper');
-    if (wrapper) wrapper.style.display = 'none';
+    if (pageHeading) {
+        pageHeading.textContent = 'Recipe not found';
+        pageHeading.style.display = 'block';
+    }
+    if (wrapper) {
+        wrapper.style.display = 'none';
+    }
 }
 else {
+    if (pageHeading) {
+        pageHeading.style.display = 'none';
+    }
+    if (wrapper) {
+        wrapper.style.display = 'block';
+    }
     document.getElementById('recipeName').textContent = recipe.name;
     document.getElementById('recipeImage').src = recipe.image || DEFAULT_VALUES.IMAGE;
     document.getElementById('recipeImage').alt = recipe.name;
