@@ -3,7 +3,7 @@ import { createCard } from "/static/shared/utils/create-card.js";
 import { setupSearch } from "/static/shared/utils/setup-search.js";
 import { setupFilters } from "/static/shared/utils/setup-filters.js";
 import { searchRecipes } from "/static/shared/utils/search-recipes.js";
-import { fillHerbs } from "/static/shared/utils/favourites.js";
+import { initHerbs } from "/static/shared/utils/favourites.js";
 
 let currentQuery = "";
 let currentSource = "all";
@@ -96,5 +96,4 @@ function renderRecipes() {
 }
 
 init();
-fillHerbs();
-window.addEventListener('resize', fillHerbs);
+initHerbs();

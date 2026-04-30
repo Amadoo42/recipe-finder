@@ -95,5 +95,13 @@ export function fillHerbs() {
     });
 }
 
-fillHerbs();
-window.addEventListener('resize', fillHerbs);
+let herbsResizeListenerAttached = false;
+
+export function initHerbs() {
+    fillHerbs();
+
+    if (herbsResizeListenerAttached) return;
+
+    window.addEventListener('resize', fillHerbs);
+    herbsResizeListenerAttached = true;
+}

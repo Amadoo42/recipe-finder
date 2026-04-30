@@ -5,12 +5,15 @@
 <head>
     <meta charset="UTF-8" />
     <title>Favourites Recipe Finder</title>
-    <script type="module" src="{% static 'shared/utils/favourites.js' %}"></script>
+    <script type="module">
+        import { initHerbs } from "{% static 'shared/utils/favourites.js' %}";
+        initHerbs();
+    </script>
     <script type="module" src="{% static 'api/auth.js' %}"></script>
     <link href="{% static 'shared/css/main.css' %}" rel="stylesheet" />
     <link href="{% static 'shared/css/search.css' %}" rel="stylesheet" />
     <link href="{% static 'shared/css/cards.css' %}" rel="stylesheet" />
-    <link href="{% static 'pages/admin/css/favorites-delete-button.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/favorites-delete-button.css' %}" rel="stylesheet" />
 </head>
 
 <body>

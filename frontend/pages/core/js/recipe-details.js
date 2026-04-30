@@ -8,7 +8,8 @@ const recipeId = params.get('recipeid');
 const recipe = getRecipeById(recipeId);
 if (!recipe) {
     document.querySelector('h1').textContent = 'Recipe not found';
-    document.getElementById('recipeContentWrapper').style.display = 'none';
+    const wrapper = document.getElementById('recipeContentWrapper');
+    if (wrapper) wrapper.style.display = 'none';
 }
 else {
     document.getElementById('recipeName').textContent = recipe.name;
