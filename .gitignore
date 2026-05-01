@@ -212,4 +212,8 @@ uml.drawio
 .*/
 __pycache__/
 *.sqlite*
+
 media/
+frontend/shared/assets/*.jpg
+
+*.keras
