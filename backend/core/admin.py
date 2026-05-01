@@ -1,14 +1,14 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Recipe, Ingredient, RecipeIngredient
+from .models import User, Recipe, Ingredient
 
-class RecipeIngredientInline(admin.TabularInline):
-    model = RecipeIngredient
+class IngredientInline(admin.TabularInline):
+    model = Ingredient
     extra = 1
 
 class RecipeAdmin(admin.ModelAdmin):
-    inlines = [RecipeIngredientInline]
-    list_display = ('name', 'course_type')
+    inlines = [IngredientInline]
+    list_display = ('name', 'courseType')
     search_fields = ('name',)
 
 class CustomUserAdmin(UserAdmin):

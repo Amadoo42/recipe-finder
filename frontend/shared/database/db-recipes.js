@@ -6,13 +6,14 @@
 
 import { readTable, writeTable } from '/static/shared/database/db-core.js';
 import { createMessage } from '/static/shared/utils/create-message.js';
-
+import { getRequest, postRequest } from '/static/api/request.js';
 /**
  * Retrieves all recipes from the database.
  * @returns { Array } - An array of recipe objects.
  */
-export function getRecipes() {
-    return readTable('recipes') || [];
+export async function getRecipes() {
+    const response = await getRequest('/admin/get_all_recipes/');
+    return response;
 }
 
 /**
@@ -20,17 +21,28 @@ export function getRecipes() {
  * @param { string } recipeId - The ID of the recipe to retrieve.
  * @returns { Object | null } - The recipe object if found, otherwise null.
  */
-export function getRecipeById(recipeId) {
-    let recipes = getRecipes();
-    let recipe = null;
-    for(let r of recipes) {
-        // Im lazy to check types so I just convert both to strings before comparing
-        if(String(r.id) === String(recipeId)) {
-            recipe = r;
-            break;
-        }
-    }
-    return recipe;
+export async function getRecipeById(recipeId) {
+    const params = new URLSearchParams();
+    params.append('RecipeID', recipeId);
+    const result = await getRequest('/admin/get_recipe_by_id/', params);
+    return result;
+}
+
+export async function addIngredientDB(data) {
+    const result = await postRequest('/admin/add_ingredient/', data);
+    return result;
+}
+
+export async function searchIngredients(query) {
+    const params = new URLSearchParams();
+    params.append('query', query);
+    const result = await getRequest('/admin/search_ingredient/', params);
+    return result;
+}
+
+export async function addOtherUnitDB(data) {
+    const result = await postRequest('/admin/add_other_unit/', data);
+    return result;
 }
 
 /**
@@ -39,30 +51,9 @@ export function getRecipeById(recipeId) {
  * @param { Object } recipe - The recipe object to add to the database.
  * @return { Object } - A message object indicating success or failure of the operation, along with the added recipe if successful.
  */
-export function addRecipe(recipe) {
-    try {
-        let recipes = getRecipes();
-
-        // Here we just auto-increment the ID based on the highest existing ID
-        let newId = 1;
-        if(recipes.length > 0) {
-            let maxId = 1; 
-            for(let r of recipes) {
-                if(Number(r.id) > maxId) {
-                    maxId = Number(r.id);
-                }
-            }
-            newId = maxId + 1;
-        }
-
-        recipe.id = newId;
-        recipes.push(recipe);
-        writeTable('recipes', recipes);
-        // Here we return the newly added recipe in the payload so that the caller can easily access the assigned ID.
-        return createMessage(true, 'Recipe added successfully', recipe);
-    } catch(error) {
-        return createMessage(false, 'Failed to add recipe to the database');
-    }
+export async function addRecipe(data) {
+    const result = await postRequest('/admin/add_recipe/', data);
+    return result;
 }
 
 /**
@@ -71,23 +62,10 @@ export function addRecipe(recipe) {
  * @param { Object } updatedRecipe - The updated recipe object.
  * @returns { Object } - A message object indicating the result of the operation.
  */
-export function updateRecipe(recipeId, updatedRecipe) {
-    let recipes = getRecipes();
-    let index = -1;
-    for(let i = 0; i < recipes.length; i++) {
-        if(String(recipes[i].id) === String(recipeId)) {
-            index = i;
-            break;
-        }
-    }
-
-    if(index !== -1) {
-        updatedRecipe.id = recipes[index].id;
-        recipes[index] = updatedRecipe;
-        writeTable('recipes', recipes);
-        return createMessage(true, 'Recipe updated successfully', updatedRecipe);
-    }
-    return createMessage(false, 'Recipe not found');
+export async function updateRecipe(recipeId, data) {
+    data['recipe_id'] = recipeId;
+    const result = await postRequest('/admin/update_recipe/', data);
+    return result;
 }
 
 /**
