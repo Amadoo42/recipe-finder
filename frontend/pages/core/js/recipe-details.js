@@ -1,16 +1,29 @@
-import { getRecipeById } from '../../../shared/database/db-recipes.js'
-import { toggleFavourite, getUserFavourites } from '../../../shared/database/db-user.js'
-import { DEFAULT_VALUES } from '../constants/recipe-constants.js';
+import { getRecipeById } from '/static/shared/database/db-recipes.js';
+import { toggleFavourite, getUserFavourites } from '/static/shared/database/db-user.js';
+import { DEFAULT_VALUES } from '/static/constants/recipe-constants.js';
 
 const params = new URLSearchParams(window.location.search);
 const recipeId = params.get('recipeid');
 
 const recipe = getRecipeById(recipeId);
+const wrapper = document.getElementById('recipeContentWrapper');
+const pageHeading = document.getElementById('pageHeading');
 if (!recipe) {
-    document.querySelector('h1').textContent = 'Recipe not found';
-    document.getElementById('recipeContentWrapper').style.display = 'none';
+    if (pageHeading) {
+        pageHeading.textContent = 'Recipe not found';
+        pageHeading.style.display = 'block';
+    }
+    if (wrapper) {
+        wrapper.style.display = 'none';
+    }
 }
 else {
+    if (pageHeading) {
+        pageHeading.style.display = 'none';
+    }
+    if (wrapper) {
+        wrapper.style.display = 'block';
+    }
     document.getElementById('recipeName').textContent = recipe.name;
     document.getElementById('recipeImage').src = recipe.image || DEFAULT_VALUES.IMAGE;
     document.getElementById('recipeImage').alt = recipe.name;

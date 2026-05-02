@@ -1,6 +1,6 @@
-import { toggleFavourite } from '../database/db-user.js'
-import { filterRecipesByCategory } from './filter-recipes.js';
-import { createCard } from './create-card.js';
+import { toggleFavourite } from '/static/shared/database/db-user.js';
+import { filterRecipesByCategory } from '/static/shared/utils/filter-recipes.js';
+import { createCard } from '/static/shared/utils/create-card.js';
 
 let currentCategory = 'all';
 
@@ -95,5 +95,13 @@ export function fillHerbs() {
     });
 }
 
-fillHerbs();
-window.addEventListener('resize', fillHerbs);
+let herbsResizeListenerAttached = false;
+
+export function initHerbs() {
+    fillHerbs();
+
+    if (herbsResizeListenerAttached) return;
+
+    window.addEventListener('resize', fillHerbs);
+    herbsResizeListenerAttached = true;
+}

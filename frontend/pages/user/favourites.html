@@ -1,15 +1,19 @@
+{% load static %}
 <!doctype html>
 <html lang="en" data-auth-level="private">
 
 <head>
     <meta charset="UTF-8" />
     <title>Favourites Recipe Finder</title>
-    <script type="module" src="../js/handlers/favourites.js"></script>
-    <script type="module" src="../js/auth.js"></script>
-    <link href="../css/main.css" rel="stylesheet" />
-    <link href="../css/search.css" rel="stylesheet" />
-    <link href="../css/cards.css" rel="stylesheet" />
-    <link href="../css/favorites-delete-button.css" rel="stylesheet" />
+    <script type="module">
+        import { initHerbs } from "{% static 'shared/utils/favourites.js' %}";
+        initHerbs();
+    </script>
+    <script type="module" src="{% static 'api/auth.js' %}"></script>
+    <link href="{% static 'shared/css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/search.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/cards.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/favorites-delete-button.css' %}" rel="stylesheet" />
 </head>
 
 <body>
@@ -28,7 +32,7 @@
                 <button class="FilterBtn active" data-category="all">
                     <span class="BtnText">All</span>
                     <div class="IconContainer IconAll">
-                        <img src="../assets/plate_utensils_icon.svg" alt="All" class="CustomIcon">
+                        <img src="{% static 'shared/assets/plate_utensils_icon.svg' %}" alt="All" class="CustomIcon">
                         <span class="CountBadge" id="countAll">0</span>
                     </div>
                 </button>
@@ -36,7 +40,7 @@
                 <button class="FilterBtn" data-category="Main">
                     <span class="BtnText">Main Dish</span>
                     <div class="IconContainer IconMain">
-                        <img src="../assets/chicken_icon.svg" alt="Main Dish" class="CustomIcon">
+                        <img src="{% static 'shared/assets/chicken_icon.svg' %}" alt="Main Dish" class="CustomIcon">
                         <span class="CountBadge" id="countMain">0</span>
                     </div>
                 </button>
@@ -44,7 +48,7 @@
                 <button class="FilterBtn" data-category="Appetizers">
                     <span class="BtnText">Appetizer</span>
                     <div class="IconContainer IconAppetizer">
-                        <img src="../assets/appetizer_icon.svg" alt="Appetizer" class="CustomIcon">
+                        <img src="{% static 'shared/assets/appetizer_icon.svg' %}" alt="Appetizer" class="CustomIcon">
                         <span class="CountBadge" id="countAppetizer">0</span>
                     </div>
                 </button>
@@ -52,18 +56,18 @@
                 <button class="FilterBtn" data-category="Dessert">
                     <span class="BtnText">Dessert</span>
                     <div class="IconContainer IconDessert">
-                        <img src="../assets/cake_icon.svg" alt="Dessert" class="CustomIcon">
+                        <img src="{% static 'shared/assets/cake_icon.svg' %}" alt="Dessert" class="CustomIcon">
                         <span class="CountBadge" id="countDessert">0</span>
                     </div>
                 </button>
             </div>
         </div>
         <div class="DecorationWrapper">
-            <img src="../assets/lolli.svg" class="lollii">
+            <img src="{% static 'shared/assets/lolli.svg' %}" class="lollii">
         </div>
     </div>
 
-    <img src="../assets/pattern.svg" class="pattern">
+    <img src="{% static 'shared/assets/pattern.svg' %}" class="pattern">
 
     <section id="main"></section><!-- put the grid id -->
 

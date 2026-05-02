@@ -10,10 +10,10 @@ export function buildNav() {
 
     const adminLinks = `
         <div class="NavContainer">
-            <a class="NavBrand" href="/admin/dashboard/">Recipe Finder</a>
+            <a class="NavBrand" href="/admin/">Recipe Finder</a>
             <div class="NavLinks">
-                <a href="/admin/add-recipe/"><span class="material-symbols-rounded">add_circle</span>Add Recipe</a>
-                <a href="/admin/view-recipe/"><span class="material-symbols-rounded">visibility</span>View Recipes</a>
+                <a href="/admin/add/"><span class="material-symbols-rounded">add_circle</span>Add Recipe</a>
+                <a href="/admin/explore/"><span class="material-symbols-rounded">visibility</span>View Recipes</a>
                 <a href="/" id="logout-btn"><span class="material-symbols-rounded">logout</span>Logout</a>
             </div>
         </div>
@@ -21,7 +21,7 @@ export function buildNav() {
 
     const userLinks = `
         <div class="NavContainer">
-            <a class="NavBrand" href="/user/dashboard/">Recipe Finder</a>
+            <a class="NavBrand" href="/user/">Recipe Finder</a>
             <div class="NavLinks">
                 <a href="/user/search/"><span class="material-symbols-rounded">search</span>Browse</a>
                 <a href="/user/favourites/"><span class="material-symbols-rounded">favorite</span>Favourites</a>
@@ -60,7 +60,7 @@ export function buildNav() {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
             logout();
-            window.location.replace('/login.html');
+            window.location.replace('/login/');
         });
     }
 }

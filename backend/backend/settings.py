@@ -37,8 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'admins.apps.AdminsConfig',
+    'core.apps.CoreConfig',
+    'admin_app.apps.AdminAppConfig',
+    'user_app.apps.UserAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,9 +58,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / "frontend" / "pages" / "admin",
-            BASE_DIR / "frontend" / "pages" / "user",
-            BASE_DIR / "frontend" / "pages" / "core",
+            BASE_DIR / "frontend" / "pages",
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -120,7 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "frontend",

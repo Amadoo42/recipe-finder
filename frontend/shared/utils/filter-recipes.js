@@ -1,6 +1,6 @@
 import { getUserFavourites } from "/static/shared/database/db-user.js";
 import { getRecipes } from "/static/shared/database/db-recipes.js";
-import { createMessage } from "./create-message.js";
+import { createMessage } from "/static/shared/utils/create-message.js";
 
 /**
  * Filters recipes by course category from the selected source.

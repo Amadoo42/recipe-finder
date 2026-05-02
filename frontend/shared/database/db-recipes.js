@@ -4,8 +4,8 @@
  * Depends on: db-core.js
 */
 
-import { readTable, writeTable } from './db-core.js';
-import { createMessage } from '../utils/create-message.js';
+import { readTable, writeTable } from '/static/shared/database/db-core.js';
+import { createMessage } from '/static/shared/utils/create-message.js';
 
 /**
  * Retrieves all recipes from the database.
