@@ -8,6 +8,7 @@
     <link href="css/main.css" rel="stylesheet">
     <link href="css/onboarding-page.css" rel="stylesheet">
     <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/utils/seed-data.js"></script>
 
 </head>
 
@@ -16,9 +17,10 @@
     
     <nav></nav>
     
-    <!-- <div class="testingDevMode">
+    <div class="testingDevMode">
         <button id="devModeBtn">Testing: Enable Developer Mode</button>
-    </div> -->
+        <button id="seedData" onclick="seedDatabase()">Load dummy data</button>
+    </div>
     
     <main class="HeroSection">
         <img src="assets/laurel_leaf.svg" class="BgLeaf BottomLeaf" alt="Hand drawn leaf doodle">
