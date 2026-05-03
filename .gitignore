@@ -212,3 +212,4 @@ uml.drawio
 .*/
 __pycache__/
 *.sqlite*
+media/
