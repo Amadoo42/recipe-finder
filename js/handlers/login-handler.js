@@ -2,16 +2,9 @@ import { requestLogin } from '../auth.js';
 import { createMessage } from '../utils/create-message.js';
 import { hash } from '../utils/hash.js';
 import { PAGE_AUTH_LEVEL, REDIRECT } from '../constants/auth-constants.js';
+import { handleStatusMessage, clearMessage } from '/js/utils/error-message.js';
 
 const loginForm = document.getElementsByName('loginUserForm')[0];
-
-/**
- * @summary Handles the success/failure messages and displays it to the user
- * @param {Message} message The message object to display
- */
-function handleLoginMessage(message) {
-    alert(message.description);
-}
 
 /**
  * @summary Handles the form submission for the login process, including validation and redirection based on user role
@@ -36,7 +29,7 @@ async function onSubmit(event) {
     });
 
     if (loginMessage.success === false) {
-        handleLoginMessage(loginMessage);
+        handleStatusMessage(loginMessage);
         return;
     }
 
@@ -48,16 +41,17 @@ async function onSubmit(event) {
     } else if (role === PAGE_AUTH_LEVEL.ADMIN) {
         REDIRECT.TO_ADMIN();
     } else {
-        handleLoginMessage(
+        handleStatusMessage(
             createMessage(false, 'Account is associated with broken role!'),
         );
         return;
     }
 
     // pass the message to the handler
-    handleLoginMessage(loginMessage);
+    handleStatusMessage(loginMessage);
 }
 
 if (loginForm) {
     loginForm.addEventListener('submit', onSubmit);
+    loginForm.addEventListener('reset', clearMessage);
 }
