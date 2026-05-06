@@ -38,16 +38,6 @@ const DOM = {
     submitRecipeBtn: document.getElementById("addRecipe")
 };
 
-// References to all UI error message elements
-export const ERROR_MESSAGES = {
-    ingredientUnitErrorMessage: document.getElementById("customUnitErrorMessage"),
-    ingredientNameErrorMessage: document.getElementById("ingredientNameErrorMessage"),
-    recipeNameErrorMessage: document.getElementById("recipeNameErrorMessage"),
-    recipeDescriptionErrorMessage: document.getElementById("recipeDescriptionErrorMessage"),
-    quantityErrorMessage: document.getElementById("quantityErrorMessage"),
-    imageURLErrorMessage: document.getElementById("imageURLErrorMessage")
-}
-
 export const INGREDIENT_ERROR_MESSAGES = {
     "name": document.getElementById("ingredientNameErrorMessage"),
     "quantity": document.getElementById("quantityErrorMessage"),
@@ -60,8 +50,7 @@ export const OTHER_ERROR_MESSAGES = {
 export const RECIPE_ERROR_MESSAGES = {
     "name": document.getElementById("recipeNameErrorMessage"),
     "description": document.getElementById("recipeDescriptionErrorMessage"),
-    "image": document.getElementById("imageURLErrorMessage"),
-    "image_url": document.getElementById("imageURLErrorMessage")
+    "image_url": document.getElementById("imageURLErrorMessage"),
 }
 
 
