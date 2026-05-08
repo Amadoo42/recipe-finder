@@ -2,6 +2,12 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractUser
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
 class Recipe(models.Model):
     COURSE_CHOICES = [
         ('Appetizers', 'Appetizers'),
@@ -15,6 +21,8 @@ class Recipe(models.Model):
 
     image_file = models.ImageField(upload_to='recipe/images/', blank=True, null=True)
     image_url = models.URLField(max_length=500, blank=True, null=True)
+
+    ingredients = models.ManyToManyField(Ingredient, through='RecipeIngredient', related_name='recipes')
 
     def clean(self):
         super().clean()
@@ -32,6 +40,19 @@ class Recipe(models.Model):
     def __str__(self):
         return self.name
     
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+
+    quantity = models.FloatField()
+    unit = models.CharField(max_length=50)
+
+    class Meta:
+        unique_together = ('recipe', 'ingredient')
+
+    def __str__(self):
+        return f"{self.quantity} {self.unit} of {self.ingredient.name} for {self.recipe.name}"
+
 class User(AbstractUser):
     ROLE_CHOICES = [
         ('admin', 'Admin'),
@@ -43,12 +64,3 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-    
-class Ingredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients')
-    name = models.CharField(max_length=255)
-    quantity = models.FloatField()
-    unit = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f"{self.quantity} {self.unit} of {self.name}"

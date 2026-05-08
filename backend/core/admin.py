@@ -1,13 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Recipe, Ingredient
+from .models import User, Recipe, Ingredient, RecipeIngredient
 
-class IngredientInline(admin.TabularInline):
-    model = Ingredient
+class RecipeIngredientInline(admin.TabularInline):
+    model = RecipeIngredient
     extra = 1
 
 class RecipeAdmin(admin.ModelAdmin):
-    inlines = [IngredientInline]
+    inlines = [RecipeIngredientInline]
     list_display = ('name', 'course_type')
     search_fields = ('name',)
 
