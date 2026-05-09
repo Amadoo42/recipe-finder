@@ -55,7 +55,19 @@ function renderFavourite(category = 'all') {
         deleteBtn.className = 'FavBtn';
         deleteBtn.innerHTML = `<span class="material-symbols-rounded">favorite</span>`;
 
-        deleteBtn.addEventListener('click', (e) => { toggleFavourite(recipe.id); renderFavourite(currentCategory); e.stopPropagation(); });
+        	
+         deleteBtn.addEventListener('click', async (e) => {
+             e.stopPropagation();
+             try {
+                 const response = await toggleFavourite(recipe.id);
+                 if (response && response.success === false) {
+                     return;
+                 }
+                 renderFavourite(currentCategory);
+             } catch (error) {
+                 console.error('Failed to toggle favourite:', error);
+             }
+         });
         card.appendChild(deleteBtn);
         grid.appendChild(card);
     }
