@@ -33,7 +33,13 @@ def update_recipe(request):
     return validateRecipeForm(request, form, recipe_manager.updateRecipeData, recipe_id)
 
 def delete_recipe(request):
-    ...
+    body = json.loads(request.body)
+    id = int(body.get('id'))
+    
+    recipe_manager.deleteRecipeData(id)
+    return JsonResponse({
+            "success": True
+    })
 
 def add(request):
     return render(request, 'add-recipe.html')
