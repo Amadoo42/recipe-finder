@@ -23,11 +23,12 @@ export function getRecipes() {
 export async function getRecipeById(recipeId) {
     try{
         const respond = await fetch(`/api/recipes/${recipeId}/`);
-        if(!respond.ok)
+        if(!respond.ok){
             console.error(`Failed to fetch recipe ${recipeId}:HTTP${respond.status}`);
-        return null;
+            return null;
+        }
         const json = await respond.json();
-        return json.success? json.data():null;
+        return json.success? json.data:null;
         }
     catch(error){
         console.error('Network error fetching recipe:',error);

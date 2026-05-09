@@ -21,7 +21,7 @@ def recipe_details(request):
 def get_favourite(request):
     user = request.user
 
-    save_recipe = user.save_recipe.prefetch_related('ingredients').all()
+    save_recipe = user.saved_recipes.prefetch_related('ingredients').all()
 
     recipe_data = []
     for recipe in save_recipe:
@@ -48,12 +48,12 @@ def toggle_favourite(request,recipe_id):
         recipe = Recipe.objects.get(pk=recipe_id)
     except:
         return JsonResponse({'success':False,'description':'Recipe Not Found'},status=404)
-    is_save = user.saved_recipes.filter(pk=recipe_id).exist()
+    is_save = user.saved_recipes.filter(pk=recipe_id).exists()
 
     if is_save:
-        user.save_recipe.remove(recipe)
+        user.saved_recipes.remove(recipe)
         action = 'removed from'
     else:
-        user.save_recipe.add(recipe)
+        user.saved_recipes.add(recipe)
         action = 'added to'  
     return JsonResponse({'success':True,'description':f'Recipe {action} favourite.','data':{'isFavourited': not is_save}})         

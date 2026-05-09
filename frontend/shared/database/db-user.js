@@ -8,7 +8,7 @@ import { readTable, writeTable } from '/static/shared/database/db-core.js';
 import { createMessage } from '/static/shared/utils/create-message.js';
 import { retrieveLocalToken } from '/static/shared/database/db-auth.js';
 import { getRecipes } from '/static/shared/database/db-recipes.js';
-import { getCsrfToken } from '../utils/csrf';
+import { getCsrfToken } from '../utils/csrf.js';
 
 /**
  * Gets the index of the currently authenticated user in the users table.

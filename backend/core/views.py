@@ -7,7 +7,7 @@ from functools import wraps
 from core.models import Recipe 
 
 def login_check(view_func):
-    @wraps
+    @wraps(view_func)
     def wrapper(request,*args,**kwargs):
         if not request.user.is_authenticated:
             return JsonResponse({'success':False,'description':'Authentication required. Please log in.'}, status=401)
