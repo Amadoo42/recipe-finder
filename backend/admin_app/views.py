@@ -36,14 +36,7 @@ def delete_recipe(request):
     ...
 
 def add(request):
-    is_edit = request.GET.get('Edit', 0)
-    recipe_id = request.GET.get('RecipeID')
-    if is_edit:
-        recipe, ingredients = recipe_manager.getRecipeData(recipe_id)
-        context = {is_edit: 1, recipe: recipe, ingredients: ingredients}
-        return render(request, 'add-recipe.html', context)
-    else:
-        return render(request, 'add-recipe.html')
+    return render(request, 'add-recipe.html')
     
 
 def get_recipe_by_id(request):
@@ -54,7 +47,7 @@ def get_recipe_by_id(request):
             "success": True,
             "recipe": {
                 "name": recipe.name,
-                "course_type": recipe.course_type,
+                "courseType": recipe.courseType,
                 "description": recipe.description,
             },
             "ingredients": list(ingredients.values('name', 'quantity', 'unit'))
@@ -64,9 +57,8 @@ def get_all_recipes(request):
     recipes = recipe_manager.getAllRecipesData()
     return JsonResponse({
             "success": True,
-            "recipes": list(recipes.values('name', 'course_type', 'description'))
+            "recipes": list(recipes.values('id', 'name', 'courseType', 'description'))
     })
-    
     
 def search_ingredient(request):
     query = request.GET.get('query', '')

@@ -8,9 +8,9 @@ import { filterRecipesByCategory } from "/static/shared/utils/filter-recipes.js"
  * @param {string} [courseCategory="all"] - optional course category to filter by.
  * @returns {Object} A message object containing the search results or an error message.
  */
-export function searchRecipes(query, source, courseCategory = "all") {
+export async function searchRecipes(query, source, courseCategory = "all") {
     
-    let filterResult = filterRecipesByCategory(courseCategory, source);
+    let filterResult = await filterRecipesByCategory(courseCategory, source);
     if (!filterResult.success) {
         return filterResult;
     }
@@ -25,8 +25,8 @@ export function searchRecipes(query, source, courseCategory = "all") {
     for(let recipe of recipes) {
         if(
             recipe.name.toLowerCase().includes(query.trim().toLowerCase()) ||
-            recipe.description.toLowerCase().includes(query.trim().toLowerCase()) ||
-            recipe.ingredients.some(ingredient => ingredient.name.toLowerCase().includes(query.trim().toLowerCase()))    
+            recipe.description.toLowerCase().includes(query.trim().toLowerCase())
+            // recipe.ingredients.some(ingredient => ingredient.name.toLowerCase().includes(query.trim().toLowerCase()))  
         ) {
             found.push(recipe);
         }

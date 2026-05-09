@@ -133,7 +133,7 @@ export function getRecipeInput() {
     return {
         name: DOM.recipeName.value,
         description: DOM.recipeDescription.value,
-        course_type: DOM.recipeCourse.value
+        courseType: DOM.recipeCourse.value
     }
 }
 

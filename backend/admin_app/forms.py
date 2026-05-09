@@ -3,7 +3,7 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 import requests
 
-REGEX_PATTENRS = {
+REGEX_PATTERNS = {
     'ALPHA_ONLY': r'^[A-Za-z\s]+$',
     'DESCRIPTION_PATTERN': r"^[A-Za-z0-9\s,\/.\-']+$",
 }
@@ -11,12 +11,12 @@ REGEX_PATTENRS = {
 
 class RecipeForm(forms.Form):
     name = forms.CharField(max_length=100, required=True,
-                           validators=[RegexValidator(regex=REGEX_PATTENRS['ALPHA_ONLY'])])
+                           validators=[RegexValidator(regex=REGEX_PATTERNS['ALPHA_ONLY'])])
     
     description = forms.CharField(max_length=250, required=True,
-                                  validators=[RegexValidator(regex=REGEX_PATTENRS['DESCRIPTION_PATTERN'])])
+                                  validators=[RegexValidator(regex=REGEX_PATTERNS['DESCRIPTION_PATTERN'])])
     
-    course_type = forms.CharField(max_length=30, required=True)
+    courseType = forms.CharField(max_length=30, required=True)
     
     image_file = forms.ImageField(required=False)
     
@@ -34,17 +34,16 @@ class RecipeForm(forms.Form):
             raise ValidationError("The provided image URL is invalid")
         
     
-    
 class IngredientForm(forms.Form):
     name = forms.CharField(max_length=100, required=True,
-                        validators=[RegexValidator(regex=REGEX_PATTENRS['ALPHA_ONLY'])])
+                        validators=[RegexValidator(regex=REGEX_PATTERNS['ALPHA_ONLY'])])
     
     quantity = forms.FloatField(min_value=0.00, required=True)
     
     unit = forms.CharField(max_length=30, required=True,
-                                    validators=[RegexValidator(regex=REGEX_PATTENRS['ALPHA_ONLY'])])
+                                    validators=[RegexValidator(regex=REGEX_PATTERNS['ALPHA_ONLY'])])
     
 
 class OtherUnitForm(forms.Form):
     unit = forms.CharField(max_length=255, required=True,
-                           validators=[RegexValidator(regex=REGEX_PATTENRS['ALPHA_ONLY'])])
+                           validators=[RegexValidator(regex=REGEX_PATTERNS['ALPHA_ONLY'])])

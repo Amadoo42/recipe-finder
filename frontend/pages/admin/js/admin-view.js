@@ -29,8 +29,9 @@ function init() {
 /**
  * @brief this is a wrapper function to get recipes and view them
  */
-function updateView() {
-    recipes = searchRecipes(currentQuery, currentSource, currentCategory).data;
+async function updateView() {
+    const result = await searchRecipes(currentQuery, currentSource, currentCategory);
+    recipes = result.data;
     renderRecipes();
 }
 
@@ -60,6 +61,7 @@ function renderRecipes() {
     const container = document.getElementById('main');
     container.innerHTML = "";
     recipes.forEach(recipe => {
+        console.log(recipe);
         const article = createCard(recipe);
 
         const editBtn = document.createElement('button');

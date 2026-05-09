@@ -109,8 +109,9 @@ async function init() {
     UI.renderHeader(isEdit);
     if (isEdit) {
         const response = await getRecipeById(recipeID);
+        console.log(response);
         const recipe = response.recipe;
-        UI.renderRecipeDetails(recipe.name, recipe.course_type, recipe.description);
+        UI.renderRecipeDetails(recipe.name, recipe.courseType, recipe.description);
         ingredients = [...ingredients, ...response.ingredients];
     }
     UI.renderIngredientList(ingredients, removeIngredient);

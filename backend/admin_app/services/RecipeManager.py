@@ -4,7 +4,6 @@ from django.shortcuts import get_object_or_404
 
 class RecipeManager:
     _instance = None
-
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
@@ -44,7 +43,7 @@ class RecipeManager:
         ingredients = Ingredient.objects.filter(recipe_id=recipe_id)
         return recipe, ingredients
     
-    
+
     def getAllRecipesData(self):
         '''
         returns recipe data by its id
