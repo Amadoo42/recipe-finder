@@ -7,7 +7,7 @@ const recipeId = params.get('recipeid');
 
 (async()=>{
 
-const recipe = getRecipeById(recipeId);
+const recipe = await getRecipeById(recipeId);
 const wrapper = document.getElementById('recipeContentWrapper');
 const pageHeading = document.getElementById('pageHeading');
 
@@ -48,7 +48,7 @@ if (!recipe) {
 
     async function updateFavBtn() {
         const favouriteResult = await getUserFavourites();
-        const isSaved = favouriteResult.success&&favouriteResult.data.some(r => (r.id)===(recipeId));
+        const isSaved = favouriteResult.success&&favouriteResult.data.some(r => String(r.id)===String(recipeId));
         favBtn.classList.toggle('active',isSaved);
     }
     await updateFavBtn();
