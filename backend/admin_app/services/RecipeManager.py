@@ -11,7 +11,7 @@ class RecipeManager:
 
     def addRecipeData(self, data, ingredients):
         '''
-        Adds a recipe and ingredients to the database
+        Adds a recipe and its ingredients to the database
         '''
         recipe = Recipe.objects.create(**data)
         for ingredient in ingredients:

@@ -1,15 +1,15 @@
 /**
  * db-recipes.js
  * CRUD operations and search logic for Recipes.
- * Depends on: db-core.js
+ * Depends on: requests.js
 */
 
 import { readTable, writeTable } from '/static/shared/database/db-core.js';
 import { createMessage } from '/static/shared/utils/create-message.js';
 import { getRequest, postRequest, deleteRequest } from '/static/api/request.js';
 /**
- * Retrieves all recipes from the database.
- * @returns { Array } - An array of recipe objects.
+ * Retrieves all recipes from the server.
+ * @returns { Promise<Array> } - A promise that resolves to an array of recipe objects.
  */
 export async function getRecipes() {
     const response = await getRequest('/admin/get_all_recipes/');
@@ -17,9 +17,9 @@ export async function getRecipes() {
 }
 
 /**
- * Retrieves a recipe by its ID from the database.
- * @param { string } recipeId - The ID of the recipe to retrieve.
- * @returns { Object | null } - The recipe object if found, otherwise null.
+ * Retrieves a specific recipe by its unique ID.
+ * @param { number } recipeId - The ID of the recipe to retrieve.
+ * @returns { Promise<Object> } - A promise that resolves to the recipe object.
  */
 export async function getRecipeById(recipeId) {
     const params = new URLSearchParams();
@@ -29,11 +29,21 @@ export async function getRecipeById(recipeId) {
     return result;
 }
 
+/**
+ * Adds a new ingredient to the database.
+ * @param { Object } data - The ingredient data to be saved.
+ * @returns { Promise<Object> } - A promise that resolves to the server response.
+ */
 export async function addIngredientDB(data) {
     const result = await postRequest('/admin/add_ingredient/', data);
     return result;
 }
 
+/**
+ * Searches for ingredients by name.
+ * @param { string } query - The search term for filtering ingredients.
+ * @returns { Promise<Array> } - A promise that resolves to a list of matching ingredients.
+ */
 export async function searchIngredients(query) {
     const params = new URLSearchParams();
     params.append('query', query);
@@ -41,6 +51,11 @@ export async function searchIngredients(query) {
     return result;
 }
 
+/**
+ * Adds a new custom ingredient.
+ * @param { Object } data - The unit data to be saved.
+ * @returns { Promise<Object> } - A promise that resolves to the server response.
+ */
 export async function addOtherUnitDB(data) {
     const result = await postRequest('/admin/add_other_unit/', data);
     return result;
@@ -48,9 +63,8 @@ export async function addOtherUnitDB(data) {
 
 /**
  * Adds a new recipe to the database. 
- * The recipe object should already be standardized using createRecipeObject from schema-factories.js before being passed to this function.
- * @param { Object } recipe - The recipe object to add to the database.
- * @return { Object } - A message object indicating success or failure of the operation, along with the added recipe if successful.
+ * @param { Object } data - The recipe data object.
+ * @returns { Promise<Object> } - A promise that resolves to the server response.
  */
 export async function addRecipe(data) {
     const result = await postRequest('/admin/add_recipe/', data);
@@ -58,10 +72,10 @@ export async function addRecipe(data) {
 }
 
 /**
- * Updates a recipe in the database.
- * @param { string } recipeId - The ID of the recipe to update.
- * @param { Object } updatedRecipe - The updated recipe object.
- * @returns { Object } - A message object indicating the result of the operation.
+ * Updates an existing recipe's information in the database.
+ * @param { number } recipeId - The ID of the recipe to update.
+ * @param { Object } data - The updated recipe data.
+ * @returns { Promise<Object> } - A message object indicating the result of the operation.
  */
 export async function updateRecipe(recipeId, data) {
     data['recipe_id'] = recipeId;
@@ -71,8 +85,8 @@ export async function updateRecipe(recipeId, data) {
 
 /**
  * Deletes a recipe from the database.
- * @param { string } recipeId - The ID of the recipe to delete.
- * @returns { Object } - A message object indicating the result of the operation.
+ * @param { number } recipeId - The ID of the recipe to delete.
+ * @returns { Object } - A message object indicating success or failure.
  */
 export async function deleteRecipe(recipeId) {
     await deleteRequest('/admin/delete_recipe/', {'id': recipeId })
