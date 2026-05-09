@@ -65,5 +65,5 @@ def search_ingredient(request):
     suggestions = recipe_manager.ingredient_search(query)
     return JsonResponse({
         "success": True,
-        "ingredients": list(suggestions.values('id', 'name', 'quantity', 'unit'))
+        "ingredients": list(suggestions.values('id', 'name'))
     })

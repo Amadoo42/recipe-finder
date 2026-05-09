@@ -1,6 +1,5 @@
 from core.models import *
 from admin_app.forms import *
-from django.shortcuts import get_object_or_404
 
 class RecipeManager:
     _instance = None

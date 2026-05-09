@@ -86,6 +86,7 @@ async function addRecipeHandler() {
     let data = UI.getRecipeInput();
     const ingredients_list = JSON.stringify(ingredients);
     data = {...data, image_file, image_url, ingredients_list};
+    
     const result = await saveRecipe(data);
     if (!result.success) {
         toggleErrorMessageList(UI.RECIPE_ERROR_MESSAGES, true, result.errors);

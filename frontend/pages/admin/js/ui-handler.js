@@ -187,7 +187,12 @@ export function initUI(addIngredientHandler, addRecipeHandler, addOtherUnitHandl
         toggleOtherUnitModal(DOM.ingredientUnitInput.value === "Other")
     });
     DOM.addIngredientBtn.addEventListener("click", addIngredientHandler);
-    DOM.submitRecipeBtn.addEventListener("click", addRecipeHandler);
+    DOM.submitRecipeBtn.addEventListener("click", () => {
+        DOM.submitRecipeBtn.disabled = true;
+        DOM.submitRecipeBtn.textContent = "Processing the request...";
+        addRecipeHandler();
+        renderHeader();
+    });
     DOM.customUnitModalCancelBtn.addEventListener("click", cancelOtherUnit);
     DOM.customUnitModalAddBtn.addEventListener("click", addOtherUnitHandler);
     DOM.ingredientNameInput.addEventListener('input', ingredientSearch)
