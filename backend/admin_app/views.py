@@ -41,23 +41,23 @@ def add(request):
 
 def get_recipe_by_id(request):
     recipe_id = request.GET.get('RecipeID')
-    print(f"RECIPE ID = {recipe_id}")
-    recipe, ingredients = recipe_manager.getRecipeData(recipe_id)
+    recipe, ingredient_data = recipe_manager.getRecipeData(recipe_id)
     return JsonResponse({
             "success": True,
             "recipe": {
+                "id": recipe.id,
                 "name": recipe.name,
                 "courseType": recipe.courseType,
                 "description": recipe.description,
             },
-            "ingredients": list(ingredients.values('name', 'quantity', 'unit'))
+            "ingredients": ingredient_data
     })
 
 def get_all_recipes(request):
-    recipes = recipe_manager.getAllRecipesData()
+    all_recipe_data = recipe_manager.getAllRecipesData()
     return JsonResponse({
             "success": True,
-            "recipes": list(recipes.values('id', 'name', 'courseType', 'description'))
+            "recipes": all_recipe_data
     })
     
 def search_ingredient(request):

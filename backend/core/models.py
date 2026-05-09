@@ -26,8 +26,8 @@ class Recipe(models.Model):
 
     def clean(self):
         super().clean()
-        if not self.image_file and not self.image_url:
-            raise ValidationError("You must provide either an image file or an image URL.")
+        # if not self.image_file and not self.image_url:
+        #     raise ValidationError("You must provide either an image file or an image URL.")
         if self.image_file and self.image_url:
             raise ValidationError("Please provide an image file OR an image URL, not both.")
 
