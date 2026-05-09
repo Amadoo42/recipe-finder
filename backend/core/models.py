@@ -41,7 +41,7 @@ class Recipe(models.Model):
         return self.name
     
 class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="recipe_ingredients")
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
 
     quantity = models.FloatField()

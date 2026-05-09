@@ -8,6 +8,7 @@ import { readTable, writeTable } from '/static/shared/database/db-core.js';
 import { createMessage } from '/static/shared/utils/create-message.js';
 import { retrieveLocalToken } from '/static/shared/database/db-auth.js';
 import { getRecipes } from '/static/shared/database/db-recipes.js';
+import { getCsrfToken } from '/static/shared/utils/csrf.js';
 
 /**
  * Gets the index of the currently authenticated user in the users table.
@@ -30,70 +31,49 @@ function getCurrentUserIndex(users, sessionToken) {
  * @param { string } recipeId - The ID of the recipe to toggle as a favourite.
  * @returns { Object } A message object indicating success or failure of the operation.
  */
-export function toggleFavourite(recipeId) {
-    let sessionTokenObject = retrieveLocalToken();
-    if(sessionTokenObject.success === false) {
-        return createMessage(false, 'User not authenticated');
-    }
-    let sessionToken = sessionTokenObject.data.token;
-
-    let users = readTable('users');
-    let userIndex = getCurrentUserIndex(users, sessionToken);
-
-    if(userIndex === -1) {
-        return createMessage(false, 'User not found');
-    }
-
-    let savedList = users[userIndex].savedRecipes || [];
-    recipeId = String(recipeId); 
-    if(savedList.includes(recipeId)) {
-        let newSavedList = []
-        for(let id of savedList) {
-            if(id !== recipeId) {
-                newSavedList.push(id);
-            }
+export async function toggleFavourite(recipeId) {
+    try{
+        const response = await fetch(`/api/user/favourites/${recipeId}/toggle/`,{
+            method:'POST',
+            headers:{
+                'X-CSRFToken':getCsrfToken(),
+                'Content-Type':'application/json',
+            },
+        });
+        if(response.status===401){
+            return createMessage(false,'User not authenticated.');
         }
-        savedList = newSavedList;
-    } else {
-        savedList.push(recipeId);
+        if(!response.ok){
+            return createMessage(false,'Failed to fetch favourites from server.');
+        }
+        const json = await response.json();
+        return json
     }
-
-    users[userIndex].savedRecipes = savedList;
-    writeTable('users', users);
-
-    return createMessage(true, 'Favourite toggled successfully');
+    catch(error){
+        console.error('Network error fetching favourites:',error);
+        return createMessage(false,'Network problem')
+    }
 }
 
 /**
  * Retrieves the list of favourite recipes for the authenticated user.
  * @returns { Object } A message object containing the list of favourite recipes or an error message if the user is not authenticated or not found.
  */
-export function getUserFavourites() {
-    let sessionTokenObject = retrieveLocalToken();
-    if(sessionTokenObject.success === false) {
-        return createMessage(false, 'User not authenticated');
-    }
-    let sessionToken = sessionTokenObject.data.token;
+export async function getUserFavourites() {
+    try{
+        const response = await fetch(`/api/user/favourites/`);
 
-    let users = readTable('users');
-    let userIndex = getCurrentUserIndex(users, sessionToken);
-
-    if(userIndex === -1) {
-        return createMessage(false, 'User not found');
-    }
-    
-    if(!users[userIndex].savedRecipes || users[userIndex].savedRecipes.length === 0) {
-        return createMessage(true, 'No favourite recipes found', []);
-    }
-
-    let allRecipes = getRecipes();
-    let favouriteRecipes = [];
-    
-    for(let recipe of allRecipes) {
-        if(users[userIndex].savedRecipes.includes(String(recipe.id))) {
-            favouriteRecipes.push(recipe);
+        if(response.status===401){
+            return createMessage(false,'User not authenticated.');
         }
+        if(!response.ok)
+            return createMessage(false,'Failed to fetch favourites from server.');
+        const json = await response.json();
+        return json;
     }
+    catch(error){
+        console.error('Network error fetching favourites:',error);
+        return createMessage(false,'Network problem');
 
-    return createMessage(true, 'Favourites retrieved successfully', favouriteRecipes);
+    }
 }
