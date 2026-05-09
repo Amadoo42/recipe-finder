@@ -25,6 +25,7 @@ export async function getRecipeById(recipeId) {
     const params = new URLSearchParams();
     params.append('RecipeID', recipeId);
     const result = await getRequest('/admin/get_recipe_by_id/', params);
+    // console.log(result);
     return result;
 }
 

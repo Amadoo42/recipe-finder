@@ -31,8 +31,11 @@ class RecipeManager:
         '''
         updates a recipe's data in the database along with its ingredients
         '''
-        Recipe.objects.filter(id=recipe_id).update(**data)
         recipe = Recipe.objects.get(id=recipe_id)
+        for key, value in data.items():
+            if value is not None:
+                setattr(recipe, key, value)
+        recipe.save()
             
         RecipeIngredient.objects.filter(recipe=recipe).delete()
         for ingredient in ingredients:
@@ -49,7 +52,7 @@ class RecipeManager:
                     unit=ingredient_form.cleaned_data['unit']
                 )
                 
-    def getRecipeData(self, recipe_id):
+    def getRecipeData(self, recipe_id, request):
         '''
         fetches recipe data by its id
         returns recipe data along with its ingredients list
@@ -58,17 +61,28 @@ class RecipeManager:
         ingredients = recipe.ingredients.all()
         recipeIngredient = RecipeIngredient.objects.filter(recipe=recipe)
         ingredient_data = []
+        if recipe.image_file: image = request.build_absolute_uri(recipe.image_file.url)
+        else: image = recipe.image_url
         for i in range(len(recipeIngredient)):
             ingredient = {
                 "name": ingredients[i].name,
                 "quantity": recipeIngredient[i].quantity,
-                "unit": recipeIngredient[i].unit
+                "unit": recipeIngredient[i].unit,
             }
             ingredient_data.append(ingredient)
-        return recipe, ingredient_data
+
+        recipe_data = {
+            "id": recipe.id,
+            "name": recipe.name,
+            "courseType": recipe.courseType,
+            "description": recipe.description,
+            "image": image,
+            "ingredients": ingredient_data
+        }
+        return recipe_data
     
 
-    def getAllRecipesData(self):
+    def getAllRecipesData(self, request):
         '''
         returns recipe data by its id
         returns only the recipe data without its ingredients list
@@ -87,11 +101,14 @@ class RecipeManager:
                 }
                 ingredient_data.append(ingredient)
 
+            if recipes[i].image_file: image = request.build_absolute_uri(recipes[i].image_file.url)
+            else: image = recipes[i].image_url
             all_recipe_data.append({
                 "id": recipes[i].id,
                 "name": recipes[i].name,
                 "courseType": recipes[i].courseType,
                 "description": recipes[i].description,
+                "image": image,
                 "ingredients": ingredient_data
             })
             

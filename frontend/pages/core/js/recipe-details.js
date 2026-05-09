@@ -5,7 +5,8 @@ import { DEFAULT_VALUES } from '/static/constants/recipe-constants.js';
 const params = new URLSearchParams(window.location.search);
 const recipeId = params.get('recipeid');
 
-const recipe = getRecipeById(recipeId);
+let recipe = await getRecipeById(recipeId);
+recipe = recipe.recipe;
 const wrapper = document.getElementById('recipeContentWrapper');
 const pageHeading = document.getElementById('pageHeading');
 if (!recipe) {

@@ -19,7 +19,7 @@ class Recipe(models.Model):
     description = models.TextField()
     courseType = models.CharField(max_length=20, choices=COURSE_CHOICES)
 
-    image_file = models.ImageField(upload_to='recipe/images/', blank=True, null=True)
+    image_file = models.ImageField(blank=True, null=True)
     image_url = models.URLField(max_length=500, blank=True, null=True)
 
     ingredients = models.ManyToManyField(Ingredient, through='RecipeIngredient', related_name='recipes')

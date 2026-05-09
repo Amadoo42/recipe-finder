@@ -2,6 +2,8 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 import requests
+from PIL import Image
+from io import BytesIO
 
 REGEX_PATTERNS = {
     'ALPHA_ONLY': r'^[A-Za-z\s]+$',
@@ -29,9 +31,15 @@ class RecipeForm(forms.Form):
         if response.status_code != 200:
             raise ValidationError("The provided image URL is invalid")
         
-        content_type = response.headers.get('Content-Type')
-        if not content_type.startswith('image'):
+        response = requests.get(url)
+        image_data = BytesIO(response.content)
+    
+        img = Image.open(image_data)
+        try:
+            img.verify()
+        except:
             raise ValidationError("The provided image URL is invalid")
+        return url
         
     
 class IngredientForm(forms.Form):
