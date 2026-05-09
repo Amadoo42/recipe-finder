@@ -6,7 +6,7 @@
 
 import { readTable, writeTable } from '/static/shared/database/db-core.js';
 import { createMessage } from '/static/shared/utils/create-message.js';
-import { getRequest, postRequest } from '/static/api/request.js';
+import { getRequest, postRequest, deleteRequest } from '/static/api/request.js';
 /**
  * Retrieves all recipes from the database.
  * @returns { Array } - An array of recipe objects.
@@ -74,22 +74,8 @@ export async function updateRecipe(recipeId, data) {
  * @param { string } recipeId - The ID of the recipe to delete.
  * @returns { Object } - A message object indicating the result of the operation.
  */
-export function deleteRecipe(recipeId) {
-    let recipes = getRecipes();
-    let filteredRecipes = [];
-    let found = false;
-    for(let r of recipes) {
-        if(String(r.id) === String(recipeId)) {
-            found = true;
-            continue; 
-        }
-        filteredRecipes.push(r);
-    }
-    if(found) {
-        writeTable('recipes', filteredRecipes);
-        return createMessage(true, 'Recipe deleted successfully');
-    }
-    return createMessage(false, 'Recipe not found');
+export async function deleteRecipe(recipeId) {
+    await deleteRequest('/admin/delete_recipe/', {'id': recipeId })
 }
 
 /**

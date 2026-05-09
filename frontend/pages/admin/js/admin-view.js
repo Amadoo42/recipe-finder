@@ -61,7 +61,6 @@ function renderRecipes() {
     const container = document.getElementById('main');
     container.innerHTML = "";
     recipes.forEach(recipe => {
-        console.log(recipe);
         const article = createCard(recipe);
 
         const editBtn = document.createElement('button');

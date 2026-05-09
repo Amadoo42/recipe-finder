@@ -27,3 +27,17 @@ export async function postRequest(url, data) {
     const result = await response.json();
     return result;
 }
+
+export async function deleteRequest(url, data) {
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCSRFToken()
+        },
+        body: JSON.stringify(data)
+    })
+
+    const result = await response.json();
+    return result
+}
