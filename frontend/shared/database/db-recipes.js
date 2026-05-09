@@ -20,18 +20,20 @@ export function getRecipes() {
  * @param { string } recipeId - The ID of the recipe to retrieve.
  * @returns { Object | null } - The recipe object if found, otherwise null.
  */
-export function getRecipeById(recipeId) {
-    let recipes = getRecipes();
-    let recipe = null;
-    for(let r of recipes) {
-        // Im lazy to check types so I just convert both to strings before comparing
-        if(String(r.id) === String(recipeId)) {
-            recipe = r;
-            break;
+export async function getRecipeById(recipeId) {
+    try{
+        const respond = await fetch(`/api/recipes/${recipeId}/`);
+        if(!respond.ok)
+            console.error(`Failed to fetch recipe ${recipeId}:HTTP${respond.status}`);
+        return null;
+        const json = await respond.json();
+        return json.success? json.data():null;
+        }
+    catch(error){
+        console.error('Network error fetching recipe:',error);
+        return null;
         }
     }
-    return recipe;
-}
 
 /**
  * Adds a new recipe to the database. 

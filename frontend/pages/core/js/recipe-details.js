@@ -5,9 +5,12 @@ import { DEFAULT_VALUES } from '/static/constants/recipe-constants.js';
 const params = new URLSearchParams(window.location.search);
 const recipeId = params.get('recipeid');
 
+(async()=>{
+
 const recipe = getRecipeById(recipeId);
 const wrapper = document.getElementById('recipeContentWrapper');
 const pageHeading = document.getElementById('pageHeading');
+
 if (!recipe) {
     if (pageHeading) {
         pageHeading.textContent = 'Recipe not found';
@@ -15,15 +18,14 @@ if (!recipe) {
     }
     if (wrapper) {
         wrapper.style.display = 'none';
+        return;
     }
 }
-else {
-    if (pageHeading) {
-        pageHeading.style.display = 'none';
-    }
-    if (wrapper) {
-        wrapper.style.display = 'block';
-    }
+
+    if (pageHeading) pageHeading.style.display = 'none';
+
+    if (wrapper) wrapper.style.display = 'block';
+    
     document.getElementById('recipeName').textContent = recipe.name;
     document.getElementById('recipeImage').src = recipe.image || DEFAULT_VALUES.IMAGE;
     document.getElementById('recipeImage').alt = recipe.name;
@@ -44,15 +46,16 @@ else {
     }
     const favBtn = document.getElementById('favBtn');
 
-    function updateFavBtn() {
-        const favourites = getUserFavourites();
-        if (favourites.success && favourites.data.some(r => String(r.id) === String(recipeId))) {
-            favBtn.classList.add('active');
-        }
-        else {
-            favBtn.classList.remove('active');
-        }
+    async function updateFavBtn() {
+        const favouriteResult = await getUserFavourites();
+        const isSaved = favouriteResult.success&&favouriteResult.data.some(r => (r.id)===(recipeId));
+        favBtn.classList.toggle('active',isSaved);
     }
-    updateFavBtn();
-    favBtn.addEventListener('click', () => { toggleFavourite(recipe.id); updateFavBtn(); });
-}
+    await updateFavBtn();
+    favBtn.addEventListener('click', async() => {
+        favBtn.disabled = true;
+        await toggleFavourite(recipeId);
+        await updateFavBtn();
+        favBtn.disabled = false;
+      });
+})();
