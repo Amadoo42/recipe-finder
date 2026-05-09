@@ -1,4 +1,3 @@
-import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -21,7 +20,7 @@ def recipe_details(request):
 def get_favourite(request):
     user = request.user
 
-    save_recipe = user.saved_recipes.prefetch_related('ingredients').all()
+    save_recipe = user.saved_recipes.prefetch_related('recipe_ingredients__ingredient').all()
 
     recipe_data = []
     for recipe in save_recipe:
@@ -32,8 +31,8 @@ def get_favourite(request):
         'courseType':recipe.course_type,
         'image':recipe.get_image,
         'ingredients':[
-            {'name':i.name,'quantity':i.quantity,'unit':i.unit}
-            for i in recipe.ingredient.all()
+            {'name':ri.ingredient.name,'quantity':ri.quantity,'unit':ri.unit}
+            for ri in recipe.recipe_ingredients.all()
         ]
     })
     return JsonResponse({'success':True,'data':recipe_data})

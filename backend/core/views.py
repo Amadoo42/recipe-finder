@@ -2,7 +2,6 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
-from django.views.decorators.http import require_http_methods
 from functools import wraps
 from core.models import Recipe 
 
@@ -44,7 +43,7 @@ def login(request):
 
 def recipe_detail(request,recipe_id):
     try:
-        recipe = Recipe.objects.prefetch_related('ingredients').get(pk=recipe_id)
+        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(pk=recipe_id)
     except:
         return JsonResponse({'success': False, 'description': 'Recipe Not Found'},status=404)
     
@@ -56,11 +55,11 @@ def recipe_detail(request,recipe_id):
         'image':recipe.get_image,
         'ingredients':[
             {
-                'name': ingredient.name,
-                'quantity': ingredient.quantity,
-                'unit': ingredient.unit,
+                'name': ri.ingredient.name,
+                'quantity': ri.quantity,
+                'unit': ri.unit,
             }
-            for ingredient in recipe.ingredients.all()
+            for ri in recipe.recipe_ingredients.all()
         ]
     }
     return JsonResponse({'success':True,'data':recipe_data})

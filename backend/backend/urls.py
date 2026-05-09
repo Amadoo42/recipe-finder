@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('user/', include('user_app.urls')),
     path('admin/', include('admin_app.urls')),
-    path('api/recipe/<int:recipe_id>/',core_views.recipe_detail,name='recipe_detail'),
+    path('api/recipes/<int:recipe_id>/',core_views.recipe_detail,name='recipe_detail'),
     path('api/user/favourites/',user_views.get_favourite,name='get_favourite'),
     path('api/user/favourites/<int:recipe_id>/toggle/',user_views.toggle_favourite,name='toggle_favourite'), 
 ]
