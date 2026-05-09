@@ -6,7 +6,7 @@
     <meta charset="UTF-8" />
     <title>Favourites Recipe Finder</title>
     <script type="module">
-        import { initHerbs } from "{% static 'shared/utils/favourites.js' %}";
+        import { initHerbs } from "{% static 'pages/user/js/favourites.js' %}";
         initHerbs();
     </script>
     <script type="module" src="{% static 'api/auth.js' %}"></script>
@@ -17,6 +17,7 @@
 </head>
 
 <body>
+    {% csrf_token %}
     <nav></nav>
 
     <div class="TopSection">

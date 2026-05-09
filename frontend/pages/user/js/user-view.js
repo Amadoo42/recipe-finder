@@ -3,7 +3,7 @@ import { toggleFavourite, getUserFavourites } from "/static/shared/database/db-u
 import { searchRecipes } from "/static/shared/utils/search-recipes.js";
 import { setupSearch } from "/static/shared/utils/setup-search.js";
 import { setupFilters } from "/static/shared/utils/setup-filters.js";
-import { initHerbs } from "/static/shared/utils/favourites.js";
+import { initHerbs } from "/static/pages/user/js/favourites.js";
 
 let currentQuery = "";
 let currentSource = "all";

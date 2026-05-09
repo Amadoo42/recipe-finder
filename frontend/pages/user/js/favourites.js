@@ -1,6 +1,6 @@
-import { toggleFavourite } from '../database/db-user.js'
-import { filterRecipesByCategory } from '../utils/filter-recipes.js';
-import { createCard } from '../utils/create-card.js';
+import { toggleFavourite } from '/static/shared/database/db-user.js';
+import { filterRecipesByCategory } from '/static/shared/utils/filter-recipes.js';
+import { createCard } from '/static/shared/utils/create-card.js';
 
 let currentCategory = 'all';
 
@@ -17,7 +17,7 @@ function updateCategoryCounts() {
 
     allFavouriteRecipes.forEach(recipe => {
         const type = recipe.courseType.toLowerCase();
-        if(counts[type] !== undefined) counts[type]++;
+        if (counts[type] !== undefined) counts[type]++;
     });
 
     document.getElementById('countAll').textContent = counts['all'];
@@ -26,28 +26,28 @@ function updateCategoryCounts() {
     document.getElementById('countDessert').textContent = counts['dessert'];
 }
 
-function renderFavourite(category='all'){
+function renderFavourite(category = 'all') {
     currentCategory = category;
     const grid = document.getElementById('main');//put the id of grid
     const state = document.getElementById('fav-empty');//put the state if empty or not
 
     const respond = filterRecipesByCategory(category, 'favourites');
 
-    grid.innerHTML = ''; 
+    grid.innerHTML = '';
 
     updateCategoryCounts();
 
-    if(!respond.success || !respond.data || respond.data.length == 0){
+    if (!respond.success || !respond.data || respond.data.length == 0) {
         grid.style.display = 'none';
-        state.style.display='';
+        state.style.display = '';
         return;
     }
 
     const recipes = respond.data;
- 
+
     grid.style.display = '';
     state.style.display = 'none';
- 
+
     for (const recipe of recipes) {
         const card = createCard(recipe);
 
@@ -55,14 +55,14 @@ function renderFavourite(category='all'){
         deleteBtn.className = 'FavBtn';
         deleteBtn.innerHTML = `<span class="material-symbols-rounded">favorite</span>`;
 
-        deleteBtn.addEventListener('click', (e)=>{toggleFavourite(recipe.id);renderFavourite(currentCategory);e.stopPropagation();});
+        deleteBtn.addEventListener('click', (e) => { toggleFavourite(recipe.id); renderFavourite(currentCategory); e.stopPropagation(); });
         card.appendChild(deleteBtn);
         grid.appendChild(card);
     }
 
     updateCategoryCounts(recipes);
 }
- 
+
 
 if (document.getElementById('countAll')) {
     renderFavourite('all');
@@ -77,23 +77,31 @@ if (document.getElementById('countAll')) {
 }
 
 export function fillHerbs() {
-  const herbs = ['../assets/origano.svg', '../assets/basil.svg'];
-  const cols = [document.getElementById('herbLeft'), document.getElementById('herbRight')];
+    const herbs = ['/static/shared/assets/origano.svg', '/static/shared/assets/basil.svg'];
+    const cols = [document.getElementById('herbLeft'), document.getElementById('herbRight')];
 
-  cols.forEach((col) => {
-    col.innerHTML = '';
-    const availableHeight = window.innerHeight - 300; // matches calc above
-    const imgHeight = 110 + 12; // img width + gap
-    const slots = Math.ceil(availableHeight / imgHeight) + 1;
+    cols.forEach((col) => {
+        col.innerHTML = '';
+        const availableHeight = window.innerHeight - 300; // matches calc above
+        const imgHeight = 110 + 12; // img width + gap
+        const slots = Math.ceil(availableHeight / imgHeight) + 1;
 
-    for (let i = 0; i < slots; i++) {
-      const img = document.createElement('img');
-      img.src = herbs[i % 2];
-      img.alt = '';
-      col.appendChild(img);
-    }
-  });
+        for (let i = 0; i < slots; i++) {
+            const img = document.createElement('img');
+            img.src = herbs[i % 2];
+            img.alt = '';
+            col.appendChild(img);
+        }
+    });
 }
 
-fillHerbs();
-window.addEventListener('resize', fillHerbs);
+let herbsResizeListenerAttached = false;
+
+export function initHerbs() {
+    fillHerbs();
+
+    if (herbsResizeListenerAttached) return;
+
+    window.addEventListener('resize', fillHerbs);
+    herbsResizeListenerAttached = true;
+}
