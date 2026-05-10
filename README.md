@@ -1,14 +1,14 @@
-# Recipe Finder — Phase 1
+# Recipe Finder
 
 A web application that connects food lovers and home cooks, allowing them to browse, search, and manage recipes. Built as part of the IS231 Web Technology course at the Faculty of Computers and Artificial Intelligence, Cairo University.
 
 ---
 
 ## Table of Contents
-
 - [About the Project](#about-the-project)
-- [Pages](#pages)
+- [Tech Stack](#tech-stack)
 - [File Structure](#file-structure)
+- [Setup](#setup)
 - [Team](#team)
 - [Acknowledgments](#acknowledgments)
 
@@ -21,55 +21,74 @@ Recipe Finder is a multi-user web application with two roles: **Admins** and **U
 - **Admins** can add, edit, and delete recipes from the platform.
 - **Users** can browse, search, and save their favorite recipes.
 
-**Phase 1** covers all HTML pages with no CSS or JavaScript — pure semantic HTML only. Styling and interactivity will be introduced in later phases.
+Recipe Finder comes with a full **Django + Python** backend with server-side authentication, session management, and a REST-like API layer.
 
 ---
 
-## Pages
+## Tech Stack
 
-The project is split across 8 HTML pages:
-
-| Page | Path | Description |
-|---|---|---|
-| Home | `index.html` | Entry point — welcome message with links to sign up and log in |
-| Sign Up | `signup.html` | Registration form for both admins and users |
-| Login | `login.html` | Authentication page |
-| Admin Dashboard | `admin/dashboard.html` | Lists all recipes with edit and delete actions |
-| Add Recipe | `admin/add-recipe.html` | Form to create a new recipe with multiple ingredients |
-| Edit Recipe | `admin/edit-recipe.html` | Pre-filled form to modify an existing recipe |
-| Search & Browse | `user/search.html` | Search bar and results filtered by dish name or ingredient |
-| Recipe Details | `user/recipe-details.html` | Full instructions and ingredient list for a single recipe |
-| Favorites | `user/favorites.html` | List of recipes saved by the logged-in user |
+| Layer | Technology |
+|---|---|
+| Backend | Python, Django |
+| Frontend | HTML, CSS, JavaScript |
+| Auth | Django session-based authentication |
+| Database | Postgres (neon.tech) |
 
 ---
 
 ## File Structure
-
 ```
 recipe-finder/
 │
-├── index.html
-├── signup.html
-├── login.html
+├── backend/                        # Django project root
+│   ├── backend/                    # Project settings, URLs, middleware
+│   ├── core/                       # Shared app — auth views, models, constants
+│   │   └── services/               # Message, validation utilities
+│   ├── admin_app/                  # Admin-facing views and logic
+│   └── user_app/                   # User-facing views and logic
 │
-├── admin/
-│   ├── dashboard.html
-│   ├── add-recipe.html
-│   └── edit-recipe.html
+├── frontend/                       # Static files
+│   ├── api/                        # API class for making requests
+│   ├── constants/                  # Shared JS constants
+│   ├── pages/
+│   │   ├── core/                   # Login, signup pages
+│   │   ├── admin/                  # Admin dashboard, recipe management
+│   │   └── user/                   # Browse, search, favorites
+│   └── shared/                     # Shared assets, CSS, JS utilities
 │
-├── user/
-│   ├── search.html
-│   ├── recipe-details.html
-│   └── favorites.html
-│
-├── assets/
-│   └── logo.svg
-│
-├── css/                  # Phase 2
-│   └── main.css
-│
-└── js/                   # Phase 3
-    └── validation.js
+└── docs/                           # Documentation
+```
+---
+
+## Setup
+
+```bash
+# Clone the repo
+git clone https://github.com/Amadoo42/recipe-finder.git
+cd recipe-finder
+
+# Create and activate virtual environment
+python3 -m venv .venv
+
+# Linux/WSL:
+source .venv/bin/activate 
+# Windows:
+./.venv/Scripts/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Create the .env and add your keys 
+touch .env
+# DATABASE_URL="xxx"
+
+# Run migrations
+cd backend
+python manage.py makemigrations
+python manage.py migrate
+
+# Start the server
+python manage.py runserver
 ```
 
 ---
@@ -90,6 +109,5 @@ recipe-finder/
 ---
 
 ## 🎓 Acknowledgments
-
 - This project is submitted as part of the **IS231 Web Technology course** course.
 - **Faculty of Computers and Artificial Intelligence (FCAI), Cairo University.**
