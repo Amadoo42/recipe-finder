@@ -41,13 +41,10 @@ export async function addIngredientDB(data) {
 
 /**
  * Searches for ingredients by name.
- * @param { string } query - The search term for filtering ingredients.
  * @returns { Promise<Array> } - A promise that resolves to a list of matching ingredients.
  */
-export async function searchIngredients(query) {
-    const params = new URLSearchParams();
-    params.append('query', query);
-    const result = await getRequest('/admin/search_ingredient/', params);
+export async function getAllIngredients() {
+    const result = await getRequest('/admin/get_all_ingredients/');
     return result;
 }
 

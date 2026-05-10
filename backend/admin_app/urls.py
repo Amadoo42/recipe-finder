@@ -13,5 +13,5 @@ urlpatterns = [
     path('update_recipe/', views.update_recipe, name='update_recipe'),
     path('get_all_recipes/', views.get_all_recipes, name='get_all_recipes'),
     path('delete_recipe/', views.delete_recipe, name='delete_recipe'),
-    path('search_ingredient/', views.search_ingredient, name='search_ingredient'),
+    path('get_all_ingredients/', views.get_all_ingredients, name='get_all_ingredients'),
 ]

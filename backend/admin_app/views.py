@@ -56,14 +56,13 @@ def get_recipe_by_id(request):
 def get_all_recipes(request):
     all_recipe_data = recipe_manager.getAllRecipesData(request)
     return JsonResponse({
-            "success": True,
-            "recipes": all_recipe_data
+        "success": True,
+        "recipes": all_recipe_data
     })
     
-def search_ingredient(request):
-    query = request.GET.get('query', '')
-    suggestions = recipe_manager.ingredient_search(query)
+def get_all_ingredients(request):
+    ingredients = recipe_manager.getAllIngredients()
     return JsonResponse({
         "success": True,
-        "ingredients": list(suggestions.values('id', 'name'))
+        "ingredients": list(ingredients.values('name'))
     })

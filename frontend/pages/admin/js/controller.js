@@ -1,4 +1,4 @@
-import { addIngredientDB, addOtherUnitDB, addRecipe, updateRecipe, getRecipeById, searchIngredients } from "/static/shared/database/db-recipes.js";
+import { addIngredientDB, addOtherUnitDB, addRecipe, updateRecipe, getRecipeById, getAllIngredients } from "/static/shared/database/db-recipes.js";
 import { toggleErrorMessageList } from "/static/shared/utils/error-message.js"
 import * as UI from "/static/pages/admin/js/ui-handler.js";
 
@@ -8,6 +8,8 @@ let recipeID;
 
 // Current List of Ingredients
 let ingredients = [];
+let allIngredientNames = [];
+let timer;
 
 
 // Validates the name, quantity inputs and appends a new list item to the ingredient list
@@ -37,17 +39,20 @@ function removeIngredient(index) {
     UI.renderIngredientList(ingredients, removeIngredient);
 }
 
-async function ingredientSearch(e) {
+function filterIngredients(query) {
+    return allIngredientNames.filter(ing => ing.toLowerCase().startsWith(query));
+}
+
+function ingredientSearch(e) {
     let query = e.target.value.trim();
     if (!query) {
         UI.resetIngredientSuggestions();
         return;
     }
-    let timer;
     clearTimeout(timer);
     timer = setTimeout(async () => {
-        const suggestions = await searchIngredients(query);
-        UI.renderIngredientSuggestions(suggestions.ingredients);
+        const suggestions = filterIngredients(query);
+        UI.renderIngredientSuggestions(suggestions);
     }, 500);
 }
 
@@ -116,5 +121,8 @@ async function init() {
         ingredients = [...ingredients, ...recipe.ingredients];
     }
     UI.renderIngredientList(ingredients, removeIngredient);
+
+    const allIngredientsResponse = await getAllIngredients();
+    allIngredientNames = allIngredientsResponse.ingredients.map(ing => ing.name);
 };
 init();

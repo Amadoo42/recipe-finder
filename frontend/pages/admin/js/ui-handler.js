@@ -109,8 +109,9 @@ export function renderIngredientSuggestions(suggestions) {
         const li = document.createElement('li');
         li.addEventListener('click', () => {
             DOM.ingredientNameInput.value = li.textContent;
+            renderIngredientSuggestions();
         });
-        li.textContent = item.name;
+        li.textContent = item;
         DOM.ingredientSuggestionsList.appendChild(li);
     }
 }
@@ -187,13 +188,23 @@ export function initUI(addIngredientHandler, addRecipeHandler, addOtherUnitHandl
         toggleOtherUnitModal(DOM.ingredientUnitInput.value === "Other")
     });
     DOM.addIngredientBtn.addEventListener("click", addIngredientHandler);
-    DOM.submitRecipeBtn.addEventListener("click", () => {
+    DOM.submitRecipeBtn.addEventListener("click", async () => {
         DOM.submitRecipeBtn.disabled = true;
         DOM.submitRecipeBtn.textContent = "Processing the request...";
-        addRecipeHandler();
+        await addRecipeHandler();
         renderHeader();
     });
     DOM.customUnitModalCancelBtn.addEventListener("click", cancelOtherUnit);
     DOM.customUnitModalAddBtn.addEventListener("click", addOtherUnitHandler);
     DOM.ingredientNameInput.addEventListener('input', ingredientSearch)
+
+    // hide the suggestions list when clicking anywhere in the page but the input field or the list itself
+    document.addEventListener('click', (e) => {
+    if (!DOM.ingredientNameInput.contains(e.target) && !DOM.ingredientSuggestionsList.contains(e.target)) {
+        DOM.ingredientSuggestionsList.style.display = 'none';
+    }
+    else if (DOM.ingredientNameInput.contains(e.target)) {
+        DOM.ingredientSuggestionsList.style.display = 'block';
+    }
+});
 }

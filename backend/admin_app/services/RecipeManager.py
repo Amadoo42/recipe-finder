@@ -13,17 +13,26 @@ class RecipeManager:
         Adds a recipe and its ingredients to the database
         '''
         recipe = Recipe.objects.create(**data)
+
+        if data['image_url']:
+            recipe.image_file = None
+            data['image_file'] = None
+
+        recipe_ingredient_relatins = []
+
         for ingredient in ingredients:
             ingredient_form = IngredientForm(ingredient)
             if ingredient_form.is_valid():
-                if not Ingredient.objects.filter(name=ingredient_form.cleaned_data['name']).exists():
-                    ingredient = Ingredient.objects.create(name=ingredient_form.cleaned_data['name'])
-                    RecipeIngredient.objects.create(
-                        recipe=recipe,
-                        ingredient=ingredient,
-                        quantity=ingredient_form.cleaned_data['quantity'],
-                        unit=ingredient_form.cleaned_data['unit']
-                    )
+                ingredient, created = Ingredient.objects.get_or_create(name=ingredient_form.cleaned_data['name'])
+                recipe_ingredient_obj = RecipeIngredient(
+                    recipe=recipe,
+                    ingredient=ingredient,
+                    quantity=ingredient_form.cleaned_data['quantity'],
+                    unit=ingredient_form.cleaned_data['unit']
+                )
+                recipe_ingredient_relatins.append(recipe_ingredient_obj)
+        if recipe_ingredient_relatins:
+            RecipeIngredient.objects.bulk_create(recipe_ingredient_relatins)
                 
                 
     def updateRecipeData(self, data, ingredients, recipe_id):
@@ -31,44 +40,57 @@ class RecipeManager:
         updates a recipe's data in the database along with its ingredients
         '''
         recipe = Recipe.objects.get(id=recipe_id)
+
+        if data['image_url']:
+            recipe.image_file = None
+            data['image_file'] = None
+
+        elif data['image_file'] and not data['image_url']:
+            recipe.image_url = None
+            data['image_url'] = None
+
         for key, value in data.items():
             if value is not None:
                 setattr(recipe, key, value)
         recipe.save()
+
+        recipe_ingredient_relatins = []
             
         RecipeIngredient.objects.filter(recipe=recipe).delete()
         for ingredient in ingredients:
             ingredient_form = IngredientForm(ingredient)
             if ingredient_form.is_valid():
-                if not Ingredient.objects.filter(name=ingredient_form.cleaned_data['name']).exists():
-                    ingredient = Ingredient.objects.create(name=ingredient_form.cleaned_data['name'])
-                else:
-                    ingredient = Ingredient.objects.get(name=ingredient_form.cleaned_data['name'])
-                RecipeIngredient.objects.create(
+                ingredient, created = Ingredient.objects.get_or_create(name=ingredient_form.cleaned_data['name'])
+                recipe_ingredient_obj = RecipeIngredient(
                     recipe=recipe,
                     ingredient=ingredient,
                     quantity=ingredient_form.cleaned_data['quantity'],
                     unit=ingredient_form.cleaned_data['unit']
                 )
+                recipe_ingredient_relatins.append(recipe_ingredient_obj)
+
+        if recipe_ingredient_relatins:
+            RecipeIngredient.objects.bulk_create(recipe_ingredient_relatins)
                 
     def getRecipeData(self, recipe_id, request):
         '''
         fetches recipe data by its id
         returns recipe data along with its ingredients list
         '''
-        recipe = Recipe.objects.get(id=recipe_id)
+        recipe = Recipe.objects.prefetch_related('recipeingredient_set__ingredient').get(id=recipe_id)
+        
         ingredients = recipe.ingredients.all()
-        recipeIngredient = RecipeIngredient.objects.filter(recipe=recipe)
-        ingredient_data = []
+        ingredient_data = [
+                {
+                    "name": ri.ingredient.name,
+                    "quantity": ri.quantity,
+                    "unit": ri.unit,
+                }
+                for ri in recipe.recipeingredient_set.all()
+            ]
+        
         if recipe.image_file: image = request.build_absolute_uri(recipe.image_file.url)
         else: image = recipe.image_url
-        for i in range(len(recipeIngredient)):
-            ingredient = {
-                "name": ingredients[i].name,
-                "quantity": recipeIngredient[i].quantity,
-                "unit": recipeIngredient[i].unit,
-            }
-            ingredient_data.append(ingredient)
 
         recipe_data = {
             "id": recipe.id,
@@ -87,37 +109,39 @@ class RecipeManager:
         returns only the recipe data without its ingredients list
         '''
         all_recipe_data = []
-        recipes = Recipe.objects.all()
-        for i in range(len(recipes)):
-            ingredients = recipes[i].ingredients.all()
-            recipeIngredient = RecipeIngredient.objects.filter(recipe=recipes[i])
-            ingredient_data = []
-            for j in range(len(recipeIngredient)):
-                ingredient = {
-                    "name": ingredients[j].name,
-                    "quantity": recipeIngredient[j].quantity,
-                    "unit": recipeIngredient[j].unit
+        recipes = Recipe.objects.prefetch_related('recipeingredient_set__ingredient').all()
+        for recipe in recipes:
+            recipe_ingredients = recipe.recipeingredient_set.all()
+            ingredient_data = [
+                {
+                    "name": ri.ingredient.name,
+                    "quantity": ri.quantity,
+                    "unit": ri.unit,
                 }
-                ingredient_data.append(ingredient)
-
-            if recipes[i].image_file: image = request.build_absolute_uri(recipes[i].image_file.url)
-            else: image = recipes[i].image_url
+                for ri in recipe_ingredients
+            ]
+            if recipe.image_file: image = request.build_absolute_uri(recipe.image_file.url)
+            else: image = recipe.image_url
             all_recipe_data.append({
-                "id": recipes[i].id,
-                "name": recipes[i].name,
-                "courseType": recipes[i].courseType,
-                "description": recipes[i].description,
+                "id": recipe.id,
+                "name": recipe.name,
+                "courseType": recipe.courseType,
+                "description": recipe.description,
                 "image": image,
                 "ingredients": ingredient_data
             })
-            
         return all_recipe_data
+        
         
     def deleteRecipeData(self, recipe_id):
         '''
         deletes a recipe and its ingredients from the database
         '''
         Recipe.objects.filter(id=recipe_id).delete()
+
+    def getAllIngredients(self):
+        result = Ingredient.objects.all()
+        return result
         
     def ingredient_search(self, query):
         result = Ingredient.objects.filter(name__startswith=query)
