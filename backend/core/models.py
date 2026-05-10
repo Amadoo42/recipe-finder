@@ -26,8 +26,6 @@ class Recipe(models.Model):
 
     def clean(self):
         super().clean()
-        # if not self.image_file and not self.image_url:
-        #     raise ValidationError("You must provide either an image file or an image URL.")
         if self.image_file and self.image_url:
             raise ValidationError("Please provide an image file OR an image URL, not both.")
 
@@ -41,7 +39,7 @@ class Recipe(models.Model):
         return self.name
     
 class RecipeIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="recipe_ingredients")
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
 
     quantity = models.FloatField()

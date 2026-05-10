@@ -18,12 +18,17 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
+from core import views as core_views
+from user_app import views as user_views
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
     path('', include('core.urls')),
     path('user/', include('user_app.urls')),
     path('admin/', include('admin_app.urls')),
+    path('api/recipes/<int:recipe_id>/',core_views.recipe_detail,name='recipe_detail'),
+    path('api/user/favourites/',user_views.get_favourite,name='get_favourite'),
+    path('api/user/favourites/<int:recipe_id>/toggle/',user_views.toggle_favourite,name='toggle_favourite'), 
 ]
 
 if settings.DEBUG:

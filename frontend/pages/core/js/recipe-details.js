@@ -9,6 +9,7 @@ let recipe = await getRecipeById(recipeId);
 recipe = recipe.recipe;
 const wrapper = document.getElementById('recipeContentWrapper');
 const pageHeading = document.getElementById('pageHeading');
+
 if (!recipe) {
     if (pageHeading) {
         pageHeading.textContent = 'Recipe not found';
@@ -16,44 +17,43 @@ if (!recipe) {
     }
     if (wrapper) {
         wrapper.style.display = 'none';
+        return;
     }
 }
-else {
-    if (pageHeading) {
-        pageHeading.style.display = 'none';
-    }
-    if (wrapper) {
-        wrapper.style.display = 'block';
-    }
-    document.getElementById('recipeName').textContent = recipe.name;
-    document.getElementById('recipeImage').src = recipe.image || DEFAULT_VALUES.IMAGE;
-    document.getElementById('recipeImage').alt = recipe.name;
-    document.getElementById('course').textContent = recipe.courseType;
-    document.getElementById('recipeDescription').textContent = recipe.description;
+
+if (pageHeading) pageHeading.style.display = 'none';
+
+if (wrapper) wrapper.style.display = 'block';
+
+document.getElementById('recipeName').textContent = recipe.name;
+document.getElementById('recipeImage').src = recipe.image || DEFAULT_VALUES.IMAGE;
+document.getElementById('recipeImage').alt = recipe.name;
+document.getElementById('course').textContent = recipe.courseType;
+document.getElementById('recipeDescription').textContent = recipe.description;
 
 
-    const orderList = document.getElementById('ingredientList');
-    orderList.innerHTML = '';
-    for (const ingredient of recipe.ingredients) {
-        const li = document.createElement('li');
-        // #TODO: we should handle XSS injections here later but too busy rn 😭 
-        li.innerHTML = `
-            <span class="IngAmount">${ingredient.quantity} ${ingredient.unit}</span>
-            <span class="IngName">${ingredient.name}</span>
-        `;
-        orderList.appendChild(li);
-    }
-    const favBtn = document.getElementById('favBtn');
-
-    function updateFavBtn() {
-        const favourites = getUserFavourites();
-        if (favourites.success && favourites.data.some(r => String(r.id) === String(recipeId))) {
-            favBtn.classList.add('active');
-        }
-        else {
-            favBtn.classList.remove('active');
-        }
-    }
-    updateFavBtn();
-    favBtn.addEventListener('click', () => { toggleFavourite(recipe.id); updateFavBtn(); });
+const orderList = document.getElementById('ingredientList');
+orderList.innerHTML = '';
+for (const ingredient of recipe.ingredients) {
+    const li = document.createElement('li');
+    // #TODO: we should handle XSS injections here later but too busy rn 😭 
+    li.innerHTML = `
+        <span class="IngAmount">${ingredient.quantity} ${ingredient.unit}</span>
+        <span class="IngName">${ingredient.name}</span>
+    `;
+    orderList.appendChild(li);
 }
+const favBtn = document.getElementById('favBtn');
+
+async function updateFavBtn() {
+    const favouriteResult = await getUserFavourites();
+    const isSaved = favouriteResult.success&&favouriteResult.data.some(r => String(r.id)===String(recipeId));
+    favBtn.classList.toggle('active',isSaved);
+}
+await updateFavBtn();
+favBtn.addEventListener('click', async() => {
+    favBtn.disabled = true;
+    await toggleFavourite(recipeId);
+    await updateFavBtn();
+    favBtn.disabled = false;
+    });

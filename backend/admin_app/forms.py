@@ -32,9 +32,6 @@ class RecipeForm(forms.Form):
         if image_file and image_url:
             raise ValidationError("Provide either an image file or an image URL, not both.")
 
-        if not image_file and not image_url:
-            raise ValidationError("Provide either an image file or an image URL.")
-
         return cleaned_data
     
     def clean_image_url(self):

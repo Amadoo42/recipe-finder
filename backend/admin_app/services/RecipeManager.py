@@ -17,7 +17,7 @@ class RecipeManager:
 
         recipe = Recipe.objects.create(**data)
 
-        recipe_ingredient_relatins = []
+        recipe_ingredient_relations = []
 
         for ingredient in ingredients:
             ingredient_form = IngredientForm(ingredient)
@@ -29,9 +29,9 @@ class RecipeManager:
                     quantity=ingredient_form.cleaned_data['quantity'],
                     unit=ingredient_form.cleaned_data['unit']
                 )
-                recipe_ingredient_relatins.append(recipe_ingredient_obj)
-        if recipe_ingredient_relatins:
-            RecipeIngredient.objects.bulk_create(recipe_ingredient_relatins)
+                recipe_ingredient_relations.append(recipe_ingredient_obj)
+        if recipe_ingredient_relations:
+            RecipeIngredient.objects.bulk_create(recipe_ingredient_relations)
                 
                 
     def updateRecipeData(self, data, ingredients, recipe_id):
@@ -53,7 +53,7 @@ class RecipeManager:
                 setattr(recipe, key, value)
         recipe.save()
 
-        recipe_ingredient_relatins = []
+        recipe_ingredient_relations = []
             
         RecipeIngredient.objects.filter(recipe=recipe).delete()
         for ingredient in ingredients:
@@ -66,26 +66,25 @@ class RecipeManager:
                     quantity=ingredient_form.cleaned_data['quantity'],
                     unit=ingredient_form.cleaned_data['unit']
                 )
-                recipe_ingredient_relatins.append(recipe_ingredient_obj)
+                recipe_ingredient_relations.append(recipe_ingredient_obj)
 
-        if recipe_ingredient_relatins:
-            RecipeIngredient.objects.bulk_create(recipe_ingredient_relatins)
+        if recipe_ingredient_relations:
+            RecipeIngredient.objects.bulk_create(recipe_ingredient_relations)
                 
     def getRecipeData(self, recipe_id, request):
         '''
         fetches recipe data by its id
         returns recipe data along with its ingredients list
         '''
-        recipe = Recipe.objects.prefetch_related('recipeingredient_set__ingredient').get(id=recipe_id)
+        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(id=recipe_id)
         
-        ingredients = recipe.ingredients.all()
         ingredient_data = [
                 {
                     "name": ri.ingredient.name,
                     "quantity": ri.quantity,
                     "unit": ri.unit,
                 }
-                for ri in recipe.recipeingredient_set.all()
+                for ri in recipe.recipe_ingredients.all()
             ]
         
         if recipe.image_file: image = request.build_absolute_uri(recipe.image_file.url)
@@ -108,9 +107,9 @@ class RecipeManager:
         returns only the recipe data without its ingredients list
         '''
         all_recipe_data = []
-        recipes = Recipe.objects.prefetch_related('recipeingredient_set__ingredient').all()
+        recipes = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').all()
         for recipe in recipes:
-            recipe_ingredients = recipe.recipeingredient_set.all()
+            recipe_ingredients = recipe.recipe_ingredients.all()
             ingredient_data = [
                 {
                     "name": ri.ingredient.name,
