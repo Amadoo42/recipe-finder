@@ -1,7 +1,4 @@
 body {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.1s ease;
     font-family: var(--fontBody);
     background-color: #FCF3D7;
     color: var(--textPrimary);
