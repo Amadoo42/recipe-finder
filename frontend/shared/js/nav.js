@@ -60,7 +60,6 @@ export function buildNav() {
         logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
             logout();
-            window.location.replace('/login/');
         });
     }
 }
