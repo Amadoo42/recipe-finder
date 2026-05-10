@@ -5,3 +5,7 @@ pillow==12.2.0
 psycopg2-binary==2.9.12
 python-dotenv==1.2.2
 sqlparse==0.5.5
+requests
+tensorflow
+tensorflow_hub
+setuptools==81.0.0

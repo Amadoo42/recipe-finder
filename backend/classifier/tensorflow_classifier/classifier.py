@@ -122,7 +122,20 @@ class_names = ['apple_pie',
  'waffles']
 
 class Classifier:
-    def __init__(self, modelPath: str = "/home/youssef/Projects/recipe-finder/backend/classifier/tensorflow_classifier/best_model_fine_tuned_V3.keras"):
+    _instance = None
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+    
+    def __init__(self, modelPath=None):
+        if modelPath is None:
+            BASE_DIR = os.path.dirname(__file__)
+
+            modelPath = os.path.join(
+                BASE_DIR,
+                "best_model_fine_tuned_V3.keras"
+            )
         self.model = keras.models.load_model(
             modelPath,
             custom_objects={'KerasLayer': hub.KerasLayer}

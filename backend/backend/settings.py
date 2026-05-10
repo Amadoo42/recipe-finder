@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'admin_app.apps.AdminAppConfig',
     'user_app.apps.UserAppConfig',
+    'classifier.apps.ClassifierConfig',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / "frontend" / "pages",
+            BASE_DIR / "frontend" / "pages" / "classifier",
         ],
         'APP_DIRS': True,
         'OPTIONS': {

@@ -8,94 +8,42 @@
     <title>Food Classifier</title>
 </head>
 <body>
-    <h1>Food Classifier</h1>
-    <p class="subtitle">Upload a photo to identify the dish</p>
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+    <header>
+        <span class="logo">&#x25C6;</span>
+        <h1>Food Classifier</h1>
+    </header>
 
-        <div>
-            <label for="imageURL">Image URL</label>
-            <input type="text" id="imageURL" name="imageURL">
-        </div>
+    <main>
+        <form method="post" enctype="multipart/form-data" id="classifierForm">
+            {% csrf_token %}
 
-        <div>
-            <label>Photo</label>
-            <div class="upload-zone" onclick="document.getElementById('imageUpload').click()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7F77DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 0.5rem;">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                    <polyline points="17 8 12 3 7 8"/>
-                    <line x1="12" y1="3" x2="12" y2="15"/>
-                </svg>
-                <p><span>Choose a file</span> or drag it here</p>
-                <p class="upload-hint">PNG, JPG up to 10MB</p>
+            <div class="field">
+                <label for="imageURL">Image URL</label>
+                <input type="text" id="imageURL" name="imageURL" placeholder="https://...">
             </div>
-            <input type="file" id="imageUpload" name="image" accept="image/*">
-        </div>
 
-        {% if preview %}
-            <div style="text-align: center; margin-top: 1rem;">
-                <img id="preview" src="#" alt="Preview" style="max-width: 100%; border-radius: 8px; display: none;">
+            <div class="field">
+                <label>or Upload</label>
+                <div class="upload-zone" id="uploadZone">
+                    <input type="file" id="imageUpload" name="image" accept="image/*">
+                    <p id="uploadLabel"><span>Choose file</span> or drag here</p>
+                </div>
             </div>
-        {% endif %}
 
-        <hr>
+            <img id="preview" src="#" alt="Preview">
 
-        <button type="submit">Classify image</button>
+            <button type="submit">Classify</button>
 
-        {% if pred_class %}
-        <div class="result">
-            <div>
-                <p class="result-label">Detected dish</p>
-                <p class="result-value">{{ pred_class }}</p>
+            {% if pred_class %}
+            <div class="result">
+                <p class="dish">{{ pred_class }}</p>
+                <span class="badge">{{ confidence }}%</span>
             </div>
-            <span class="confidence-badge">{{ confidence }}% confident</span>
-        </div>
-        {% endif %}
-    </form>
+            {% endif %}
+        </form>
+    </main>
 
     <script src="{% static '/pages/classifier/js/classifier.js' %}" type="module"></script>
-    <script>
-        const uploadZone = document.querySelector('.upload-zone');
-        const fileInput = document.getElementById('imageUpload');
-        const preview = document.getElementById('preview');
-
-        fileInput.addEventListener('change', function () {
-            const file = this.files[0];
-            if (file) {
-                uploadZone.querySelector('p').innerHTML = `<span>${file.name}</span>`;
-                if (preview) {
-                    preview.src = URL.createObjectURL(file);
-                    preview.style.display = 'block';
-                }
-            }
-        });
-
-        uploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadZone.style.borderColor = '#7F77DD';
-            uploadZone.style.background = '#EEEDFE';
-        });
-
-        uploadZone.addEventListener('dragleave', () => {
-            uploadZone.style.borderColor = '';
-            uploadZone.style.background = '';
-        });
-
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const file = e.dataTransfer.files[0];
-            if (file) {
-                fileInput.files = e.dataTransfer.files;
-                uploadZone.querySelector('p').innerHTML = `<span>${file.name}</span>`;
-                if (preview) {
-                    preview.src = URL.createObjectURL(file);
-                    preview.style.display = 'block';
-                }
-            }
-            uploadZone.style.borderColor = '';
-            uploadZone.style.background = '';
-        });
-    </script>
 </body>
 </html>

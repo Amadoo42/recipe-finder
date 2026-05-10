@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .models import ImageModel
 from .tensorflow_classifier import Classifier
 
 classifier = Classifier()
