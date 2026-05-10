@@ -9,7 +9,7 @@ let currentQuery = "";
 let currentSource = "all";
 let currentCategory = "all";
 let recipes = [];
-
+let requestId = 0;
 
 /**
  * @brief toggles the favourite status of a recipe
@@ -78,7 +78,9 @@ function init() {
  * @brief Applies the current search query and filter settings to update the displayed recipes
 */
 async function applySearchAndFilter() {
+    const thisRequest = ++requestId;
     let results = await searchRecipes(currentQuery, currentCategory);
+    if (thisRequest !== requestId) return;
     recipes = results.data;
     await renderRecipes();
 }

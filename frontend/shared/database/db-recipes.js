@@ -132,15 +132,13 @@ export async function searchRecipes(queryText, courseFilter) {
         const response = await fetch(`/api/recipes/?${params}`);
 
         if (!response.ok) {
-            console.error('Server error:', response.status);
-            return { success: false, data: [] };
+            return createMessage(false, 'Server error: ' + response.status);
         }
 
         const json = await response.json();
         return json;
     }
     catch (error){
-        console.error('Network error:', error);
-        return { success: false, data: [] };
+        return createMessage(false, 'Network error: ' + error.message);
     }
 }

@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from functools import wraps
-from core.models import Recipe 
+from core.models import Recipe
+from django.db.models import Q 
 
 def login_check(view_func):
     @wraps(view_func)
@@ -77,10 +78,11 @@ def search_recipes(request):
         recipes = recipes.filter(course_type=category)
 
     if query:
-        recipes = recipes.filter(name__icontains=query) | \
-                  recipes.filter(description__icontains=query) | \
-                  recipes.filter(ingredients__name__icontains=query)
-        recipes = recipes.distinct()
+        recipes = recipes.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(ingredients__name__icontains=query)
+        ).distinct()
 
     results = []
     for recipe in recipes:

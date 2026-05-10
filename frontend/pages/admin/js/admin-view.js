@@ -9,6 +9,7 @@ let currentQuery = "";
 let currentSource = "all";
 let currentCategory = "all";
 let recipes = [];
+let requestId = 0;
 
 /**
  * @brief this function initializes the recipes array from database
@@ -30,7 +31,9 @@ function init() {
  * @brief this is a wrapper function to get recipes and view them
  */
 async function updateView() {
+    const thisRequest = ++requestId;
     let results = await searchRecipes(currentQuery, currentCategory);
+    if (thisRequest !== requestId) return;
     recipes = results.data;
     renderRecipes();
 }
