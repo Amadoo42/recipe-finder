@@ -2,7 +2,7 @@ import { deleteRecipe } from "/static/shared/database/db-recipes.js";
 import { createCard } from "/static/shared/utils/create-card.js";
 import { setupSearch } from "/static/shared/utils/setup-search.js";
 import { setupFilters } from "/static/shared/utils/setup-filters.js";
-import { searchRecipes } from "/static/shared/utils/search-recipes.js";
+import { searchRecipes } from "/static/shared/database/db-recipes.js";
 import { initHerbs } from "/static/shared/utils/favourites.js";
 
 let currentQuery = "";
@@ -29,8 +29,9 @@ function init() {
 /**
  * @brief this is a wrapper function to get recipes and view them
  */
-function updateView() {
-    recipes = searchRecipes(currentQuery, currentSource, currentCategory).data;
+async function updateView() {
+    let results = await searchRecipes(currentQuery, currentCategory);
+    recipes = results.data;
     renderRecipes();
 }
 

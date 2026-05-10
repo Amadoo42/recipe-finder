@@ -1,6 +1,6 @@
 import { createCard } from "/static/shared/utils/create-card.js";
 import { toggleFavourite, getUserFavourites } from "/static/shared/database/db-user.js";
-import { searchRecipes } from "/static/shared/utils/search-recipes.js";
+import { searchRecipes } from "/static/shared/database/db-recipes.js";
 import { setupSearch } from "/static/shared/utils/setup-search.js";
 import { setupFilters } from "/static/shared/utils/setup-filters.js";
 import { initHerbs } from "/static/pages/user/js/favourites.js";
@@ -78,7 +78,7 @@ function init() {
  * @brief Applies the current search query and filter settings to update the displayed recipes
 */
 async function applySearchAndFilter() {
-    let results = searchRecipes(currentQuery, currentSource, currentCategory);
+    let results = await searchRecipes(currentQuery, currentCategory);
     recipes = results.data;
     await renderRecipes();
 }
