@@ -189,10 +189,18 @@ export function initUI(addIngredientHandler, addRecipeHandler, addOtherUnitHandl
     });
     DOM.addIngredientBtn.addEventListener("click", addIngredientHandler);
     DOM.submitRecipeBtn.addEventListener("click", async () => {
+        const originalDisabled = DOM.submitRecipeBtn.disabled;
+        const originalText = DOM.submitRecipeBtn.textContent;
+
         DOM.submitRecipeBtn.disabled = true;
         DOM.submitRecipeBtn.textContent = "Processing the request...";
-        await addRecipeHandler();
-        renderHeader();
+
+        try {
+            await addRecipeHandler();
+        } finally {
+            DOM.submitRecipeBtn.disabled = originalDisabled;
+            DOM.submitRecipeBtn.textContent = originalText;
+        }
     });
     DOM.customUnitModalCancelBtn.addEventListener("click", cancelOtherUnit);
     DOM.customUnitModalAddBtn.addEventListener("click", addOtherUnitHandler);

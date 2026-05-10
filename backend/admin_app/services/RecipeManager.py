@@ -12,11 +12,10 @@ class RecipeManager:
         '''
         Adds a recipe and its ingredients to the database
         '''
-        recipe = Recipe.objects.create(**data)
-
         if data['image_url']:
-            recipe.image_file = None
             data['image_file'] = None
+
+        recipe = Recipe.objects.create(**data)
 
         recipe_ingredient_relatins = []
 

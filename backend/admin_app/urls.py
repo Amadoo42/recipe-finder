@@ -1,7 +1,7 @@
 from django.urls import path
 from admin_app import views
-app_name = 'admin_app'
 
+app_name = 'admin_app'
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('explore/', views.explore, name='explore'),

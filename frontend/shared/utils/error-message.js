@@ -10,7 +10,10 @@ export function toggleErrorMessageList(list, show, errorKeys) {
     let errorMessageList = [];
     if (errorKeys) {
         for (const key in errorKeys) {
-            errorMessageList.push(list[key]);
+            const errorMessage = list[key];
+            if (errorMessage) {
+                errorMessageList.push(errorMessage);
+            }
         }
     }
     else {

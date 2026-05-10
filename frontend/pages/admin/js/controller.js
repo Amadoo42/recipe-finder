@@ -40,7 +40,8 @@ function removeIngredient(index) {
 }
 
 function filterIngredients(query) {
-    return allIngredientNames.filter(ing => ing.toLowerCase().startsWith(query));
+    const normalizedQuery = query.toLowerCase();
+    return allIngredientNames.filter(ing => ing.toLowerCase().startsWith(normalizedQuery));
 }
 
 function ingredientSearch(e) {
@@ -116,7 +117,6 @@ async function init() {
     if (isEdit) {
         const response = await getRecipeById(recipeID);
         const recipe = response.recipe;
-        console.log(recipe);
         UI.renderRecipeDetails(recipe.name, recipe.courseType, recipe.description);
         ingredients = [...ingredients, ...recipe.ingredients];
     }

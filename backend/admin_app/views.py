@@ -1,19 +1,19 @@
+import json
 from django.shortcuts import render
-from .forms import *
+from .forms import OtherUnitForm, IngredientForm, RecipeForm
 from django.http import JsonResponse
-from core.models import *
-from .services import *
+from .services import RecipeManager, validateForm, validateRecipeForm
 
 recipe_manager = RecipeManager()
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    return render(request, 'admin/dashboard.html')
 
 def explore(request):
-    return render(request, 'view-recipe.html')
+    return render(request, 'admin/view-recipe.html')
 
 def add(request):
-    return render(request, 'add-recipe.html')
+    return render(request, 'admin/add-recipe.html')
 
 def add_other_unit(request):
     form = OtherUnitForm(request.POST)
@@ -41,16 +41,12 @@ def delete_recipe(request):
             "success": True
     })
 
-def add(request):
-    return render(request, 'add-recipe.html')
-    
-
 def get_recipe_by_id(request):
     recipe_id = request.GET.get('RecipeID')
     recipe_data = recipe_manager.getRecipeData(recipe_id, request)
     return JsonResponse({
-            "success": True,
-            "recipe": recipe_data
+        "success": True,
+        "recipe": recipe_data
     })
 
 def get_all_recipes(request):

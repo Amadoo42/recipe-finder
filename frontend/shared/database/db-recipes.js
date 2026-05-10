@@ -4,8 +4,6 @@
  * Depends on: requests.js
 */
 
-import { readTable, writeTable } from '/static/shared/database/db-core.js';
-import { createMessage } from '/static/shared/utils/create-message.js';
 import { getRequest, postRequest, deleteRequest } from '/static/api/request.js';
 /**
  * Retrieves all recipes from the server.
@@ -86,7 +84,8 @@ export async function updateRecipe(recipeId, data) {
  * @returns { Object } - A message object indicating success or failure.
  */
 export async function deleteRecipe(recipeId) {
-    await deleteRequest('/admin/delete_recipe/', {'id': recipeId })
+    const result = await deleteRequest('/admin/delete_recipe/', {'id': recipeId });
+    return result;
 }
 
 /**

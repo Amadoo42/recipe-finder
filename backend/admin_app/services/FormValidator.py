@@ -8,11 +8,8 @@ def validateForm(form: forms.Form):
     used for IngredientForm, OtherunitForm
     '''
     if not form.is_valid():
-        print("FAIL")
-        print(form.errors.get_json_data())
         return JsonResponse({"success": False, "errors": form.errors.get_json_data()})
     else:
-        print("SUCCESS")
         return JsonResponse({"success": True})
     
 def validateRecipeForm(request, form: forms.Form, save_method, *args):
@@ -22,11 +19,8 @@ def validateRecipeForm(request, form: forms.Form, save_method, *args):
     used for RecipeForm
     '''
     if not form.is_valid():
-        print("FAIL")
-        print(form.errors.get_json_data())
         return JsonResponse({"success": False, "errors": form.errors.get_json_data()})
     else:
-        print("SUCCESS")
         data = form.cleaned_data
         ingredients = json.loads(request.POST.get('ingredients_list', '[]'))
         save_method(data, ingredients, *args)

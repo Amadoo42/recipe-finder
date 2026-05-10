@@ -24,6 +24,19 @@ class RecipeForm(forms.Form):
     
     image_url = forms.URLField(required=False)
     
+    def clean(self):
+        cleaned_data = super().clean()
+        image_file = cleaned_data.get('image_file')
+        image_url = cleaned_data.get('image_url')
+
+        if image_file and image_url:
+            raise ValidationError("Provide either an image file or an image URL, not both.")
+
+        if not image_file and not image_url:
+            raise ValidationError("Provide either an image file or an image URL.")
+
+        return cleaned_data
+    
     def clean_image_url(self):
         url = self.cleaned_data.get('image_url')
         if not url: return
@@ -31,13 +44,13 @@ class RecipeForm(forms.Form):
         if response.status_code != 200:
             raise ValidationError("The provided image URL is invalid")
         
-        response = requests.get(url)
+        response = requests.get(url, timeout=5)
         image_data = BytesIO(response.content)
     
         img = Image.open(image_data)
         try:
             img.verify()
-        except:
+        except requests.exceptions.RequestException:
             raise ValidationError("The provided image URL is invalid")
         return url
         
