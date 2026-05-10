@@ -57,9 +57,13 @@ export function buildNav() {
 
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', (e) => {
+        logoutBtn.addEventListener('click', async (e) => {
             e.preventDefault();
-            logout();
+            try {
+                await logout();
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
         });
     }
 }

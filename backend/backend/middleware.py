@@ -14,8 +14,6 @@ class RecipeFinderMiddleware:
         except:
             app_name = None
 
-        print(f'[Middleware] requested app_name = {app_name}')
-
         # Allow all requests into the core
         if app_name == 'core':
             return self.get_response(request)

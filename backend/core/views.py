@@ -77,7 +77,7 @@ def loginAPI(request):
             success= False, 
             description='[Login API] Unknown Role'
             ).to_dict(), 
-            status=402)
+            status=500)
 
 
 def createNewUser(data):

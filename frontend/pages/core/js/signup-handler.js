@@ -46,8 +46,6 @@ async function onSubmit(event) {
         userInput.userRole
     );
 
-    console.log(newUserObject);
-
     // Pass the object into the createUser function and create the account
     const response = await api.request('signup_API/', 'POST', newUserObject);
 

@@ -28,7 +28,6 @@ async function onSubmit(event) {
     const response = await api.request('login_API/', 'POST', userInput)
 
     const message = await response.json();
-    console.log(message);
 
     // Could not Log in
     if (message.success == false) {

@@ -9,7 +9,7 @@
  * @param { string } lastName - The user's last name.
  * @param { string } username - The user's unique username.
  * @param { string } email - The user's unique email address.
- * @param { string } passwordHash - The hashed password for the user.
+ * @param { string } password - The password for the user.
  * @param { string } role - The user's role, either 'admin' or 'user'.
  * @returns { Object } A standardized user object ready for insertion into the database. 
 */

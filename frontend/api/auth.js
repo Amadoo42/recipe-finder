@@ -48,6 +48,7 @@ export async function logout() {
 
     if (message.success == false) {
         console.log(message);
+        return;
     }
 
     alert(message.description);
