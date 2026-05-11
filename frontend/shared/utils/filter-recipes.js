@@ -13,7 +13,7 @@ export async function filterRecipesByCategory(courseCategory, source) {
 
     if(source === "all") {
         recipes = await getRecipes();
-        recipes = recipes.recipes;
+        recipes = recipes;
     }
     else if (source === "favourites") {
         let response = getUserFavourites();

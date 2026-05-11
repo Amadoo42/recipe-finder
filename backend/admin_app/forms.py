@@ -12,13 +12,18 @@ REGEX_PATTERNS = {
 
 
 class RecipeForm(forms.Form):
+    COURSE_CHOICES = [
+        ('Appetizers', 'Appetizers'),
+        ('Main', 'Main'),
+        ('Dessert', 'Dessert'),
+    ]
     name = forms.CharField(max_length=100, required=True,
                            validators=[RegexValidator(regex=REGEX_PATTERNS['ALPHA_ONLY'])])
     
     description = forms.CharField(max_length=250, required=True,
                                   validators=[RegexValidator(regex=REGEX_PATTERNS['DESCRIPTION_PATTERN'])])
     
-    courseType = forms.CharField(max_length=30, required=True)
+    courseType = forms.ChoiceField(choices=COURSE_CHOICES, required=True)
     
     image_file = forms.ImageField(required=False)
     

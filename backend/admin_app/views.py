@@ -1,8 +1,9 @@
 import json
 from django.shortcuts import render
 from .forms import OtherUnitForm, IngredientForm, RecipeForm
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from .services import RecipeManager, validateForm, validateRecipeForm
+from django.core.exceptions import ObjectDoesNotExist
 
 recipe_manager = RecipeManager()
 
@@ -30,7 +31,10 @@ def add_recipe(request):
 def update_recipe(request):
     form = RecipeForm(request.POST, request.FILES)
     recipe_id = request.POST.get('recipe_id', None)
-    return validateRecipeForm(request, form, recipe_manager.updateRecipeData, recipe_id)
+    try:
+        return validateRecipeForm(request, form, recipe_manager.updateRecipeData, recipe_id)
+    except ObjectDoesNotExist:
+        return JsonResponse({"success": False, "error": "Recipe not found"}, status=404)
 
 def delete_recipe(request):
     body = json.loads(request.body)
@@ -43,11 +47,22 @@ def delete_recipe(request):
 
 def get_recipe_by_id(request):
     recipe_id = request.GET.get('RecipeID')
-    recipe_data = recipe_manager.getRecipeData(recipe_id, request)
-    return JsonResponse({
-        "success": True,
-        "recipe": recipe_data
-    })
+    try:
+        recipe_data = recipe_manager.getRecipeData(recipe_id, request)
+        return JsonResponse({
+            "success": True,
+            "recipe": recipe_data
+        })
+    except ObjectDoesNotExist:
+        return JsonResponse({
+            "success": False,
+            "error": f"Recipe with ID {recipe_id} not found."
+        }, status=404)
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "error": "An internal error occurred."
+        }, status=500)
 
 def get_all_recipes(request):
     all_recipe_data = recipe_manager.getAllRecipesData(request)
