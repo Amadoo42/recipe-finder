@@ -1,11 +1,10 @@
-import { createUser } from '/static/api/auth.js';
 import { createMessage } from '/static/shared/utils/create-message.js';
-import { hash } from '/static/shared/utils/hash.js';
 import { createUserObject } from '/static/shared/utils/schema-factories.js';
-import { validation } from '/static/pages/core/js/validation.js';
-import { REDIRECT } from '/static/constants/auth-constants.js';
+import { API } from '/static/api/auth.js';
 
 const signUpForm = document.getElementsByName('createUserForm')[0];
+const api = new API();
+api.setBase('/')
 
 /**
  * @summary Handles the success/failure messages and displays it to the user
@@ -35,14 +34,6 @@ async function onSubmit(event) {
         handleCreationMessage(createMessage(false, 'Passwords do not match!'));
         return;
     }
-    console.log(userInput);
-
-    const validationMessage = validation(userInput);
-
-    if (validationMessage.success === false) {
-        handleCreationMessage(validationMessage);
-        return;
-    }
 
     // Create a user object using the factory function
     // Hash the password before creating the final user object to pass into the createUser function
@@ -51,18 +42,20 @@ async function onSubmit(event) {
         userInput.lastName,
         userInput.username,
         userInput.email,
-        hash(userInput.password),
+        userInput.password,
         userInput.userRole
     );
 
     // Pass the object into the createUser function and create the account
-    const message = await createUser(newUserObject);
+    const response = await api.request('signup_API/', 'POST', newUserObject);
+
+    const message = await response.json();
 
     // Pass the message to the handler
     handleCreationMessage(message);
 
     if (message.success === true) {
-        REDIRECT.TO_LOGIN();
+        window.location.replace(message.data)
     }
 }
 
