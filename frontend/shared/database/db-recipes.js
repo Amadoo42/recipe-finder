@@ -25,15 +25,13 @@ export async function getRecipes() {
  * @returns { Promise<Object> } - A promise that resolves to the recipe object.
  */
 export async function getRecipeById(recipeId) {
-    const params = new URLSearchParams();
-    params.append('RecipeID', recipeId);
-    const result = await getRequest('/admin/get_recipe_by_id/', params);
+    const result = await getRequest(`/api/recipes/${recipeId}/`);
     if (result.success) {
         console.log(result);
-        return result.recipe;
+        return result.data;
     }
     else {
-        return {"Error": "No recipe found by this id"};
+        return null;
     }
 }
 

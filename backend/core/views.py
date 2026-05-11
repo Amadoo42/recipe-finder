@@ -228,7 +228,7 @@ def search_recipes(request):
     recipes = Recipe.objects.prefetch_related('recipe_ingredients__ingredient')
 
     if category and category.lower() != 'all':
-        recipes = recipes.filter(course_type=category)
+        recipes = recipes.filter(courseType=category)
 
     if query:
         recipes = recipes.filter(
