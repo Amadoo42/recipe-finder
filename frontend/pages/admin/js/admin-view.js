@@ -6,7 +6,6 @@ import { searchRecipes } from "/static/shared/database/db-recipes.js";
 import { initHerbs } from "/static/shared/utils/favourites.js";
 
 let currentQuery = "";
-let currentSource = "all";
 let currentCategory = "all";
 let recipes = [];
 let requestId = 0;
@@ -34,7 +33,14 @@ async function updateView() {
     const thisRequest = ++requestId;
     let results = await searchRecipes(currentQuery, currentCategory);
     if (thisRequest !== requestId) return;
-    recipes = results.data;
+    if (results.success && Array.isArray(results.data)) {
+        recipes = results.data;
+    } else {
+        recipes = [];
+        if (results.description) {
+            console.error(results.description);
+        }
+    }
     renderRecipes();
 }
 

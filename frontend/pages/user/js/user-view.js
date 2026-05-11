@@ -6,7 +6,6 @@ import { setupFilters } from "/static/shared/utils/setup-filters.js";
 import { initHerbs } from "/static/pages/user/js/favourites.js";
 
 let currentQuery = "";
-let currentSource = "all";
 let currentCategory = "all";
 let recipes = [];
 let requestId = 0;
@@ -81,7 +80,14 @@ async function applySearchAndFilter() {
     const thisRequest = ++requestId;
     let results = await searchRecipes(currentQuery, currentCategory);
     if (thisRequest !== requestId) return;
-    recipes = results.data;
+    if (results.success && Array.isArray(results.data)) {
+        recipes = results.data;
+    } else {
+        recipes = [];
+        if (results.description) {
+            console.error(results.description);
+        }
+    }
     await renderRecipes();
 }
 init();

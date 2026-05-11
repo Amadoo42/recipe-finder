@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login
 from functools import wraps
 from core.models import Recipe
-from django.db.models import Q 
+from django.db.models import Q
 
 def login_check(view_func):
     @wraps(view_func)
@@ -42,19 +42,14 @@ def login(request):
 
     return render(request, 'core/login.html')
 
-def recipe_detail(request,recipe_id):
-    try:
-        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(pk=recipe_id)
-    except:
-        return JsonResponse({'success': False, 'description': 'Recipe Not Found'},status=404)
-    
-    recipe_data = {
-        'id':recipe.id,
-        'name':recipe.name,
-        'description':recipe.description,
-        'courseType':recipe.course_type,
-        'image':recipe.get_image,
-        'ingredients':[
+def serialize_recipe(recipe):
+    return {
+        'id': recipe.id,
+        'name': recipe.name,
+        'description': recipe.description,
+        'courseType': recipe.course_type,
+        'image': recipe.get_image,
+        'ingredients': [
             {
                 'name': ri.ingredient.name,
                 'quantity': ri.quantity,
@@ -63,7 +58,14 @@ def recipe_detail(request,recipe_id):
             for ri in recipe.recipe_ingredients.all()
         ]
     }
-    return JsonResponse({'success':True,'data':recipe_data})
+
+def recipe_detail(request,recipe_id):
+    try:
+        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(pk=recipe_id)
+    except:
+        return JsonResponse({'success': False, 'description': 'Recipe Not Found'},status=404)
+    
+    return JsonResponse({'success':True,'data':serialize_recipe(recipe)})
 
 def search_recipes(request):
     if request.method != 'GET':
@@ -86,23 +88,7 @@ def search_recipes(request):
 
     results = []
     for recipe in recipes:
-        
-        ingredients_list = []
-        for ri in recipe.recipe_ingredients.all():
-            ingredients_list.append({
-                'name': ri.ingredient.name,
-                'quantity': ri.quantity,
-                'unit': ri.unit,
-            })
-
-        results.append({
-            'id': recipe.id,
-            'name': recipe.name,
-            'description': recipe.description,
-            'courseType': recipe.course_type,
-            'image': recipe.get_image,
-            'ingredients': ingredients_list,
-        })
+        results.append(serialize_recipe(recipe))
 
     return JsonResponse({'success': True, 'data': results})
 
