@@ -9,17 +9,17 @@
  * @param { string } lastName - The user's last name.
  * @param { string } username - The user's unique username.
  * @param { string } email - The user's unique email address.
- * @param { string } passwordHash - The hashed password for the user.
+ * @param { string } password - The password for the user.
  * @param { string } role - The user's role, either 'admin' or 'user'.
  * @returns { Object } A standardized user object ready for insertion into the database. 
 */
-export function createUserObject(firstName, lastName, username, email, passwordHash, role) {
+export function createUserObject(firstName, lastName, username, email, password, role) {
     return {
         firstName: firstName,
         lastName: lastName,
         username: username,
         email: email,
-        passwordHash: passwordHash,
+        password: password,
         role: role,
         savedRecipes: [], // Defaults to empty array
         token: null // Defaults to null until login
