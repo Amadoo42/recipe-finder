@@ -6,7 +6,7 @@ const params = new URLSearchParams(window.location.search);
 const recipeId = params.get('recipeid');
 
 let recipe = await getRecipeById(recipeId);
-recipe = recipe.recipe;
+
 const wrapper = document.getElementById('recipeContentWrapper');
 const pageHeading = document.getElementById('pageHeading');
 
@@ -17,7 +17,8 @@ if (!recipe) {
     }
     if (wrapper) {
         wrapper.style.display = 'none';
-        return;
+        // what is this?
+        // return;
     }
 }
 

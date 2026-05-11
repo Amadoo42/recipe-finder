@@ -30,8 +30,10 @@ function init() {
  * @brief this is a wrapper function to get recipes and view them
  */
 async function updateView() {
-    const result = await searchRecipes(currentQuery, currentSource, currentCategory);
-    recipes = result.data;
+    const thisRequest = ++requestId;
+    let results = await searchRecipes(currentQuery, currentCategory);
+    if (thisRequest !== requestId) return;
+    recipes = results.data;
     renderRecipes();
 }
 

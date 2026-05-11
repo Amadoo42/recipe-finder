@@ -29,6 +29,7 @@ export async function getRecipeById(recipeId) {
     params.append('RecipeID', recipeId);
     const result = await getRequest('/admin/get_recipe_by_id/', params);
     if (result.success) {
+        console.log(result);
         return result.recipe;
     }
     else {

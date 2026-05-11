@@ -210,7 +210,7 @@ def serialize_recipe(recipe):
         ]
     }
 
-def recipe_detail(request,recipe_id):
+def recipe_detail(request, recipe_id):
     try:
         recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(pk=recipe_id)
     except:
