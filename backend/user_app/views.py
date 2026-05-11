@@ -26,7 +26,7 @@ def get_favourite(request):
         'id':recipe.id,
         'name':recipe.name,
         'description':recipe.description,
-        'courseType':recipe.course_type,
+        'courseType':recipe.courseType,
         'image':recipe.get_image,
         'ingredients':[
             {'name':ri.ingredient.name,'quantity':ri.quantity,'unit':ri.unit}
