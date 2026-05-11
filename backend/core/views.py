@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from core.constants import LOGIN_URL, USER_DASHBOARD_URL, ADMIN_DASHBOARD_URL, INDEX_URL
 from core.services.Message import Message
-from core.models import User
+from core.models import User, Recipe
 from core.services.validation import validation
 import json
 
@@ -18,7 +18,7 @@ def signup_page(request):
     return render(request, 'core/signup.html')
 
 def loginAPI(request):
-    
+
     # Must use POST
     if request.method != 'POST':
         return JsonResponse(Message(
@@ -37,8 +37,8 @@ def loginAPI(request):
         ).to_dict(), status=400)
     
     try:
-        username=data.get('username')
-        password=data.get('password')
+        username=data.get('username', '').strip()
+        password=data.get('password', '').strip()
     except Exception as e:
         return JsonResponse(Message(
             success=False,
@@ -46,7 +46,7 @@ def loginAPI(request):
         ).to_dict(), status=400)
 
     # Verify credentials
-    user=authenticate(request, username=username, password=password)
+    user = authenticate(request, username=username, password=password)
 
     if user is None:
         return JsonResponse(Message(
@@ -62,7 +62,7 @@ def loginAPI(request):
         return JsonResponse(Message(
             success=True,
             description='[Login API] Successfully authenticated - redirecting to User Dashboard',
-            data=USER_DASHBOARD_URL, # redirection path
+            data=USER_DASHBOARD_URL,
         ).to_dict())
     
     elif user.role == 'admin':
@@ -81,23 +81,21 @@ def loginAPI(request):
 
 
 def createNewUser(data):
-    
-    role=data.get('role')
-    firstname=data.get('firstName')
-    lastname=data.get('lastName')
-    username=data.get('username')
-    email=data.get('email')
-    password=data.get('password')
+    role = data.get('role')
+    firstname = data.get('firstName')
+    lastname = data.get('lastName')
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
         
     new_user = {
         'username': username,
         'password': password,
         'email': email,
-        'first_name': firstname, # Map JS firstName to Django first_name
-        'last_name': lastname,   # Map JS lastName to Django last_name
+        'first_name': firstname,
+        'last_name': lastname,
         'role': role
     }
-
     return new_user
 
 
@@ -193,3 +191,26 @@ def logoutAPI(request):
         description="[LogoutAPI] Logged out successfully",
         data=INDEX_URL).to_dict()
         )
+
+def recipe_detail(request, recipe_id):
+    try:
+        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(pk=recipe_id)
+    except:
+        return JsonResponse({'success': False, 'description': 'Recipe Not Found'}, status=404)
+    
+    recipe_data = {
+        'id': recipe.id,
+        'name': recipe.name,
+        'description': recipe.description,
+        'courseType': recipe.course_type,
+        'image': recipe.get_image,
+        'ingredients': [
+            {
+                'name': ri.ingredient.name,
+                'quantity': ri.quantity,
+                'unit': ri.unit,
+            }
+            for ri in recipe.recipe_ingredients.all()
+        ]
+    }
+    return JsonResponse({'success': True, 'data': recipe_data})

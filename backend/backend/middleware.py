@@ -1,5 +1,6 @@
 from django.urls import resolve
 from django.shortcuts import redirect
+from django.http import JsonResponse
 from core.constants import LOGIN_URL, USER_DASHBOARD_URL
 
 
@@ -22,6 +23,11 @@ class RecipeFinderMiddleware:
 
         # If user not logged in, redirect to login page
         if not user.is_authenticated:
+            if request.path.startswith('/api/'):
+                return JsonResponse({
+                    'success': False, 
+                    'description': 'User not authenticated.'
+                }, status=401)
             return redirect(LOGIN_URL)
         
         role = user.role
