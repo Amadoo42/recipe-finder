@@ -6,6 +6,7 @@ from core.constants import LOGIN_URL, USER_DASHBOARD_URL, ADMIN_DASHBOARD_URL, I
 from core.services.Message import Message
 from core.models import User, Recipe
 from core.services.validation import validation
+from django.db.models import Q
 import json
 
 def index(request):
@@ -191,18 +192,13 @@ def logoutAPI(request):
         description="[LogoutAPI] Logged out successfully",
         data=INDEX_URL).to_dict()
         )
-
-def recipe_detail(request, recipe_id):
-    try:
-        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(pk=recipe_id)
-    except:
-        return JsonResponse({'success': False, 'description': 'Recipe Not Found'}, status=404)
-    
-    recipe_data = {
+  
+def serialize_recipe(recipe):
+    return {
         'id': recipe.id,
         'name': recipe.name,
         'description': recipe.description,
-        'courseType': recipe.course_type,
+        'courseType': recipe.courseType,
         'image': recipe.get_image,
         'ingredients': [
             {
@@ -213,4 +209,37 @@ def recipe_detail(request, recipe_id):
             for ri in recipe.recipe_ingredients.all()
         ]
     }
-    return JsonResponse({'success': True, 'data': recipe_data})
+
+def recipe_detail(request,recipe_id):
+    try:
+        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(pk=recipe_id)
+    except:
+        return JsonResponse({'success': False, 'description': 'Recipe Not Found'},status=404)
+    
+    return JsonResponse({'success':True,'data':serialize_recipe(recipe)})
+
+def search_recipes(request):
+    if request.method != 'GET':
+        return JsonResponse({'success': False, 'description': 'Method not allowed'}, status=405)
+    
+    query = request.GET.get('search', '').strip()
+    category = request.GET.get('category', 'all').strip()
+
+    recipes = Recipe.objects.prefetch_related('recipe_ingredients__ingredient')
+
+    if category and category.lower() != 'all':
+        recipes = recipes.filter(course_type=category)
+
+    if query:
+        recipes = recipes.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(ingredients__name__icontains=query)
+        ).distinct()
+
+    results = []
+    for recipe in recipes:
+        results.append(serialize_recipe(recipe))
+
+    return JsonResponse({'success': True, 'data': results})
+  

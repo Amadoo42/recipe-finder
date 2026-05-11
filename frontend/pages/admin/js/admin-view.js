@@ -2,13 +2,13 @@ import { deleteRecipe } from "/static/shared/database/db-recipes.js";
 import { createCard } from "/static/shared/utils/create-card.js";
 import { setupSearch } from "/static/shared/utils/setup-search.js";
 import { setupFilters } from "/static/shared/utils/setup-filters.js";
-import { searchRecipes } from "/static/shared/utils/search-recipes.js";
+import { searchRecipes } from "/static/shared/database/db-recipes.js";
 import { initHerbs } from "/static/shared/utils/favourites.js";
 
 let currentQuery = "";
-let currentSource = "all";
 let currentCategory = "all";
 let recipes = [];
+let requestId = 0;
 
 /**
  * @brief this function initializes the recipes array from database
@@ -29,8 +29,18 @@ function init() {
 /**
  * @brief this is a wrapper function to get recipes and view them
  */
-function updateView() {
-    recipes = searchRecipes(currentQuery, currentSource, currentCategory).data;
+async function updateView() {
+    const thisRequest = ++requestId;
+    let results = await searchRecipes(currentQuery, currentCategory);
+    if (thisRequest !== requestId) return;
+    if (results.success && Array.isArray(results.data)) {
+        recipes = results.data;
+    } else {
+        recipes = [];
+        if (results.description) {
+            console.error(results.description);
+        }
+    }
     renderRecipes();
 }
 

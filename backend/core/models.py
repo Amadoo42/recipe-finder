@@ -17,7 +17,7 @@ class Recipe(models.Model):
 
     name = models.CharField(max_length=255)
     description = models.TextField()
-    course_type = models.CharField(max_length=20, choices=COURSE_CHOICES)
+    courseType = models.CharField(max_length=20, choices=COURSE_CHOICES)
 
     image_file = models.ImageField(upload_to='recipe/images/', blank=True, null=True)
     image_url = models.URLField(max_length=500, blank=True, null=True)
