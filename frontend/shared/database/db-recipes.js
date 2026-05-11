@@ -11,7 +11,12 @@ import { getRequest, postRequest, deleteRequest } from '/static/api/request.js';
  */
 export async function getRecipes() {
     const response = await getRequest('/admin/get_all_recipes/');
-    return response;
+    if (response.success && Array.isArray(response.recipes)) {
+        return response.recipes;
+    }
+    else {
+        return [];
+    }
 }
 
 /**
@@ -23,7 +28,12 @@ export async function getRecipeById(recipeId) {
     const params = new URLSearchParams();
     params.append('RecipeID', recipeId);
     const result = await getRequest('/admin/get_recipe_by_id/', params);
-    return result;
+    if (result.success) {
+        return result.recipe;
+    }
+    else {
+        return {"Error": "No recipe found by this id"};
+    }
 }
 
 /**
@@ -42,7 +52,12 @@ export async function addIngredientDB(data) {
  */
 export async function getAllIngredients() {
     const result = await getRequest('/admin/get_all_ingredients/');
-    return result;
+    if (result.success && Array.isArray(result.ingredients)) {
+        return result.ingredients.map(ing => ing.name);
+    }
+    else {
+        return [];
+    }
 }
 
 /**
@@ -62,6 +77,7 @@ export async function addOtherUnitDB(data) {
  */
 export async function addRecipe(data) {
     const result = await postRequest('/admin/add_recipe/', data);
+    console.log(result);
     return result;
 }
 

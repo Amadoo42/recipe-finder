@@ -116,13 +116,15 @@ async function init() {
     UI.renderHeader(isEdit);
     if (isEdit) {
         const response = await getRecipeById(recipeID);
-        const recipe = response.recipe;
-        UI.renderRecipeDetails(recipe.name, recipe.courseType, recipe.description);
-        ingredients = [...ingredients, ...recipe.ingredients];
+        if (response.success == false) {
+            alert("Failed, could not load recipe data");
+            window.location.replace("/admin/explore/");
+        }
+        UI.renderRecipeDetails(response.name, response.courseType, response.description);
+        ingredients = [...ingredients, ...response.ingredients];
     }
     UI.renderIngredientList(ingredients, removeIngredient);
 
-    const allIngredientsResponse = await getAllIngredients();
-    allIngredientNames = allIngredientsResponse.ingredients.map(ing => ing.name);
+    allIngredientNames = await getAllIngredients();
 };
 init();

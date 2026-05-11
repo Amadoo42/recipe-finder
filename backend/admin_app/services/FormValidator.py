@@ -22,6 +22,16 @@ def validateRecipeForm(request, form: forms.Form, save_method, *args):
         return JsonResponse({"success": False, "errors": form.errors.get_json_data()})
     else:
         data = form.cleaned_data
-        ingredients = json.loads(request.POST.get('ingredients_list', '[]'))
-        save_method(data, ingredients, *args)
-        return JsonResponse({"success": True})
+        try:
+            ingredients = json.loads(request.POST.get('ingredients_list', '[]'))
+        except json.JSONDecodeError:
+            return JsonResponse(
+                {"success": False, "errors": {"ingredients_list": ["Invalid JSON."]}},
+                status=400
+            )
+        
+        try:
+            save_method(data, ingredients, *args) 
+            return JsonResponse({"success": True, "message": "Recipe saved successfully!"})
+        except Exception as e:
+            return JsonResponse({"success": False, "errors": {"server": [str(e)]}}, status=500)

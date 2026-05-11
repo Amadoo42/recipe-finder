@@ -1,5 +1,7 @@
 from core.models import *
 from admin_app.forms import *
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 class RecipeManager:
     _instance = None
@@ -39,6 +41,8 @@ class RecipeManager:
         updates a recipe's data in the database along with its ingredients
         '''
         recipe = Recipe.objects.get(id=recipe_id)
+        if recipe is None:
+            raise ObjectDoesNotExist
 
         if data['image_url']:
             recipe.image_file = None
@@ -76,7 +80,9 @@ class RecipeManager:
         fetches recipe data by its id
         returns recipe data along with its ingredients list
         '''
-        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').get(id=recipe_id)
+        recipe = Recipe.objects.prefetch_related('recipe_ingredients__ingredient').filter(id=recipe_id).first()
+        if recipe is None:
+            raise ObjectDoesNotExist
         
         ingredient_data = [
                 {
