@@ -1,9 +1,8 @@
-import { requestLogin } from '/static/api/auth.js';
-import { createMessage } from '/static/shared/utils/create-message.js';
-import { hash } from '/static/shared/utils/hash.js';
-import { PAGE_AUTH_LEVEL, REDIRECT } from '/static/constants/auth-constants.js';
+import { API } from '/static/api/auth.js';
 
 const loginForm = document.getElementsByName('loginUserForm')[0];
+const api = new API();
+api.setBase('/')
 
 /**
  * @summary Handles the success/failure messages and displays it to the user
@@ -25,37 +24,20 @@ async function onSubmit(event) {
     const formData = new FormData(loginForm);
     const userInput = Object.fromEntries(formData.entries());
 
-    // Check the confirm field first
-    const username = userInput.username;
-    const password = userInput.password;
-
     // Pass the object into the createUser function and create the account
-    const loginMessage = await requestLogin({
-        username: username,
-        password: hash(password), // given the hashed version directly
-    });
+    const response = await api.request('login_API/', 'POST', userInput)
 
-    if (loginMessage.success === false) {
-        handleLoginMessage(loginMessage);
+    const message = await response.json();
+
+    // Could not Log in
+    if (message.success == false) {
+        handleLoginMessage(message)
         return;
     }
 
-    const role = loginMessage.data.role;
-
-    // Redirect user correctly
-    if (role === PAGE_AUTH_LEVEL.USER) {
-        REDIRECT.TO_USER();
-    } else if (role === PAGE_AUTH_LEVEL.ADMIN) {
-        REDIRECT.TO_ADMIN();
-    } else {
-        handleLoginMessage(
-            createMessage(false, 'Account is associated with broken role!'),
-        );
-        return;
+    if (message.success === true) {
+        window.location.replace(message.data)
     }
-
-    // pass the message to the handler
-    handleLoginMessage(loginMessage);
 }
 
 if (loginForm) {
