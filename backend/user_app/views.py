@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
 from core.models import Recipe
-from core.views import login_check
 
 def dashboard(request):
     return render(request, 'user/dashboard.html')
@@ -16,7 +15,6 @@ def favourites(request):
 def recipe_details(request):
     return render(request, 'user/recipe_details.html')
 
-@login_check
 def get_favourite(request):
     user = request.user
 
@@ -37,7 +35,6 @@ def get_favourite(request):
     })
     return JsonResponse({'success':True,'data':recipe_data})
 
-@login_check
 @require_http_methods(['POST'])
 
 def toggle_favourite(request,recipe_id):

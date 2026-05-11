@@ -19,7 +19,7 @@ def signup_page(request):
     return render(request, 'core/signup.html')
 
 def loginAPI(request):
-    
+
     # Must use POST
     if request.method != 'POST':
         return JsonResponse(Message(
@@ -38,8 +38,8 @@ def loginAPI(request):
         ).to_dict(), status=400)
     
     try:
-        username=data.get('username')
-        password=data.get('password')
+        username=data.get('username', '').strip()
+        password=data.get('password', '').strip()
     except Exception as e:
         return JsonResponse(Message(
             success=False,
@@ -47,7 +47,7 @@ def loginAPI(request):
         ).to_dict(), status=400)
 
     # Verify credentials
-    user=authenticate(request, username=username, password=password)
+    user = authenticate(request, username=username, password=password)
 
     if user is None:
         return JsonResponse(Message(
@@ -63,7 +63,7 @@ def loginAPI(request):
         return JsonResponse(Message(
             success=True,
             description='[Login API] Successfully authenticated - redirecting to User Dashboard',
-            data=USER_DASHBOARD_URL, # redirection path
+            data=USER_DASHBOARD_URL,
         ).to_dict())
     
     elif user.role == 'admin':
@@ -82,23 +82,21 @@ def loginAPI(request):
 
 
 def createNewUser(data):
-    
-    role=data.get('role')
-    firstname=data.get('firstName')
-    lastname=data.get('lastName')
-    username=data.get('username')
-    email=data.get('email')
-    password=data.get('password')
+    role = data.get('role')
+    firstname = data.get('firstName')
+    lastname = data.get('lastName')
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
         
     new_user = {
         'username': username,
         'password': password,
         'email': email,
-        'first_name': firstname, # Map JS firstName to Django first_name
-        'last_name': lastname,   # Map JS lastName to Django last_name
+        'first_name': firstname,
+        'last_name': lastname,
         'role': role
     }
-
     return new_user
 
 
