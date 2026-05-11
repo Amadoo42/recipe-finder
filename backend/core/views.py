@@ -198,7 +198,7 @@ def serialize_recipe(recipe):
         'id': recipe.id,
         'name': recipe.name,
         'description': recipe.description,
-        'courseType': recipe.course_type,
+        'courseType': recipe.courseType,
         'image': recipe.get_image,
         'ingredients': [
             {
