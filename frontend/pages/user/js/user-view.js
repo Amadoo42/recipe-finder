@@ -1,15 +1,14 @@
 import { createCard } from "/static/shared/utils/create-card.js";
 import { toggleFavourite, getUserFavourites } from "/static/shared/database/db-user.js";
-import { searchRecipes } from "/static/shared/utils/search-recipes.js";
+import { searchRecipes } from "/static/shared/database/db-recipes.js";
 import { setupSearch } from "/static/shared/utils/setup-search.js";
 import { setupFilters } from "/static/shared/utils/setup-filters.js";
 import { initHerbs } from "/static/pages/user/js/favourites.js";
 
 let currentQuery = "";
-let currentSource = "all";
 let currentCategory = "all";
 let recipes = [];
-
+let requestId = 0;
 
 /**
  * @brief toggles the favourite status of a recipe
@@ -78,8 +77,17 @@ function init() {
  * @brief Applies the current search query and filter settings to update the displayed recipes
 */
 async function applySearchAndFilter() {
-    let results = searchRecipes(currentQuery, currentSource, currentCategory);
-    recipes = results.data;
+    const thisRequest = ++requestId;
+    let results = await searchRecipes(currentQuery, currentCategory);
+    if (thisRequest !== requestId) return;
+    if (results.success && Array.isArray(results.data)) {
+        recipes = results.data;
+    } else {
+        recipes = [];
+        if (results.description) {
+            console.error(results.description);
+        }
+    }
     await renderRecipes();
 }
 init();

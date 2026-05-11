@@ -105,42 +105,27 @@ export async function deleteRecipe(recipeId) {
 
 /**
  * Searches for recipes based on a query text and course filter.
+ * Sends a GET request to /api/recipes/ with search and category query parameters.
  * @param { string } queryText - The text to search for in recipe titles, descriptions, and ingredients.
  * @param { string } courseFilter - The course type to filter by.
- * @returns { Array } - An array of matching recipe objects.
+ * @returns { Promise<Object> } - A message object with success status and matching recipes in data.
  */
-export function searchRecipes(queryText, courseFilter) {
-    let recipes = getRecipes();
-    let results = recipes;
-    
-    if(courseFilter && courseFilter.toLowerCase() !== 'all') {
-        let temp = []
-        for(let r of results) {
-            if(r.courseType.toLowerCase() === courseFilter.toLowerCase()) {
-                temp.push(r);
-            }
-        }
-        results = temp;
-    }
+export async function searchRecipes(queryText, courseFilter) {
+    try{
+        const params = new URLSearchParams();
+        params.append('search', queryText || '');
+        params.append('category', courseFilter || 'all');
 
-    if(queryText && queryText.trim() !== '') {
-        let query = queryText.toLowerCase().trim();
-        let finalResults = [];
-        for(let r of results) {
-            let haveTitle = r.name.toLowerCase().includes(query);
-            let haveDescription = r.description.toLowerCase().includes(query);
-            let foundIngredient = false;
-            for(let ingredient of r.ingredients) {
-                if(ingredient.name.toLowerCase().includes(query)) {
-                    foundIngredient = true;
-                    break;
-                }
-            }
-            if(haveTitle || foundIngredient || haveDescription) {
-                finalResults.push(r);
-            }
+        const response = await fetch(`/api/recipes/?${params}`);
+
+        if (!response.ok) {
+            return createMessage(false, 'Server error: ' + response.status);
         }
-        return finalResults;
+
+        const json = await response.json();
+        return json;
     }
-    return results;
+    catch (error){
+        return createMessage(false, 'Network error: ' + error.message);
+    }
 }
