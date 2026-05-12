@@ -18,6 +18,7 @@ const DOM = {
 
     // INGREDIENT INPUT
     ingredientNameInput: document.querySelector("#ingredientName"),
+    ingredientSuggestionsList: document.querySelector("#ingredientSuggestionsList"),
     ingredientQuantityInput: document.querySelector("#quantity"),
     ingredientUnitInput: document.querySelector("#unit"),
     addIngredientBtn: document.getElementById("addIngredient"),
@@ -37,15 +38,21 @@ const DOM = {
     submitRecipeBtn: document.getElementById("addRecipe")
 };
 
-// References to all UI error message elements
-export const ERROR_MESSAGES = {
-    ingredientUnitErrorMessage: document.getElementById("customUnitErrorMessage"),
-    ingredientNameErrorMessage: document.getElementById("ingredientNameErrorMessage"),
-    recipeNameErrorMessage: document.getElementById("recipeNameErrorMessage"),
-    recipeDescriptionErrorMessage: document.getElementById("recipeDescriptionErrorMessage"),
-    quantityErrorMessage: document.getElementById("quantityErrorMessage"),
-    imageURLErrorMessage: document.getElementById("imageURLErrorMessage")
+export const INGREDIENT_ERROR_MESSAGES = {
+    "name": document.getElementById("ingredientNameErrorMessage"),
+    "quantity": document.getElementById("quantityErrorMessage"),
 }
+
+export const OTHER_ERROR_MESSAGES = {
+    "unit": document.getElementById("customUnitErrorMessage"),
+}
+
+export const RECIPE_ERROR_MESSAGES = {
+    "name": document.getElementById("recipeNameErrorMessage"),
+    "description": document.getElementById("recipeDescriptionErrorMessage"),
+    "image_url": document.getElementById("imageURLErrorMessage"),
+}
+
 
 // Toggle the visibility of an element using the 'show' css class
 export function toggleUIComponent(component, value) {
@@ -91,6 +98,24 @@ export function renderIngredientList(ingredients, removeIngredient) {
     });
 }
 
+export function resetIngredientSuggestions() {
+    DOM.ingredientSuggestionsList.innerHTML = "";
+}
+
+export function renderIngredientSuggestions(suggestions) {
+    resetIngredientSuggestions();
+    if (!suggestions) return;
+    for (const item of suggestions) {
+        const li = document.createElement('li');
+        li.addEventListener('click', () => {
+            DOM.ingredientNameInput.value = li.textContent;
+            renderIngredientSuggestions();
+        });
+        li.textContent = item;
+        DOM.ingredientSuggestionsList.appendChild(li);
+    }
+}
+
 export function getIngredientInput() {
     return {
         name: DOM.ingredientNameInput.value,
@@ -109,7 +134,7 @@ export function getRecipeInput() {
     return {
         name: DOM.recipeName.value,
         description: DOM.recipeDescription.value,
-        course: DOM.recipeCourse.value
+        courseType: DOM.recipeCourse.value
     }
 }
 
@@ -121,8 +146,7 @@ export function toggleOtherUnitModal(val) {
 
 export function getOtherUnitData() {
     return {
-        newUnit: DOM.customUnitInput.value,
-        options: DOM.ingredientUnitInput.options
+        unit: DOM.customUnitInput.value
     }
 }
 
@@ -133,29 +157,62 @@ export function cancelOtherUnit() {
 }
 
 // Insert the new unit into the dropdown if it doesn't already exist
-export function addOtherUnitOption(unique) {
+export function addOtherUnitOption(unit) {
+    let unique = true;
+    const unitsOptions = DOM.ingredientUnitInput.options;
+    for (let option of unitsOptions) {
+        if (option.value.toLowerCase() === unit.toLowerCase()) {
+            unique = false;
+            break;
+        }
+    }
+
     if (unique) {
         let newOption = document.createElement("option");
         newOption.textContent = DOM.customUnitInput.value;
         DOM.ingredientUnitInput.insertBefore(newOption, DOM.otherUnitEntry);
     }
-    DOM.ingredientUnitInput.value = DOM.customUnitInput.value;
+    DOM.ingredientUnitInput.value = unit;
     DOM.customUnitInput.value = "";
 }
 
 export function getImageInput() {
     return {
-        localImage: DOM.imageInput,
-        URL: DOM.imageURLInput
+        image_file: DOM.imageInput.files[0],
+        image_url: DOM.imageURLInput.value
     }
 }
 
-export function initUI(addIngredientHandler, addRecipeHandler, addOtherUnitHandler) {
+export function initUI(addIngredientHandler, addRecipeHandler, addOtherUnitHandler, ingredientSearch) {
     DOM.ingredientUnitInput.addEventListener("change", function () {
         toggleOtherUnitModal(DOM.ingredientUnitInput.value === "Other")
     });
     DOM.addIngredientBtn.addEventListener("click", addIngredientHandler);
-    DOM.submitRecipeBtn.addEventListener("click", addRecipeHandler);
+    DOM.submitRecipeBtn.addEventListener("click", async () => {
+        const originalDisabled = DOM.submitRecipeBtn.disabled;
+        const originalText = DOM.submitRecipeBtn.textContent;
+
+        DOM.submitRecipeBtn.disabled = true;
+        DOM.submitRecipeBtn.textContent = "Processing the request...";
+
+        try {
+            await addRecipeHandler();
+        } finally {
+            DOM.submitRecipeBtn.disabled = originalDisabled;
+            DOM.submitRecipeBtn.textContent = originalText;
+        }
+    });
     DOM.customUnitModalCancelBtn.addEventListener("click", cancelOtherUnit);
     DOM.customUnitModalAddBtn.addEventListener("click", addOtherUnitHandler);
+    DOM.ingredientNameInput.addEventListener('input', ingredientSearch)
+
+    // hide the suggestions list when clicking anywhere in the page but the input field or the list itself
+    document.addEventListener('click', (e) => {
+    if (!DOM.ingredientNameInput.contains(e.target) && !DOM.ingredientSuggestionsList.contains(e.target)) {
+        DOM.ingredientSuggestionsList.style.display = 'none';
+    }
+    else if (DOM.ingredientNameInput.contains(e.target)) {
+        DOM.ingredientSuggestionsList.style.display = 'block';
+    }
+});
 }

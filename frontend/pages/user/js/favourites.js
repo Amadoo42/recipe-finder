@@ -4,8 +4,8 @@ import { createCard } from '/static/shared/utils/create-card.js';
 
 let currentCategory = 'all';
 
-function updateCategoryCounts() {
-    const response = filterRecipesByCategory('all', 'favourites');
+async function updateCategoryCounts() {
+    const response = await filterRecipesByCategory('all', 'favourites');
     const allFavouriteRecipes = response.success ? response.data : [];
 
     let counts = {
@@ -26,16 +26,16 @@ function updateCategoryCounts() {
     document.getElementById('countDessert').textContent = counts['dessert'];
 }
 
-function renderFavourite(category = 'all') {
+async function renderFavourite(category = 'all') {
     currentCategory = category;
     const grid = document.getElementById('main');//put the id of grid
     const state = document.getElementById('fav-empty');//put the state if empty or not
 
-    const respond = filterRecipesByCategory(category, 'favourites');
+    const respond = await filterRecipesByCategory(category, 'favourites');
 
     grid.innerHTML = '';
 
-    updateCategoryCounts();
+    await updateCategoryCounts();
 
     if (!respond.success || !respond.data || respond.data.length == 0) {
         grid.style.display = 'none';
@@ -72,7 +72,7 @@ function renderFavourite(category = 'all') {
         grid.appendChild(card);
     }
 
-    updateCategoryCounts(recipes);
+    await updateCategoryCounts(recipes);
 }
 
 

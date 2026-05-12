@@ -8,14 +8,14 @@ import { createMessage } from "/static/shared/utils/create-message.js";
  * @param { "favourites" | "all" } source - The recipe source to filter.
  * @returns { Object } A message object with the filtered recipes.
  */
-export function filterRecipesByCategory(courseCategory, source) {
+export async function filterRecipesByCategory(courseCategory, source) {
     let recipes = [];
 
     if(source === "all") {
-        recipes = getRecipes();
+        recipes = await getRecipes();
     }
     else if (source === "favourites") {
-        let response = getUserFavourites();
+        let response = await getUserFavourites();
         if (response.success === false) {
             return createMessage(false, "User not authenticated or not found");
         }

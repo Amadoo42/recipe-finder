@@ -33,14 +33,7 @@ async function updateView() {
     const thisRequest = ++requestId;
     let results = await searchRecipes(currentQuery, currentCategory);
     if (thisRequest !== requestId) return;
-    if (results.success && Array.isArray(results.data)) {
-        recipes = results.data;
-    } else {
-        recipes = [];
-        if (results.description) {
-            console.error(results.description);
-        }
-    }
+    recipes = results.data;
     renderRecipes();
 }
 

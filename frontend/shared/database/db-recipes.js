@@ -1,119 +1,105 @@
 /**
  * db-recipes.js
  * CRUD operations and search logic for Recipes.
- * Depends on: db-core.js
+ * Depends on: requests.js
 */
 
-import { readTable, writeTable } from '/static/shared/database/db-core.js';
-import { createMessage } from '/static/shared/utils/create-message.js';
-
+import { getRequest, postRequest, deleteRequest } from '/static/api/request.js';
 /**
- * Retrieves all recipes from the database.
- * @returns { Array } - An array of recipe objects.
+ * Retrieves all recipes from the server.
+ * @returns { Promise<Array> } - A promise that resolves to an array of recipe objects.
  */
-export function getRecipes() {
-    return readTable('recipes') || [];
+export async function getRecipes() {
+    const response = await getRequest('/admin/get_all_recipes/');
+    if (response.success && Array.isArray(response.recipes)) {
+        return response.recipes;
+    }
+    else {
+        return [];
+    }
 }
 
 /**
- * Retrieves a recipe by its ID from the database.
- * @param { string } recipeId - The ID of the recipe to retrieve.
- * @returns { Object | null } - The recipe object if found, otherwise null.
+ * Retrieves a specific recipe by its unique ID.
+ * @param { number } recipeId - The ID of the recipe to retrieve.
+ * @returns { Promise<Object> } - A promise that resolves to the recipe object.
  */
 export async function getRecipeById(recipeId) {
-    try{
-        const respond = await fetch(`/api/recipes/${recipeId}/`);
-        if(!respond.ok){
-            console.error(`Failed to fetch recipe ${recipeId}:HTTP${respond.status}`);
-            return null;
-        }
-        const json = await respond.json();
-        return json.success? json.data:null;
-        }
-    catch(error){
-        console.error('Network error fetching recipe:',error);
-        return null;
-        }
+    const result = await getRequest(`/api/recipes/${recipeId}/`);
+    if (result.success) {
+        console.log(result);
+        return result.data;
     }
+    else {
+        return null;
+    }
+}
+
+/**
+ * Adds a new ingredient to the database.
+ * @param { Object } data - The ingredient data to be saved.
+ * @returns { Promise<Object> } - A promise that resolves to the server response.
+ */
+export async function addIngredientDB(data) {
+    const result = await postRequest('/admin/add_ingredient/', data);
+    return result;
+}
+
+/**
+ * Searches for ingredients by name.
+ * @returns { Promise<Array> } - A promise that resolves to a list of matching ingredients.
+ */
+export async function getAllIngredients() {
+    const result = await getRequest('/admin/get_all_ingredients/');
+    if (result.success && Array.isArray(result.ingredients)) {
+        return result.ingredients.map(ing => ing.name);
+    }
+    else {
+        return [];
+    }
+}
+
+/**
+ * Adds a new custom ingredient.
+ * @param { Object } data - The unit data to be saved.
+ * @returns { Promise<Object> } - A promise that resolves to the server response.
+ */
+export async function addOtherUnitDB(data) {
+    const result = await postRequest('/admin/add_other_unit/', data);
+    return result;
+}
 
 /**
  * Adds a new recipe to the database. 
- * The recipe object should already be standardized using createRecipeObject from schema-factories.js before being passed to this function.
- * @param { Object } recipe - The recipe object to add to the database.
- * @return { Object } - A message object indicating success or failure of the operation, along with the added recipe if successful.
+ * @param { Object } data - The recipe data object.
+ * @returns { Promise<Object> } - A promise that resolves to the server response.
  */
-export function addRecipe(recipe) {
-    try {
-        let recipes = getRecipes();
-
-        // Here we just auto-increment the ID based on the highest existing ID
-        let newId = 1;
-        if(recipes.length > 0) {
-            let maxId = 1; 
-            for(let r of recipes) {
-                if(Number(r.id) > maxId) {
-                    maxId = Number(r.id);
-                }
-            }
-            newId = maxId + 1;
-        }
-
-        recipe.id = newId;
-        recipes.push(recipe);
-        writeTable('recipes', recipes);
-        // Here we return the newly added recipe in the payload so that the caller can easily access the assigned ID.
-        return createMessage(true, 'Recipe added successfully', recipe);
-    } catch(error) {
-        return createMessage(false, 'Failed to add recipe to the database');
-    }
+export async function addRecipe(data) {
+    const result = await postRequest('/admin/add_recipe/', data);
+    console.log(result);
+    return result;
 }
 
 /**
- * Updates a recipe in the database.
- * @param { string } recipeId - The ID of the recipe to update.
- * @param { Object } updatedRecipe - The updated recipe object.
- * @returns { Object } - A message object indicating the result of the operation.
+ * Updates an existing recipe's information in the database.
+ * @param { number } recipeId - The ID of the recipe to update.
+ * @param { Object } data - The updated recipe data.
+ * @returns { Promise<Object> } - A message object indicating the result of the operation.
  */
-export function updateRecipe(recipeId, updatedRecipe) {
-    let recipes = getRecipes();
-    let index = -1;
-    for(let i = 0; i < recipes.length; i++) {
-        if(String(recipes[i].id) === String(recipeId)) {
-            index = i;
-            break;
-        }
-    }
-
-    if(index !== -1) {
-        updatedRecipe.id = recipes[index].id;
-        recipes[index] = updatedRecipe;
-        writeTable('recipes', recipes);
-        return createMessage(true, 'Recipe updated successfully', updatedRecipe);
-    }
-    return createMessage(false, 'Recipe not found');
+export async function updateRecipe(recipeId, data) {
+    data['recipe_id'] = recipeId;
+    const result = await postRequest('/admin/update_recipe/', data);
+    return result;
 }
 
 /**
  * Deletes a recipe from the database.
- * @param { string } recipeId - The ID of the recipe to delete.
- * @returns { Object } - A message object indicating the result of the operation.
+ * @param { number } recipeId - The ID of the recipe to delete.
+ * @returns { Object } - A message object indicating success or failure.
  */
-export function deleteRecipe(recipeId) {
-    let recipes = getRecipes();
-    let filteredRecipes = [];
-    let found = false;
-    for(let r of recipes) {
-        if(String(r.id) === String(recipeId)) {
-            found = true;
-            continue; 
-        }
-        filteredRecipes.push(r);
-    }
-    if(found) {
-        writeTable('recipes', filteredRecipes);
-        return createMessage(true, 'Recipe deleted successfully');
-    }
-    return createMessage(false, 'Recipe not found');
+export async function deleteRecipe(recipeId) {
+    const result = await deleteRequest('/admin/delete_recipe/', {'id': recipeId });
+    return result;
 }
 
 /**

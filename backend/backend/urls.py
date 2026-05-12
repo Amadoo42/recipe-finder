@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 from core import views as core_views
 from user_app import views as user_views
 
@@ -29,3 +31,6 @@ urlpatterns = [
     path('api/user/favourites/',user_views.get_favourite,name='get_favourite'),
     path('api/user/favourites/<int:recipe_id>/toggle/',user_views.toggle_favourite,name='toggle_favourite'), 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

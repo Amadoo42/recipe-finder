@@ -1,35 +1,37 @@
-import { createRecipeObject } from "/static/shared/utils/schema-factories.js";
-import { addRecipe, updateRecipe, getRecipeById } from "/static/shared/database/db-recipes.js";
-import { processUploadedImage, processOnlineImageURL } from "/static/shared/utils/process-image.js"
-import { createMessage } from "/static/shared/utils/create-message.js";
-import { toggleErrorMessage } from "/static/shared/utils/error-message.js"
+import { addIngredientDB, addOtherUnitDB, addRecipe, updateRecipe, getRecipeById, getAllIngredients } from "/static/shared/database/db-recipes.js";
+import { toggleErrorMessageList } from "/static/shared/utils/error-message.js"
 import * as UI from "/static/pages/admin/js/ui-handler.js";
-import * as VALIDATOR from "/static/shared/utils/recipe-validator.js"
 
 // URL parameters to choose between edit mode and creation mode
 let isEdit;
 let recipeID;
-let loadedImageData = "";
 
 // Current List of Ingredients
 let ingredients = [];
+let allIngredientNames = [];
+let timer;
+
 
 // Validates the name, quantity inputs and appends a new list item to the ingredient list
-function addNewIngredient() {
-    const {name, quantity, unit} = UI.getIngredientInput()
+async function addNewIngredient() {
+    UI.resetIngredientSuggestions();
+    toggleErrorMessageList(UI.INGREDIENT_ERROR_MESSAGES, false);
 
+    const data = UI.getIngredientInput();
+    const result = await addIngredientDB(data);
 
-    const trimmedName = name ? name.trim() : "";
-    const {invalidName: baseInvalidName, invalidQuantity} = VALIDATOR.validateIngredientInput(trimmedName, quantity);
-    const invalidName = baseInvalidName || trimmedName === "";
-    
-    toggleErrorMessage(UI.ERROR_MESSAGES.ingredientNameErrorMessage, invalidName);
-    toggleErrorMessage(UI.ERROR_MESSAGES.quantityErrorMessage, invalidQuantity)
-    if (invalidName || invalidQuantity) return;
-    ingredients.push({name: trimmedName, quantity, unit});
-
-    UI.renderIngredientList(ingredients, removeIngredient);
-    UI.resetIngredientInput();
+    if (!result.success) {
+        toggleErrorMessageList(UI.INGREDIENT_ERROR_MESSAGES, true, result.errors);
+    }
+    else {
+        ingredients.push({
+            name: data.name,
+            quantity: data.quantity,
+            unit: data.unit
+        });
+        UI.renderIngredientList(ingredients, removeIngredient);
+        UI.resetIngredientInput();
+    }
 }
 
 function removeIngredient(index) {
@@ -37,100 +39,74 @@ function removeIngredient(index) {
     UI.renderIngredientList(ingredients, removeIngredient);
 }
 
-// Validates and adds a user-defined unit to the ingredient unit dropdown list
-function addOtherUnit() {
-    toggleErrorMessage(UI.ERROR_MESSAGES.ingredientUnitErrorMessage, false);
+function filterIngredients(query) {
+    const normalizedQuery = query.toLowerCase();
+    return allIngredientNames.filter(ing => ing.toLowerCase().startsWith(normalizedQuery));
+}
 
-    const {newUnit, options} = UI.getOtherUnitData();
-    const inputValidation = VALIDATOR.validateOtherUnitInput(newUnit, options);
-
-    if (inputValidation.valid) {
-        UI.addOtherUnitOption(inputValidation.unique);
-    }
-    else {
-        toggleErrorMessage(UI.ERROR_MESSAGES.ingredientUnitErrorMessage, true);
+function ingredientSearch(e) {
+    let query = e.target.value.trim();
+    if (!query) {
+        UI.resetIngredientSuggestions();
         return;
     }
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+        const suggestions = filterIngredients(query);
+        UI.renderIngredientSuggestions(suggestions);
+    }, 500);
+}
 
+// Validates and adds a user-defined unit to the ingredient unit dropdown list
+async function addOtherUnit() {
+    toggleErrorMessageList(UI.OTHER_ERROR_MESSAGES, false);
+
+    const data = UI.getOtherUnitData();
+    const result = await addOtherUnitDB(data);
+    if (!result.success) {
+        toggleErrorMessageList(UI.OTHER_ERROR_MESSAGES, true, result.errors);
+        return;
+    }
+    else {
+        UI.addOtherUnitOption(data.unit);
+    }
     UI.toggleOtherUnitModal(false);
 }
 
-async function getImageData() {
-    const {localImage, URL} = UI.getImageInput();
-
-    let localImageResult = await processUploadedImage(localImage);
-    if (localImageResult.success && localImageResult.data) {
-        return createMessage(true, "Loaded local image successfully", localImageResult.data);
-    }
-    
-    let urlImageResult;
-    try {
-        urlImageResult = await processOnlineImageURL(URL);
-    }
-    catch (err) {
-        console.log(err);
-    }
-    console.log(typeof(urlImageResult));
-    if (urlImageResult.success && urlImageResult.data) return createMessage(true, "Image URL is valid", urlImageResult.data);
-    else if (!urlImageResult.success) {
-        toggleErrorMessage(UI.ERROR_MESSAGES.imageURLErrorMessage, true);
-		return createMessage(false, "Image URL is invalid");
-	}
-    toggleErrorMessage(UI.ERROR_MESSAGES.imageURLErrorMessage, false);
- 
-    if (isEdit) return createMessage(true, "Used the previously set image", loadedImageData);
-
-    return createMessage(true, "No Image Specified");
-}
-
-function handleSaveResult(result) {
-    if (result && result.success === true) {
-        alert(isEdit ? "Recipe edited!" : "Recipe added!");
-        return true;
-    }
-    else if (result && result.description) {
-        alert(result.description);
-        return false;
-    }
-    alert(result.description ?? (isEdit ? "Failed to edit recipe" : "Failed to add recipe"));
-    return false;
-}
-
-async function saveRecipe(recipe) {
+async function saveRecipe(data) {
     let result;
     if (isEdit) {
-        result = await updateRecipe(recipeID, recipe);
+        result = await updateRecipe(recipeID, data);
     }
     else {
-        result = await addRecipe(recipe);
+        result = await addRecipe(data);
     }
-    return handleSaveResult(result);
+    return result;
 }
 
 // Processes images (local or URL), maps ingredients, and sends the final object to the database.
 async function addRecipeHandler() {
-    toggleErrorMessage(UI.ERROR_MESSAGES.recipeNameErrorMessage, false);
-    toggleErrorMessage(UI.ERROR_MESSAGES.recipeDescriptionErrorMessage, false);
+    toggleErrorMessageList(UI.RECIPE_ERROR_MESSAGES, false);
 
-    const image = await getImageData();
-    if (!image.success) return;
-
-    const {name, description, course} = UI.getRecipeInput();
-    const {invalidName, invalidDescription} = VALIDATOR.validateRecipeInput(name, description);
-        toggleErrorMessage(UI.ERROR_MESSAGES.recipeNameErrorMessage, invalidName);
-        toggleErrorMessage(UI.ERROR_MESSAGES.recipeDescriptionErrorMessage, invalidDescription);
-
-    if (invalidName || invalidDescription) return;
-
-    let recipe = createRecipeObject(name, description, course, ingredients, image.data);
-    if (await saveRecipe(recipe)) {
+    const {image_file, image_url} = UI.getImageInput();
+    let data = UI.getRecipeInput();
+    const ingredients_list = JSON.stringify(ingredients);
+    data = {...data, image_file, image_url, ingredients_list};
+    
+    const result = await saveRecipe(data);
+    if (!result.success) {
+        toggleErrorMessageList(UI.RECIPE_ERROR_MESSAGES, true, result.errors);
+        return;
+    }
+    else {
+        alert(isEdit ? "Recipe edited!" : "Recipe added!");
         window.location.replace("/admin/explore/");
     }
 }
 
 // initalize event listners and fetch URL parameters
-function init() {
-    UI.initUI(addNewIngredient, addRecipeHandler, addOtherUnit);
+async function init() {
+    UI.initUI(addNewIngredient, addRecipeHandler, addOtherUnit, ingredientSearch);
 
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
@@ -139,11 +115,16 @@ function init() {
 
     UI.renderHeader(isEdit);
     if (isEdit) {
-        let recipe = getRecipeById(recipeID);
-        UI.renderRecipeDetails(recipe.name, recipe.courseType, recipe.description);
-        ingredients = [...recipe.ingredients]; 
-        loadedImageData = recipe.image;
+        const response = await getRecipeById(recipeID);
+        if (response.success == false) {
+            alert("Failed, could not load recipe data");
+            window.location.replace("/admin/explore/");
+        }
+        UI.renderRecipeDetails(response.name, response.courseType, response.description);
+        ingredients = [...ingredients, ...response.ingredients];
     }
     UI.renderIngredientList(ingredients, removeIngredient);
+
+    allIngredientNames = await getAllIngredients();
 };
 init();
