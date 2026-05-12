@@ -13,10 +13,9 @@ export async function filterRecipesByCategory(courseCategory, source) {
 
     if(source === "all") {
         recipes = await getRecipes();
-        recipes = recipes;
     }
     else if (source === "favourites") {
-        let response = getUserFavourites();
+        let response = await getUserFavourites();
         if (response.success === false) {
             return createMessage(false, "User not authenticated or not found");
         }
