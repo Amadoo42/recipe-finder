@@ -7,6 +7,11 @@ const recipeId = params.get('recipeid');
 
 let recipe = await getRecipeById(recipeId);
 
+if (recipe == null) {
+    alert("Failed, could not load recipe data");
+    window.location.replace("/admin/explore/");
+}
+
 const wrapper = document.getElementById('recipeContentWrapper');
 const pageHeading = document.getElementById('pageHeading');
 
@@ -37,7 +42,6 @@ const orderList = document.getElementById('ingredientList');
 orderList.innerHTML = '';
 for (const ingredient of recipe.ingredients) {
     const li = document.createElement('li');
-    // #TODO: we should handle XSS injections here later but too busy rn 😭 
     li.innerHTML = `
         <span class="IngAmount">${ingredient.quantity} ${ingredient.unit}</span>
         <span class="IngName">${ingredient.name}</span>
@@ -48,13 +52,13 @@ const favBtn = document.getElementById('favBtn');
 
 async function updateFavBtn() {
     const favouriteResult = await getUserFavourites();
-    const isSaved = favouriteResult.success&&favouriteResult.data.some(r => String(r.id)===String(recipeId));
-    favBtn.classList.toggle('active',isSaved);
+    const isSaved = favouriteResult.success && favouriteResult.data.some(r => String(r.id) === String(recipeId));
+    favBtn.classList.toggle('active', isSaved);
 }
 await updateFavBtn();
-favBtn.addEventListener('click', async() => {
+favBtn.addEventListener('click', async () => {
     favBtn.disabled = true;
     await toggleFavourite(recipeId);
     await updateFavBtn();
     favBtn.disabled = false;
-    });
+});

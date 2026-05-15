@@ -55,6 +55,4 @@ export async function logout() {
     window.location.replace(message.data)
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initUI();
-});
+initUI();

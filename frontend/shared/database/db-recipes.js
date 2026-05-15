@@ -5,6 +5,8 @@
 */
 
 import { getRequest, postRequest, deleteRequest } from '/static/api/request.js';
+import { createMessage } from '/static/shared/utils/create-message.js';
+
 /**
  * Retrieves all recipes from the server.
  * @returns { Promise<Array> } - A promise that resolves to an array of recipe objects.
@@ -98,7 +100,7 @@ export async function updateRecipe(recipeId, data) {
  * @returns { Object } - A message object indicating success or failure.
  */
 export async function deleteRecipe(recipeId) {
-    const result = await deleteRequest('/admin/delete_recipe/', {'id': recipeId });
+    const result = await deleteRequest('/admin/delete_recipe/', { 'id': recipeId });
     return result;
 }
 
@@ -110,7 +112,7 @@ export async function deleteRecipe(recipeId) {
  * @returns { Promise<Object> } - A message object with success status and matching recipes in data.
  */
 export async function searchRecipes(queryText, courseFilter) {
-    try{
+    try {
         const params = new URLSearchParams();
         params.append('search', queryText || '');
         params.append('category', courseFilter || 'all');
@@ -124,7 +126,7 @@ export async function searchRecipes(queryText, courseFilter) {
         const json = await response.json();
         return json;
     }
-    catch (error){
+    catch (error) {
         return createMessage(false, 'Network error: ' + error.message);
     }
 }

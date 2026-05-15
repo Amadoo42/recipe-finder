@@ -4,26 +4,9 @@
  * Depends on: db-core.js, db-auth.js, db-recipes.js
  */
 
-import { readTable, writeTable } from '/static/shared/database/db-core.js';
 import { createMessage } from '/static/shared/utils/create-message.js';
-import { retrieveLocalToken } from '/static/shared/database/db-auth.js';
-import { getRecipes } from '/static/shared/database/db-recipes.js';
 import { getCsrfToken } from '/static/shared/utils/csrf.js';
 
-/**
- * Gets the index of the currently authenticated user in the users table.
- * @param { Array<Object> } users - The users collection.
- * @param { string } sessionToken - The active session token.
- * @returns { number } The index of the matching user, or -1 if not found.
- */
-function getCurrentUserIndex(users, sessionToken) {
-    for(let i = 0; i < users.length; i++) {
-        if(users[i].token === sessionToken) {
-            return i;
-        }
-    }
-    return -1;
-}
 
 /**
  * Toggles the favourite status of a recipe for the authenticated user.
@@ -32,26 +15,26 @@ function getCurrentUserIndex(users, sessionToken) {
  * @returns { Object } A message object indicating success or failure of the operation.
  */
 export async function toggleFavourite(recipeId) {
-    try{
-        const response = await fetch(`/api/user/favourites/${recipeId}/toggle/`,{
-            method:'POST',
-            headers:{
-                'X-CSRFToken':getCsrfToken(),
-                'Content-Type':'application/json',
+    try {
+        const response = await fetch(`/api/user/favourites/${recipeId}/toggle/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCsrfToken(),
+                'Content-Type': 'application/json',
             },
         });
-        if(response.status===401){
-            return createMessage(false,'User not authenticated.');
+        if (response.status === 401) {
+            return createMessage(false, 'User not authenticated.');
         }
-        if(!response.ok){
-            return createMessage(false,'Failed to fetch favourites from server.');
+        if (!response.ok) {
+            return createMessage(false, 'Failed to fetch favourites from server.');
         }
         const json = await response.json();
         return json
     }
-    catch(error){
-        console.error('Network error fetching favourites:',error);
-        return createMessage(false,'Network problem')
+    catch (error) {
+        console.error('Network error fetching favourites:', error);
+        return createMessage(false, 'Network problem')
     }
 }
 
@@ -60,20 +43,20 @@ export async function toggleFavourite(recipeId) {
  * @returns { Object } A message object containing the list of favourite recipes or an error message if the user is not authenticated or not found.
  */
 export async function getUserFavourites() {
-    try{
+    try {
         const response = await fetch(`/api/user/favourites/`);
 
-        if(response.status===401){
-            return createMessage(false,'User not authenticated.');
+        if (response.status === 401) {
+            return createMessage(false, 'User not authenticated.');
         }
-        if(!response.ok)
-            return createMessage(false,'Failed to fetch favourites from server.');
+        if (!response.ok)
+            return createMessage(false, 'Failed to fetch favourites from server.');
         const json = await response.json();
         return json;
     }
-    catch(error){
-        console.error('Network error fetching favourites:',error);
-        return createMessage(false,'Network problem');
+    catch (error) {
+        console.error('Network error fetching favourites:', error);
+        return createMessage(false, 'Network problem');
 
     }
 }

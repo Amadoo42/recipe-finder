@@ -88,11 +88,11 @@ async function saveRecipe(data) {
 async function addRecipeHandler() {
     toggleErrorMessageList(UI.RECIPE_ERROR_MESSAGES, false);
 
-    const {image_file, image_url} = UI.getImageInput();
+    const { image_file, image_url } = UI.getImageInput();
     let data = UI.getRecipeInput();
     const ingredients_list = JSON.stringify(ingredients);
-    data = {...data, image_file, image_url, ingredients_list};
-    
+    data = { ...data, image_file, image_url, ingredients_list };
+
     const result = await saveRecipe(data);
     if (!result.success) {
         toggleErrorMessageList(UI.RECIPE_ERROR_MESSAGES, true, result.errors);
@@ -116,9 +116,11 @@ async function init() {
     UI.renderHeader(isEdit);
     if (isEdit) {
         const response = await getRecipeById(recipeID);
-        if (response.success == false) {
+
+        if (response == null) {
             alert("Failed, could not load recipe data");
             window.location.replace("/admin/explore/");
+            return;
         }
         UI.renderRecipeDetails(response.name, response.courseType, response.description);
         ingredients = [...ingredients, ...response.ingredients];

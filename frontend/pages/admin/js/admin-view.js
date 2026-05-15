@@ -62,6 +62,7 @@ function deleteRecipeView(id) {
 function renderRecipes() {
     const container = document.getElementById('main');
     container.innerHTML = "";
+    if (!recipes) return;
     recipes.forEach(recipe => {
         const article = createCard(recipe);
 
