@@ -37,6 +37,9 @@ def update_recipe(request):
         return JsonResponse({"success": False, "error": "Recipe not found"}, status=404)
 
 def delete_recipe(request):
+    if request.method != 'POST':
+        return JsonResponse({"success": False, "error": "Invalid request method"}, status=400)
+    
     body = json.loads(request.body)
     id = int(body.get('id'))
     
