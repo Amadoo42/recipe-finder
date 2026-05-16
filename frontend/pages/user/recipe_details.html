@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-auth-level="private">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Recipe Details</title>
+        <link href="{% static 'shared/css/main.css' %}" rel="stylesheet" />
+        <link href="{% static 'shared/css/recipe-details.css' %}" rel="stylesheet" />
+        <link href="{% static 'shared/css/favourite-button.css' %}" rel="stylesheet" />
+        <script type="module" src="{% static 'api/auth.js' %}"></script>
+        <script type="module" src="{% static 'pages/core/js/recipe-details.js' %}"></script>
+
+    </head>
+    <body>
+        {% csrf_token %}
+        <nav></nav>
+        <main class="detailPage">
+            <h1 id="pageHeading" style="display: none; text-align: center; margin-top: 2rem;"></h1>
+            <div id="recipeContentWrapper">
+                <div id ="recipeUp">
+                   <span id="courseBadge"><p id="course"></p></span>
+                   <div class="ImgContainer">
+                        <button class="FavBtn" id="favBtn">
+                            <span class="material-symbols-rounded">favorite</span>
+                        </button>
+                        <img src="{% static 'shared/assets/recipeImage.png' %}" alt="Main Dish" id="recipeImage" />
+                   </div>
+
+                <div id="bottom">
+                   <h1 id="recipeName">Recipe Name</h1>
+                </div>       
+                </div>
+                <div id="recipeBody">
+                    <h2>Description</h2>
+                    <p id="recipeDescription"></p>
+                    <div>
+                        <h2>Ingredients</h2>
+                        <ol id="ingredientList"></ol>
+                    </div>
+                </div>
+            </div>
+        </main>
+             
+    </body>
+</html>

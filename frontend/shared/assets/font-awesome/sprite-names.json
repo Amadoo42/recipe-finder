@@ -1,0 +1,7 @@
+{
+    "user" : "/static/shared/assets/font-awesome/fa-icons/user-solid-full.svg",
+    "lock" : "/static/shared/assets/font-awesome/fa-icons/lock-solid-full.svg",
+    "envelope" : "/static/shared/assets/font-awesome/fa-icons/envelope-solid-full.svg",
+    "signin" : "/static/shared/assets/font-awesome/fa-icons/sign-in-alt-solid-full.svg",
+    "signup" : "/static/shared/assets/font-awesome/fa-icons/user-plus-solid-full.svg"
+}

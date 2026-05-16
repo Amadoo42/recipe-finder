@@ -1,0 +1,75 @@
+{% load static %}
+<!doctype html>
+<html lang="en" data-auth-level="private">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Recipes</title>
+    <link href="{% static 'shared/css/main.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/search.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/cards.css' %}" rel="stylesheet" />
+    <link href="{% static 'shared/css/favourite-button.css' %}" rel="stylesheet" />
+    <script type="module" src="{% static 'api/auth.js' %}"></script>
+</head>
+
+<body>
+    {% csrf_token %}
+    <nav></nav>
+
+    <div class="TopSection">
+        <div class="cont">
+            <h1 class="title">Explore Recipes</h1>
+        </div>
+        <div class="SearchGroup">
+            <div id="search">
+                <input type="text" placeholder="Search for a recipe..." />
+                <span class="material-symbols-rounded" id="searchIcon">search</span>
+            </div>
+            <div class="BtnContainer" id="filters">
+                <button class="FilterBtn active" data-category="all">
+                    <span class="BtnText">All</span>
+                    <div class="IconContainer IconAll">
+                        <img src="{% static 'shared/assets/plate_utensils_icon.svg' %}" alt="All" class="CustomIcon">
+                    </div>
+                </button>
+
+                <button class="FilterBtn" data-category="Main">
+                    <span class="BtnText">Main Dish</span>
+                    <div class="IconContainer IconMain">
+                        <img src="{% static 'shared/assets/chicken_icon.svg' %}" alt="Main Dish" class="CustomIcon">
+                    </div>
+                </button>
+
+                <button class="FilterBtn" data-category="Appetizers">
+                    <span class="BtnText">Appetizer</span>
+                    <div class="IconContainer IconAppetizer">
+                        <img src="{% static 'shared/assets/appetizer_icon.svg' %}" alt="Appetizer" class="CustomIcon">
+                    </div>
+                </button>
+
+                <button class="FilterBtn" data-category="Dessert">
+                    <span class="BtnText">Dessert</span>
+                    <div class="IconContainer IconDessert">
+                        <img src="{% static 'shared/assets/cake_icon.svg' %}" alt="Dessert" class="CustomIcon">
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div class="DecorationWrapper">
+            <img src="{% static 'shared/assets/mala7a.svg' %}" class="mala7a">
+        </div>
+    </div>
+
+    <img src="{% static 'shared/assets/pattern.svg' %}" class="pattern">
+
+    <main id="main">
+    </main>
+
+    <div class="herb-column left" id="herbLeft"></div>
+    <div class="herb-column right" id="herbRight"></div>
+
+    <script type="module" src="{% static 'pages/user/js/user-view.js' %}"></script>
+</body>
+
+</html>

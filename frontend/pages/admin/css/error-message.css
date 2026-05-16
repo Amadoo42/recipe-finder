@@ -1,0 +1,31 @@
+:root {
+    --errorRed: #ae2012;
+    --bgError: rgba(255, 255, 255, 0.4);
+    --borderError: rgba(174, 32, 18, 0.2);
+}
+
+/* === Error Messages === */
+.ErrorMessage {
+    position: relative;
+    color: var(--errorRed);
+    background-color: var(--bgError);
+    border: 1px solid var(--borderError);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-top: 1vh;
+    max-height: 0px;
+    opacity: 0;
+    overflow: hidden;
+    display: block;
+    transform: translateY(-10px);
+    transition: var(--transitionStandard);
+}
+
+.ErrorMessage.show {
+    transform: translateY(0);
+    height: auto;
+    max-height: 200px;
+    opacity: 1;
+    padding: 10px 14px;
+}

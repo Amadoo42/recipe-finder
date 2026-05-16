@@ -1,0 +1,31 @@
+.FavBtn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    z-index: 10;
+
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: var(--buttons);
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s ease;
+}
+
+.FavBtn:hover {
+    transform: scale(1.1);
+    background-color: var(--buttonHoverColorBg);
+}
+.FavBtn .material-symbols-rounded {
+    color: white;
+    font-variation-settings: 'FILL' 1; 
+    transition: font-variation-settings 0.2s ease;
+}

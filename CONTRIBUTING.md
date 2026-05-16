@@ -56,6 +56,22 @@ Include a checklist of requirements that must be met for the issue to be conside
 | **JS Constants** | SCREAMING_SNAKE | `MAX_LOGIN_ATTEMPTS`, `PUBLIC_PAGES` |
 | **CSS/JS Classes** | PascalCase | `RecipeCard`, `SubmitButton`, `GreatVibes` |
 
+## Imports & Path Conventions
+The codebase is served via a Django backend. As such, using relative import paths like `../../utils/whatever.js` is strictly forbidden. It creates brittle code, deep nesting unreadability, and breaks immediately if files are moved.
+
+All imports must use **Absolute Root-Relative Paths** starting with Django's `/static/` prefix.
+
+**Never do this:**
+```js
+import { createMessage } from "../../shared/utils/create-message.js";
+import { getRecipes } from "./db-recipes.js";
+```
+**Always do this:**
+```js
+import { createMessage } from "/static/shared/utils/create-message.js";
+import { getRecipes } from "/static/shared/database/db-recipes.js";
+```
+
 ## JavaScript Best Practices
 1. **ES6 Syntax:** Use `const` by default. Use `let` only if reassignment is strictly necessary. Never use `var`.
 2. **Error Handling:** Implement `try...catch` blocks around JSON parsing and database access logic.
